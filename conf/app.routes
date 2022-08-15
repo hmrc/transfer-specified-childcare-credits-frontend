@@ -109,3 +109,8 @@ GET        /applicantNino                        controllers.ApplicantNinoContro
 POST       /applicantNino                        controllers.ApplicantNinoController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantNino                  controllers.ApplicantNinoController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantNino                  controllers.ApplicantNinoController.onSubmit(mode: Mode = CheckMode)
+
+GET        /mainCarerName                        controllers.MainCarerNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /mainCarerName                        controllers.MainCarerNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeMainCarerName                  controllers.MainCarerNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeMainCarerName                  controllers.MainCarerNameController.onSubmit(mode: Mode = CheckMode)

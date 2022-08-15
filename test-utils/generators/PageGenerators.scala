@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryMainCarerNamePage: Arbitrary[MainCarerNamePage.type] =
+    Arbitrary(MainCarerNamePage)
+
   implicit lazy val arbitraryApplicantNinoPage: Arbitrary[ApplicantNinoPage.type] =
     Arbitrary(ApplicantNinoPage)
 

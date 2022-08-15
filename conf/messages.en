@@ -207,3 +207,15 @@ applicantNino.checkYourAnswersLabel = applicantNino
 applicantNino.error.required = Enter applicantNino
 applicantNino.error.length = ApplicantNino must be 100 characters or less
 applicantNino.change.hidden = ApplicantNino
+
+mainCarerName.title = mainCarerName
+mainCarerName.heading = mainCarerName
+mainCarerName.firstName = firstName
+mainCarerName.lastName = lastName
+mainCarerName.checkYourAnswersLabel = MainCarerName
+mainCarerName.error.firstName.required = Enter firstName
+mainCarerName.error.lastName.required = Enter lastName
+mainCarerName.error.firstName.length = firstName must be 100 characters or less
+mainCarerName.error.lastName.length = lastName must be 100 characters or less
+mainCarerName.firstName.change.hidden = firstName
+mainCarerName.lastName.change.hidden = lastName
