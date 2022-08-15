@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryPeriodPage: Arbitrary[PeriodPage.type] =
+    Arbitrary(PeriodPage)
+
   implicit lazy val arbitraryChildDateOfBirthPage: Arbitrary[ChildDateOfBirthPage.type] =
     Arbitrary(ChildDateOfBirthPage)
 

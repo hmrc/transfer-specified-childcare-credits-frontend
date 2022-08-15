@@ -135,3 +135,15 @@ childDateOfBirth.error.required.two = The date of birth must include {0} and {1}
 childDateOfBirth.error.required = The date of birth must include {0}
 childDateOfBirth.error.invalid = Enter a real date
 childDateOfBirth.change.hidden = child’s date of birth
+
+period.title = period
+period.heading = period
+period.startDate = startDate
+period.ndDate = ndDate
+period.checkYourAnswersLabel = Period
+period.error.startDate.required = Enter startDate
+period.error.ndDate.required = Enter ndDate
+period.error.startDate.length = startDate must be 100 characters or less
+period.error.ndDate.length = ndDate must be 100 characters or less
+period.startDate.change.hidden = startDate
+period.ndDate.change.hidden = ndDate

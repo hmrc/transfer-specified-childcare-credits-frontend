@@ -69,3 +69,8 @@ GET        /childDateOfBirth                  controllers.ChildDateOfBirthContro
 POST       /childDateOfBirth                  controllers.ChildDateOfBirthController.onSubmit(mode: Mode = NormalMode)
 GET        /changeChildDateOfBirth                        controllers.ChildDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeChildDateOfBirth                        controllers.ChildDateOfBirthController.onSubmit(mode: Mode = CheckMode)
+
+GET        /period                        controllers.PeriodController.onPageLoad(mode: Mode = NormalMode)
+POST       /period                        controllers.PeriodController.onSubmit(mode: Mode = NormalMode)
+GET        /changePeriod                  controllers.PeriodController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePeriod                  controllers.PeriodController.onSubmit(mode: Mode = CheckMode)

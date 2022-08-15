@@ -22,6 +22,14 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryPeriod: Arbitrary[Period] =
+    Arbitrary {
+      for {
+        startDate <- arbitrary[String]
+        ndDate <- arbitrary[String]
+      } yield Period(startDate, ndDate)
+    }
+
   implicit lazy val arbitraryChildName: Arbitrary[ChildName] =
     Arbitrary {
       for {
