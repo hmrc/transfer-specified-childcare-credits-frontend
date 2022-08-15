@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryChildNamePage: Arbitrary[ChildNamePage.type] =
+    Arbitrary(ChildNamePage)
+
   implicit lazy val arbitraryApplicantHasFullNIContributionsPage: Arbitrary[ApplicantHasFullNIContributionsPage.type] =
     Arbitrary(ApplicantHasFullNIContributionsPage)
 

@@ -22,6 +22,14 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryChildName: Arbitrary[ChildName] =
+    Arbitrary {
+      for {
+        firstName <- arbitrary[String]
+        lastName <- arbitrary[String]
+      } yield ChildName(firstName, lastName)
+    }
+
   implicit lazy val arbitraryApplicantHasFullNIContributions: Arbitrary[ApplicantHasFullNIContributions] =
     Arbitrary {
       Gen.oneOf(ApplicantHasFullNIContributions.values.toSeq)

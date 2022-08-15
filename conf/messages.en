@@ -115,3 +115,15 @@ applicantHasFullNIContributions.no = No
 applicantHasFullNIContributions.checkYourAnswersLabel = applicantHasFullNIContributions
 applicantHasFullNIContributions.error.required = Select applicantHasFullNIContributions
 applicantHasFullNIContributions.change.hidden = ApplicantHasFullNIContributions
+
+childName.title = childName
+childName.heading = childName
+childName.firstName = firstName
+childName.lastName = lastName
+childName.checkYourAnswersLabel = ChildName
+childName.error.firstName.required = Enter firstName
+childName.error.lastName.required = Enter lastName
+childName.error.firstName.length = firstName must be �00 characters or less
+childName.error.lastName.length = lastName must be 100 characters or less
+childName.firstName.change.hidden = firstName
+childName.lastName.change.hidden = lastName
