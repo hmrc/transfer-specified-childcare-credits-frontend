@@ -153,3 +153,9 @@ addPeriod.heading = addPeriod
 addPeriod.checkYourAnswersLabel = addPeriod
 addPeriod.error.required = Select yes if addPeriod
 addPeriod.change.hidden = AddPeriod
+
+removePeriod.title = removePeriod
+removePeriod.heading = removePeriod
+removePeriod.checkYourAnswersLabel = removePeriod
+removePeriod.error.required = Select yes if removePeriod
+removePeriod.change.hidden = RemovePeriod

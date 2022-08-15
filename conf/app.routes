@@ -79,3 +79,8 @@ GET        /addPeriod                        controllers.AddPeriodController.onP
 POST       /addPeriod                        controllers.AddPeriodController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAddPeriod                  controllers.AddPeriodController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAddPeriod                  controllers.AddPeriodController.onSubmit(mode: Mode = CheckMode)
+
+GET        /removePeriod                        controllers.RemovePeriodController.onPageLoad(mode: Mode = NormalMode)
+POST       /removePeriod                        controllers.RemovePeriodController.onSubmit(mode: Mode = NormalMode)
+GET        /changeRemovePeriod                  controllers.RemovePeriodController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeRemovePeriod                  controllers.RemovePeriodController.onSubmit(mode: Mode = CheckMode)
