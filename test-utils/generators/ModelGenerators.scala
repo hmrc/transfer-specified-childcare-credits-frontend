@@ -22,6 +22,14 @@ import org.scalacheck.{Arbitrary, Gen}
 
 trait ModelGenerators {
 
+  implicit lazy val arbitraryApplicantName: Arbitrary[ApplicantName] =
+    Arbitrary {
+      for {
+        firstName <- arbitrary[String]
+        lastName <- arbitrary[String]
+      } yield ApplicantName(firstName, lastName)
+    }
+
   implicit lazy val arbitraryPeriod: Arbitrary[Period] =
     Arbitrary {
       for {

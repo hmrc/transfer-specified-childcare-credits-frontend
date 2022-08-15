@@ -84,3 +84,8 @@ GET        /removePeriod                        controllers.RemovePeriodControll
 POST       /removePeriod                        controllers.RemovePeriodController.onSubmit(mode: Mode = NormalMode)
 GET        /changeRemovePeriod                  controllers.RemovePeriodController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeRemovePeriod                  controllers.RemovePeriodController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantName                        controllers.ApplicantNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantName                        controllers.ApplicantNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantName                  controllers.ApplicantNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantName                  controllers.ApplicantNameController.onSubmit(mode: Mode = CheckMode)

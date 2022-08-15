@@ -159,3 +159,15 @@ removePeriod.heading = removePeriod
 removePeriod.checkYourAnswersLabel = removePeriod
 removePeriod.error.required = Select yes if removePeriod
 removePeriod.change.hidden = RemovePeriod
+
+applicantName.title = applicantName
+applicantName.heading = applicantName
+applicantName.firstName = firstName
+applicantName.lastName = lastName
+applicantName.checkYourAnswersLabel = ApplicantName
+applicantName.error.firstName.required = Enter firstName
+applicantName.error.lastName.required = Enter lastName
+applicantName.error.firstName.length = firstName must be 100 characters or less
+applicantName.error.lastName.length = lastName must be 100 characters or less
+applicantName.firstName.change.hidden = firstName
+applicantName.lastName.change.hidden = lastName
