@@ -16,8 +16,7 @@
 
 package controllers
 
-import java.time.{LocalDate, ZoneOffset}
-
+import java.time.{Clock, Instant, LocalDate, ZoneId, ZoneOffset}
 import base.SpecBase
 import forms.ChildDateOfBirthFormProvider
 import models.{NormalMode, UserAnswers}
@@ -37,7 +36,7 @@ import scala.concurrent.Future
 
 class ChildDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
-  val formProvider = new ChildDateOfBirthFormProvider()
+  val formProvider = new ChildDateOfBirthFormProvider(Clock.fixed(Instant.now, ZoneId.systemDefault))
   private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")

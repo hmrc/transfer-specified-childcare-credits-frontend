@@ -16,15 +16,20 @@
 
 package forms
 
-import java.time.{LocalDate, ZoneOffset}
-
+import java.time.{Clock, Instant, LocalDate, ZoneId, ZoneOffset}
 import forms.behaviours.DateBehaviours
+import play.api.data.FormError
+
+import java.time.format.DateTimeFormatter
 
 class ChildDateOfBirthFormProviderSpec extends DateBehaviours {
 
-  val form = new ChildDateOfBirthFormProvider()()
-
   ".value" - {
+
+    val clock = Clock.fixed(Instant.now, ZoneId.systemDefault)
+    val form = new ChildDateOfBirthFormProvider(clock)()
+    val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+    val maxDate = LocalDate.now(clock)
 
     val validData = datesBetween(
       min = LocalDate.of(2000, 1, 1),
@@ -34,5 +39,12 @@ class ChildDateOfBirthFormProviderSpec extends DateBehaviours {
     behave like dateField(form, "value", validData)
 
     behave like mandatoryDateField(form, "value", "childDateOfBirth.error.required.all")
+
+    behave like dateFieldWithMax(
+      form,
+      "value",
+      maxDate,
+      FormError("value", "childDateOfBirth.error.max", Array(maxDate.format(dateFormatter)))
+    )
   }
 }
