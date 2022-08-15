@@ -52,8 +52,8 @@ trait PageGenerators {
   implicit lazy val arbitraryApplicantNamePage: Arbitrary[ApplicantNamePage.type] =
     Arbitrary(ApplicantNamePage)
 
-  implicit lazy val arbitraryRemovePeriodPage: Arbitrary[RemovePeriodPage.type] =
-    Arbitrary(RemovePeriodPage)
+  implicit lazy val arbitraryRemovePeriodPage: Arbitrary[RemovePeriodPage] =
+    Arbitrary(RemovePeriodPage(Index(0)))
 
   implicit lazy val arbitraryAddPeriodPage: Arbitrary[AddPeriodPage.type] =
     Arbitrary(AddPeriodPage)

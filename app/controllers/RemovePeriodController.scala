@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.RemovePeriodFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.RemovePeriodPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -44,29 +45,28 @@ class RemovePeriodController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(RemovePeriodPage) match {
+      val preparedForm = request.userAnswers.get(RemovePeriodPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, index))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
+          Future.successful(BadRequest(view(formWithErrors, mode, index))),
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(RemovePeriodPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(RemovePeriodPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(RemovePeriodPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(RemovePeriodPage(index), mode, updatedAnswers))
       )
   }
 }
