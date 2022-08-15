@@ -147,3 +147,9 @@ period.error.startDate.length = startDate must be 100 characters or less
 period.error.ndDate.length = ndDate must be 100 characters or less
 period.startDate.change.hidden = startDate
 period.ndDate.change.hidden = ndDate
+
+addPeriod.title = addPeriod
+addPeriod.heading = addPeriod
+addPeriod.checkYourAnswersLabel = addPeriod
+addPeriod.error.required = Select yes if addPeriod
+addPeriod.change.hidden = AddPeriod
