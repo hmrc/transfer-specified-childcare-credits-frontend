@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import pages._
+import pages.behaviours.PageBehaviours
 
-trait PageGenerators {
+class ApplicantIsPartnerOfClaimantPageSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryApplicantIsPartnerOfClaimantPage: Arbitrary[ApplicantIsPartnerOfClaimantPage.type] =
-    Arbitrary(ApplicantIsPartnerOfClaimantPage)
+  "ApplicantIsPartnerOfClaimantPage" - {
 
-  implicit lazy val arbitraryApplicantClaimsChildBenefitForThisChildPage: Arbitrary[ApplicantClaimsChildBenefitForThisChildPage.type] =
-    Arbitrary(ApplicantClaimsChildBenefitForThisChildPage)
+    beRetrievable[Boolean](ApplicantIsPartnerOfClaimantPage)
 
-  implicit lazy val arbitraryApplicantRelationshipToChildPage: Arbitrary[ApplicantRelationshipToChildPage.type] =
-    Arbitrary(ApplicantRelationshipToChildPage)
+    beSettable[Boolean](ApplicantIsPartnerOfClaimantPage)
+
+    beRemovable[Boolean](ApplicantIsPartnerOfClaimantPage)
+  }
 }

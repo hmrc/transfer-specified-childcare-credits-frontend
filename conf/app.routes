@@ -29,3 +29,8 @@ GET        /applicantClaimsChildBenefitForThisChild                        contr
 POST       /applicantClaimsChildBenefitForThisChild                        controllers.ApplicantClaimsChildBenefitForThisChildController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantClaimsChildBenefitForThisChild                  controllers.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantClaimsChildBenefitForThisChild                  controllers.ApplicantClaimsChildBenefitForThisChildController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantIsPartnerOfClaimant                        controllers.ApplicantIsPartnerOfClaimantController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantIsPartnerOfClaimant                        controllers.ApplicantIsPartnerOfClaimantController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantIsPartnerOfClaimant                  controllers.ApplicantIsPartnerOfClaimantController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantIsPartnerOfClaimant                  controllers.ApplicantIsPartnerOfClaimantController.onSubmit(mode: Mode = CheckMode)

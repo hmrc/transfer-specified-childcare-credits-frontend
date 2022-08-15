@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import org.scalacheck.Arbitrary
-import pages._
+import play.api.libs.json.JsPath
 
-trait PageGenerators {
+case object ApplicantIsPartnerOfClaimantPage extends QuestionPage[Boolean] {
 
-  implicit lazy val arbitraryApplicantIsPartnerOfClaimantPage: Arbitrary[ApplicantIsPartnerOfClaimantPage.type] =
-    Arbitrary(ApplicantIsPartnerOfClaimantPage)
+  override def path: JsPath = JsPath \ toString
 
-  implicit lazy val arbitraryApplicantClaimsChildBenefitForThisChildPage: Arbitrary[ApplicantClaimsChildBenefitForThisChildPage.type] =
-    Arbitrary(ApplicantClaimsChildBenefitForThisChildPage)
-
-  implicit lazy val arbitraryApplicantRelationshipToChildPage: Arbitrary[ApplicantRelationshipToChildPage.type] =
-    Arbitrary(ApplicantRelationshipToChildPage)
+  override def toString: String = "applicantIsPartnerOfClaimant"
 }
