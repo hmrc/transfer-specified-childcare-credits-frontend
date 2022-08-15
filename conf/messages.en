@@ -116,17 +116,15 @@ applicantHasFullNIContributions.checkYourAnswersLabel = applicantHasFullNIContri
 applicantHasFullNIContributions.error.required = Select applicantHasFullNIContributions
 applicantHasFullNIContributions.change.hidden = ApplicantHasFullNIContributions
 
-childName.title = childName
-childName.heading = childName
-childName.firstName = firstName
-childName.lastName = lastName
-childName.checkYourAnswersLabel = ChildName
-childName.error.firstName.required = Enter firstName
-childName.error.lastName.required = Enter lastName
-childName.error.firstName.length = firstName must be �00 characters or less
-childName.error.lastName.length = lastName must be 100 characters or less
-childName.firstName.change.hidden = firstName
-childName.lastName.change.hidden = lastName
+childName.title = What is the child’s name
+childName.heading = What is the child’s name
+childName.firstName = First name
+childName.lastName = Last name
+childName.checkYourAnswersLabel = Child’s name
+childName.error.firstName.required = Enter the child’s first name
+childName.error.lastName.required = Enter the child’s last name
+childName.error.firstName.length = The child’s first name must be {0} characters or less
+childName.error.lastName.length = The child’s last name must be {0} characters or less
 
 childDateOfBirth.title = ChildDateOfBirth
 childDateOfBirth.heading = ChildDateOfBirth
