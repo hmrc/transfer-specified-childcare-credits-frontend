@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryApplicantIsValidAgePage: Arbitrary[ApplicantIsValidAgePage.type] =
+    Arbitrary(ApplicantIsValidAgePage)
+
   implicit lazy val arbitraryApplicantChildcareAfterCutoffPage: Arbitrary[ApplicantChildcareAfterCutoffPage.type] =
     Arbitrary(ApplicantChildcareAfterCutoffPage)
 

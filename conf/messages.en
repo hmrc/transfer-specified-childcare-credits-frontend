@@ -81,3 +81,9 @@ applicantChildcareAfterCutoff.heading = applicantChildcareAfterCutoff
 applicantChildcareAfterCutoff.checkYourAnswersLabel = applicantChildcareAfterCutoff
 applicantChildcareAfterCutoff.error.required = Select yes if applicantChildcareAfterCutoff
 applicantChildcareAfterCutoff.change.hidden = ApplicantChildcareAfterCutoff
+
+applicantIsValidAge.title = applicantIsValidAge
+applicantIsValidAge.heading = applicantIsValidAge
+applicantIsValidAge.checkYourAnswersLabel = applicantIsValidAge
+applicantIsValidAge.error.required = Select yes if applicantIsValidAge
+applicantIsValidAge.change.hidden = ApplicantIsValidAge

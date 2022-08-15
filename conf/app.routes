@@ -39,3 +39,8 @@ GET        /applicantChildcareAfterCutoff                        controllers.App
 POST       /applicantChildcareAfterCutoff                        controllers.ApplicantChildcareAfterCutoffController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantChildcareAfterCutoff                  controllers.ApplicantChildcareAfterCutoffController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantChildcareAfterCutoff                  controllers.ApplicantChildcareAfterCutoffController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantIsValidAge                        controllers.ApplicantIsValidAgeController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantIsValidAge                        controllers.ApplicantIsValidAgeController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantIsValidAge                  controllers.ApplicantIsValidAgeController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantIsValidAge                  controllers.ApplicantIsValidAgeController.onSubmit(mode: Mode = CheckMode)
