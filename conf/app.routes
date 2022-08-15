@@ -59,3 +59,13 @@ GET        /applicantHasFullNIContributions                        controllers.A
 POST       /applicantHasFullNIContributions                        controllers.ApplicantHasFullNIContributionsController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantHasFullNIContributions                  controllers.ApplicantHasFullNIContributionsController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantHasFullNIContributions                  controllers.ApplicantHasFullNIContributionsController.onSubmit(mode: Mode = CheckMode)
+
+GET        /childName                        controllers.ChildNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /childName                        controllers.ChildNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeChildName                  controllers.ChildNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeChildName                  controllers.ChildNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /childDateOfBirth                  controllers.ChildDateOfBirthController.onPageLoad(mode: Mode = NormalMode)
+POST       /childDateOfBirth                  controllers.ChildDateOfBirthController.onSubmit(mode: Mode = NormalMode)
+GET        /changeChildDateOfBirth                        controllers.ChildDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeChildDateOfBirth                        controllers.ChildDateOfBirthController.onSubmit(mode: Mode = CheckMode)

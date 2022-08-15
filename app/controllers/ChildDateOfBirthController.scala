@@ -17,37 +17,37 @@
 package controllers
 
 import controllers.actions._
-import forms.ApplicantRelationshipToChildFormProvider
+import forms.ChildDateOfBirthFormProvider
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.ApplicantRelationshipToChildPage
+import pages.ChildDateOfBirthPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.ApplicantRelationshipToChildView
+import views.html.ChildDateOfBirthView
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class ApplicantRelationshipToChildController @Inject()(
-                                       override val messagesApi: MessagesApi,
-                                       sessionRepository: SessionRepository,
-                                       navigator: Navigator,
-                                       identify: IdentifierAction,
-                                       getData: DataRetrievalAction,
-                                       requireData: DataRequiredAction,
-                                       formProvider: ApplicantRelationshipToChildFormProvider,
-                                       val controllerComponents: MessagesControllerComponents,
-                                       view: ApplicantRelationshipToChildView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class ChildDateOfBirthController @Inject()(
+                                        override val messagesApi: MessagesApi,
+                                        sessionRepository: SessionRepository,
+                                        navigator: Navigator,
+                                        identify: IdentifierAction,
+                                        getData: DataRetrievalAction,
+                                        requireData: DataRequiredAction,
+                                        formProvider: ChildDateOfBirthFormProvider,
+                                        val controllerComponents: MessagesControllerComponents,
+                                        view: ChildDateOfBirthView
+                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
-  val form = formProvider()
+  def form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(ApplicantRelationshipToChildPage) match {
+      val preparedForm = request.userAnswers.get(ChildDateOfBirthPage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -64,9 +64,9 @@ class ApplicantRelationshipToChildController @Inject()(
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantRelationshipToChildPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(ChildDateOfBirthPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(ApplicantRelationshipToChildPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(ChildDateOfBirthPage, mode, updatedAnswers))
       )
   }
 }

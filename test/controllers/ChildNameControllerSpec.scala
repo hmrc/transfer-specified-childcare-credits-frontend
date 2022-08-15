@@ -17,43 +17,54 @@
 package controllers
 
 import base.SpecBase
-import forms.ApplicantRelationshipToChildFormProvider
-import models.{NormalMode, ApplicantRelationshipToChild, UserAnswers}
+import forms.ChildNameFormProvider
+import models.{NormalMode, ChildName, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ApplicantRelationshipToChildPage
+import pages.ChildNamePage
 import play.api.inject.bind
+import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.ApplicantRelationshipToChildView
+import views.html.ChildNameView
 
 import scala.concurrent.Future
 
-class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSugar {
+class ChildNameControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  lazy val applicantRelationshipToChildRoute = routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode).url
-
-  val formProvider = new ApplicantRelationshipToChildFormProvider()
+  val formProvider = new ChildNameFormProvider()
   val form = formProvider()
 
-  "ApplicantRelationshipToChild Controller" - {
+  lazy val childNameRoute = routes.ChildNameController.onPageLoad(NormalMode).url
+
+  val userAnswers = UserAnswers(
+    userAnswersId,
+    Json.obj(
+      ChildNamePage.toString -> Json.obj(
+        "firstName" -> "value 1",
+        "lastName" -> "value 2"
+      )
+    )
+  )
+
+  "ChildName Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, applicantRelationshipToChildRoute)
+        val request = FakeRequest(GET, childNameRoute)
+
+        val view = application.injector.instanceOf[ChildNameView]
 
         val result = route(application, request).value
-
-        val view = application.injector.instanceOf[ApplicantRelationshipToChildView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -62,19 +73,17 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.values.head).success.value
-
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, applicantRelationshipToChildRoute)
+        val request = FakeRequest(GET, childNameRoute)
 
-        val view = application.injector.instanceOf[ApplicantRelationshipToChildView]
+        val view = application.injector.instanceOf[ChildNameView]
 
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ApplicantRelationshipToChild.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ChildName("value 1", "value 2")), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -94,8 +103,8 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
 
       running(application) {
         val request =
-          FakeRequest(POST, applicantRelationshipToChildRoute)
-            .withFormUrlEncodedBody(("value", ApplicantRelationshipToChild.values.head.toString))
+          FakeRequest(POST, childNameRoute)
+            .withFormUrlEncodedBody(("firstName", "value 1"), ("lastName", "value 2"))
 
         val result = route(application, request).value
 
@@ -110,12 +119,12 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
 
       running(application) {
         val request =
-          FakeRequest(POST, applicantRelationshipToChildRoute)
+          FakeRequest(POST, childNameRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
 
         val boundForm = form.bind(Map("value" -> "invalid value"))
 
-        val view = application.injector.instanceOf[ApplicantRelationshipToChildView]
+        val view = application.injector.instanceOf[ChildNameView]
 
         val result = route(application, request).value
 
@@ -129,7 +138,7 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, applicantRelationshipToChildRoute)
+        val request = FakeRequest(GET, childNameRoute)
 
         val result = route(application, request).value
 
@@ -138,19 +147,18 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
       }
     }
 
-    "redirect to Journey Recovery for a POST if no existing data is found" in {
+    "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
         val request =
-          FakeRequest(POST, applicantRelationshipToChildRoute)
-            .withFormUrlEncodedBody(("value", ApplicantRelationshipToChild.values.head.toString))
+          FakeRequest(POST, childNameRoute)
+            .withFormUrlEncodedBody(("firstName", "value 1"), ("lastName", "value 2"))
 
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }
