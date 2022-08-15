@@ -127,3 +127,13 @@ childName.error.firstName.length = firstName must be �00 characters or less
 childName.error.lastName.length = lastName must be 100 characters or less
 childName.firstName.change.hidden = firstName
 childName.lastName.change.hidden = lastName
+
+childDateOfBirth.title = ChildDateOfBirth
+childDateOfBirth.heading = ChildDateOfBirth
+childDateOfBirth.hint = For example, 12 11 2007
+childDateOfBirth.checkYourAnswersLabel = ChildDateOfBirth
+childDateOfBirth.error.required.all = Enter the childDateOfBirth
+childDateOfBirth.error.required.two = The childDateOfBirth must include {0} and {1}
+childDateOfBirth.error.required = The childDateOfBirth must include {0}
+childDateOfBirth.error.invalid = Enter a real ChildDateOfBirth
+childDateOfBirth.change.hidden = ChildDateOfBirth
