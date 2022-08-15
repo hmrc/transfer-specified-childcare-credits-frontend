@@ -241,3 +241,17 @@ mainCarerAddress.error.line1.length = line1 must be 100 characters or less
 mainCarerAddress.error.line2.length = line2 must be 100 characters or less
 mainCarerAddress.line1.change.hidden = line1
 mainCarerAddress.line2.change.hidden = line2
+
+mainCarerTelephoneNumber.title = mainCarerTelephoneNumber
+mainCarerTelephoneNumber.heading = mainCarerTelephoneNumber
+mainCarerTelephoneNumber.checkYourAnswersLabel = mainCarerTelephoneNumber
+mainCarerTelephoneNumber.error.required = Enter mainCarerTelephoneNumber
+mainCarerTelephoneNumber.error.length = MainCarerTelephoneNumber must be 100 characters or less
+mainCarerTelephoneNumber.change.hidden = MainCarerTelephoneNumber
+
+mainCarerNino.title = mainCarerNino
+mainCarerNino.heading = mainCarerNino
+mainCarerNino.checkYourAnswersLabel = mainCarerNino
+mainCarerNino.error.required = Enter mainCarerNino
+mainCarerNino.error.length = MainCarerNino must be 100 characters or less
+mainCarerNino.change.hidden = MainCarerNino

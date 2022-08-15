@@ -124,3 +124,13 @@ GET        /mainCarerAddress                        controllers.MainCarerAddress
 POST       /mainCarerAddress                        controllers.MainCarerAddressController.onSubmit(mode: Mode = NormalMode)
 GET        /changeMainCarerAddress                  controllers.MainCarerAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeMainCarerAddress                  controllers.MainCarerAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /mainCarerTelephoneNumber                        controllers.MainCarerTelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /mainCarerTelephoneNumber                        controllers.MainCarerTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeMainCarerTelephoneNumber                  controllers.MainCarerTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeMainCarerTelephoneNumber                  controllers.MainCarerTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /mainCarerNino                        controllers.MainCarerNinoController.onPageLoad(mode: Mode = NormalMode)
+POST       /mainCarerNino                        controllers.MainCarerNinoController.onSubmit(mode: Mode = NormalMode)
+GET        /changeMainCarerNino                  controllers.MainCarerNinoController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeMainCarerNino                  controllers.MainCarerNinoController.onSubmit(mode: Mode = CheckMode)
