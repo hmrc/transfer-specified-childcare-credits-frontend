@@ -69,3 +69,68 @@ GET        /childDateOfBirth                  controllers.ChildDateOfBirthContro
 POST       /childDateOfBirth                  controllers.ChildDateOfBirthController.onSubmit(mode: Mode = NormalMode)
 GET        /changeChildDateOfBirth                        controllers.ChildDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeChildDateOfBirth                        controllers.ChildDateOfBirthController.onSubmit(mode: Mode = CheckMode)
+
+GET        /period                        controllers.PeriodController.onPageLoad(mode: Mode = NormalMode)
+POST       /period                        controllers.PeriodController.onSubmit(mode: Mode = NormalMode)
+GET        /changePeriod                  controllers.PeriodController.onPageLoad(mode: Mode = CheckMode)
+POST       /changePeriod                  controllers.PeriodController.onSubmit(mode: Mode = CheckMode)
+
+GET        /addPeriod                        controllers.AddPeriodController.onPageLoad(mode: Mode = NormalMode)
+POST       /addPeriod                        controllers.AddPeriodController.onSubmit(mode: Mode = NormalMode)
+GET        /changeAddPeriod                  controllers.AddPeriodController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeAddPeriod                  controllers.AddPeriodController.onSubmit(mode: Mode = CheckMode)
+
+GET        /removePeriod                        controllers.RemovePeriodController.onPageLoad(mode: Mode = NormalMode)
+POST       /removePeriod                        controllers.RemovePeriodController.onSubmit(mode: Mode = NormalMode)
+GET        /changeRemovePeriod                  controllers.RemovePeriodController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeRemovePeriod                  controllers.RemovePeriodController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantName                        controllers.ApplicantNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantName                        controllers.ApplicantNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantName                  controllers.ApplicantNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantName                  controllers.ApplicantNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantDateOfBirth                  controllers.ApplicantDateOfBirthController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantDateOfBirth                  controllers.ApplicantDateOfBirthController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantDateOfBirth                        controllers.ApplicantDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantDateOfBirth                        controllers.ApplicantDateOfBirthController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantAddress                        controllers.ApplicantAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantAddress                        controllers.ApplicantAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantAddress                  controllers.ApplicantAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantAddress                  controllers.ApplicantAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicntTelephoneNumber                        controllers.ApplicntTelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicntTelephoneNumber                        controllers.ApplicntTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicntTelephoneNumber                  controllers.ApplicntTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicntTelephoneNumber                  controllers.ApplicntTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantNino                        controllers.ApplicantNinoController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantNino                        controllers.ApplicantNinoController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantNino                  controllers.ApplicantNinoController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantNino                  controllers.ApplicantNinoController.onSubmit(mode: Mode = CheckMode)
+
+GET        /mainCarerName                        controllers.MainCarerNameController.onPageLoad(mode: Mode = NormalMode)
+POST       /mainCarerName                        controllers.MainCarerNameController.onSubmit(mode: Mode = NormalMode)
+GET        /changeMainCarerName                  controllers.MainCarerNameController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeMainCarerName                  controllers.MainCarerNameController.onSubmit(mode: Mode = CheckMode)
+
+GET        /mainCarerDateOfBirth                  controllers.MainCarerDateOfBirthController.onPageLoad(mode: Mode = NormalMode)
+POST       /mainCarerDateOfBirth                  controllers.MainCarerDateOfBirthController.onSubmit(mode: Mode = NormalMode)
+GET        /changeMainCarerDateOfBirth                        controllers.MainCarerDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeMainCarerDateOfBirth                        controllers.MainCarerDateOfBirthController.onSubmit(mode: Mode = CheckMode)
+
+GET        /mainCarerAddress                        controllers.MainCarerAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /mainCarerAddress                        controllers.MainCarerAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeMainCarerAddress                  controllers.MainCarerAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeMainCarerAddress                  controllers.MainCarerAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /mainCarerTelephoneNumber                        controllers.MainCarerTelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /mainCarerTelephoneNumber                        controllers.MainCarerTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeMainCarerTelephoneNumber                  controllers.MainCarerTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeMainCarerTelephoneNumber                  controllers.MainCarerTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /mainCarerNino                        controllers.MainCarerNinoController.onPageLoad(mode: Mode = NormalMode)
+POST       /mainCarerNino                        controllers.MainCarerNinoController.onSubmit(mode: Mode = NormalMode)
+GET        /changeMainCarerNino                  controllers.MainCarerNinoController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeMainCarerNino                  controllers.MainCarerNinoController.onSubmit(mode: Mode = CheckMode)

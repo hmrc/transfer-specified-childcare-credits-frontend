@@ -24,6 +24,110 @@ import play.api.libs.json.{JsValue, Json}
 
 trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
 
+  implicit lazy val arbitraryMainCarerNinoUserAnswersEntry: Arbitrary[(MainCarerNinoPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MainCarerNinoPage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryMainCarerTelephoneNumberUserAnswersEntry: Arbitrary[(MainCarerTelephoneNumberPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MainCarerTelephoneNumberPage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryMainCarerAddressUserAnswersEntry: Arbitrary[(MainCarerAddressPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MainCarerAddressPage.type]
+        value <- arbitrary[MainCarerAddress].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryMainCarerDateOfBirthUserAnswersEntry: Arbitrary[(MainCarerDateOfBirthPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MainCarerDateOfBirthPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryMainCarerNameUserAnswersEntry: Arbitrary[(MainCarerNamePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[MainCarerNamePage.type]
+        value <- arbitrary[MainCarerName].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryApplicantNinoUserAnswersEntry: Arbitrary[(ApplicantNinoPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ApplicantNinoPage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryApplicntTelephoneNumberUserAnswersEntry: Arbitrary[(ApplicntTelephoneNumberPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ApplicntTelephoneNumberPage.type]
+        value <- arbitrary[String].suchThat(_.nonEmpty).map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryApplicantAddressUserAnswersEntry: Arbitrary[(ApplicantAddressPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ApplicantAddressPage.type]
+        value <- arbitrary[ApplicantAddress].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryApplicantDateOfBirthUserAnswersEntry: Arbitrary[(ApplicantDateOfBirthPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ApplicantDateOfBirthPage.type]
+        value <- arbitrary[Int].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryApplicantNameUserAnswersEntry: Arbitrary[(ApplicantNamePage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[ApplicantNamePage.type]
+        value <- arbitrary[ApplicantName].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryRemovePeriodUserAnswersEntry: Arbitrary[(RemovePeriodPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[RemovePeriodPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryAddPeriodUserAnswersEntry: Arbitrary[(AddPeriodPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[AddPeriodPage.type]
+        value <- arbitrary[Boolean].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
+  implicit lazy val arbitraryPeriodUserAnswersEntry: Arbitrary[(PeriodPage.type, JsValue)] =
+    Arbitrary {
+      for {
+        page  <- arbitrary[PeriodPage.type]
+        value <- arbitrary[Period].map(Json.toJson(_))
+      } yield (page, value)
+    }
+
   implicit lazy val arbitraryChildDateOfBirthUserAnswersEntry: Arbitrary[(ChildDateOfBirthPage.type, JsValue)] =
     Arbitrary {
       for {

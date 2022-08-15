@@ -21,6 +21,45 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryMainCarerNinoPage: Arbitrary[MainCarerNinoPage.type] =
+    Arbitrary(MainCarerNinoPage)
+
+  implicit lazy val arbitraryMainCarerTelephoneNumberPage: Arbitrary[MainCarerTelephoneNumberPage.type] =
+    Arbitrary(MainCarerTelephoneNumberPage)
+
+  implicit lazy val arbitraryMainCarerAddressPage: Arbitrary[MainCarerAddressPage.type] =
+    Arbitrary(MainCarerAddressPage)
+
+  implicit lazy val arbitraryMainCarerDateOfBirthPage: Arbitrary[MainCarerDateOfBirthPage.type] =
+    Arbitrary(MainCarerDateOfBirthPage)
+
+  implicit lazy val arbitraryMainCarerNamePage: Arbitrary[MainCarerNamePage.type] =
+    Arbitrary(MainCarerNamePage)
+
+  implicit lazy val arbitraryApplicantNinoPage: Arbitrary[ApplicantNinoPage.type] =
+    Arbitrary(ApplicantNinoPage)
+
+  implicit lazy val arbitraryApplicntTelephoneNumberPage: Arbitrary[ApplicntTelephoneNumberPage.type] =
+    Arbitrary(ApplicntTelephoneNumberPage)
+
+  implicit lazy val arbitraryApplicantAddressPage: Arbitrary[ApplicantAddressPage.type] =
+    Arbitrary(ApplicantAddressPage)
+
+  implicit lazy val arbitraryApplicantDateOfBirthPage: Arbitrary[ApplicantDateOfBirthPage.type] =
+    Arbitrary(ApplicantDateOfBirthPage)
+
+  implicit lazy val arbitraryApplicantNamePage: Arbitrary[ApplicantNamePage.type] =
+    Arbitrary(ApplicantNamePage)
+
+  implicit lazy val arbitraryRemovePeriodPage: Arbitrary[RemovePeriodPage.type] =
+    Arbitrary(RemovePeriodPage)
+
+  implicit lazy val arbitraryAddPeriodPage: Arbitrary[AddPeriodPage.type] =
+    Arbitrary(AddPeriodPage)
+
+  implicit lazy val arbitraryPeriodPage: Arbitrary[PeriodPage.type] =
+    Arbitrary(PeriodPage)
+
   implicit lazy val arbitraryChildDateOfBirthPage: Arbitrary[ChildDateOfBirthPage.type] =
     Arbitrary(ChildDateOfBirthPage)
 

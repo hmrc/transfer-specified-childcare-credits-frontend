@@ -135,3 +135,123 @@ childDateOfBirth.error.required.two = The date of birth must include {0} and {1}
 childDateOfBirth.error.required = The date of birth must include {0}
 childDateOfBirth.error.invalid = Enter a real date
 childDateOfBirth.change.hidden = child’s date of birth
+
+period.title = period
+period.heading = period
+period.startDate = startDate
+period.ndDate = ndDate
+period.checkYourAnswersLabel = Period
+period.error.startDate.required = Enter startDate
+period.error.ndDate.required = Enter ndDate
+period.error.startDate.length = startDate must be 100 characters or less
+period.error.ndDate.length = ndDate must be 100 characters or less
+period.startDate.change.hidden = startDate
+period.ndDate.change.hidden = ndDate
+
+addPeriod.title = addPeriod
+addPeriod.heading = addPeriod
+addPeriod.checkYourAnswersLabel = addPeriod
+addPeriod.error.required = Select yes if addPeriod
+addPeriod.change.hidden = AddPeriod
+
+removePeriod.title = removePeriod
+removePeriod.heading = removePeriod
+removePeriod.checkYourAnswersLabel = removePeriod
+removePeriod.error.required = Select yes if removePeriod
+removePeriod.change.hidden = RemovePeriod
+
+applicantName.title = applicantName
+applicantName.heading = applicantName
+applicantName.firstName = firstName
+applicantName.lastName = lastName
+applicantName.checkYourAnswersLabel = ApplicantName
+applicantName.error.firstName.required = Enter firstName
+applicantName.error.lastName.required = Enter lastName
+applicantName.error.firstName.length = firstName must be 100 characters or less
+applicantName.error.lastName.length = lastName must be 100 characters or less
+applicantName.firstName.change.hidden = firstName
+applicantName.lastName.change.hidden = lastName
+
+applicantDateOfBirth.title = ApplicantDateOfBirth
+applicantDateOfBirth.heading = ApplicantDateOfBirth
+applicantDateOfBirth.hint = For example, 12 11 2007
+applicantDateOfBirth.checkYourAnswersLabel = ApplicantDateOfBirth
+applicantDateOfBirth.error.required.all = Enter the applicantDateOfBirth
+applicantDateOfBirth.error.required.two = The applicantDateOfBirth must include {0} and {1}
+applicantDateOfBirth.error.required = The applicantDateOfBirth must include {0}
+applicantDateOfBirth.error.invalid = Enter a real ApplicantDateOfBirth
+applicantDateOfBirth.change.hidden = ApplicantDateOfBirth
+
+applicantAddress.title = applicantAddress
+applicantAddress.heading = applicantAddress
+applicantAddress.line1 = line1
+applicantAddress.line2 = line2
+applicantAddress.checkYourAnswersLabel = ApplicantAddress
+applicantAddress.error.line1.required = Enter line1
+applicantAddress.error.line2.required = Enter line2
+applicantAddress.error.line1.length = line1 must be 100 characters or less
+applicantAddress.error.line2.length = line2 must be 100 characters or less
+applicantAddress.line1.change.hidden = line1
+applicantAddress.line2.change.hidden = line2
+
+applicntTelephoneNumber.title = applicntTelephoneNumber
+applicntTelephoneNumber.heading = applicntTelephoneNumber
+applicntTelephoneNumber.checkYourAnswersLabel = applicntTelephoneNumber
+applicntTelephoneNumber.error.required = Enter applicntTelephoneNumber
+applicntTelephoneNumber.error.length = ApplicntTelephoneNumber must be 100 characters or less
+applicntTelephoneNumber.change.hidden = ApplicntTelephoneNumber
+
+applicantNino.title = applicantNino
+applicantNino.heading = applicantNino
+applicantNino.checkYourAnswersLabel = applicantNino
+applicantNino.error.required = Enter applicantNino
+applicantNino.error.length = ApplicantNino must be 100 characters or less
+applicantNino.change.hidden = ApplicantNino
+
+mainCarerName.title = mainCarerName
+mainCarerName.heading = mainCarerName
+mainCarerName.firstName = firstName
+mainCarerName.lastName = lastName
+mainCarerName.checkYourAnswersLabel = MainCarerName
+mainCarerName.error.firstName.required = Enter firstName
+mainCarerName.error.lastName.required = Enter lastName
+mainCarerName.error.firstName.length = firstName must be 100 characters or less
+mainCarerName.error.lastName.length = lastName must be 100 characters or less
+mainCarerName.firstName.change.hidden = firstName
+mainCarerName.lastName.change.hidden = lastName
+
+mainCarerDateOfBirth.title = MainCarerDateOfBirth
+mainCarerDateOfBirth.heading = MainCarerDateOfBirth
+mainCarerDateOfBirth.hint = For example, 12 11 2007
+mainCarerDateOfBirth.checkYourAnswersLabel = MainCarerDateOfBirth
+mainCarerDateOfBirth.error.required.all = Enter the mainCarerDateOfBirth
+mainCarerDateOfBirth.error.required.two = The mainCarerDateOfBirth must include {0} and {1}
+mainCarerDateOfBirth.error.required = The mainCarerDateOfBirth must include {0}
+mainCarerDateOfBirth.error.invalid = Enter a real MainCarerDateOfBirth
+mainCarerDateOfBirth.change.hidden = MainCarerDateOfBirth
+
+mainCarerAddress.title = mainCarerAddress
+mainCarerAddress.heading = mainCarerAddress
+mainCarerAddress.line1 = line1
+mainCarerAddress.line2 = line2
+mainCarerAddress.checkYourAnswersLabel = MainCarerAddress
+mainCarerAddress.error.line1.required = Enter line1
+mainCarerAddress.error.line2.required = Enter line2
+mainCarerAddress.error.line1.length = line1 must be 100 characters or less
+mainCarerAddress.error.line2.length = line2 must be 100 characters or less
+mainCarerAddress.line1.change.hidden = line1
+mainCarerAddress.line2.change.hidden = line2
+
+mainCarerTelephoneNumber.title = mainCarerTelephoneNumber
+mainCarerTelephoneNumber.heading = mainCarerTelephoneNumber
+mainCarerTelephoneNumber.checkYourAnswersLabel = mainCarerTelephoneNumber
+mainCarerTelephoneNumber.error.required = Enter mainCarerTelephoneNumber
+mainCarerTelephoneNumber.error.length = MainCarerTelephoneNumber must be 100 characters or less
+mainCarerTelephoneNumber.change.hidden = MainCarerTelephoneNumber
+
+mainCarerNino.title = mainCarerNino
+mainCarerNino.heading = mainCarerNino
+mainCarerNino.checkYourAnswersLabel = mainCarerNino
+mainCarerNino.error.required = Enter mainCarerNino
+mainCarerNino.error.length = MainCarerNino must be 100 characters or less
+mainCarerNino.change.hidden = MainCarerNino
