@@ -171,3 +171,13 @@ applicantName.error.firstName.length = firstName must be 100 characters or less
 applicantName.error.lastName.length = lastName must be 100 characters or less
 applicantName.firstName.change.hidden = firstName
 applicantName.lastName.change.hidden = lastName
+
+applicantDateOfBirth.title = ApplicantDateOfBirth
+applicantDateOfBirth.heading = ApplicantDateOfBirth
+applicantDateOfBirth.hint = For example, 12 11 2007
+applicantDateOfBirth.checkYourAnswersLabel = ApplicantDateOfBirth
+applicantDateOfBirth.error.required.all = Enter the applicantDateOfBirth
+applicantDateOfBirth.error.required.two = The applicantDateOfBirth must include {0} and {1}
+applicantDateOfBirth.error.required = The applicantDateOfBirth must include {0}
+applicantDateOfBirth.error.invalid = Enter a real ApplicantDateOfBirth
+applicantDateOfBirth.change.hidden = ApplicantDateOfBirth
