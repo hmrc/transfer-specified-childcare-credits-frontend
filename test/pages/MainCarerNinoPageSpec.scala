@@ -17,16 +17,17 @@
 package pages
 
 import pages.behaviours.PageBehaviours
+import uk.gov.hmrc.domain.Nino
 
 
 class MainCarerNinoPageSpec extends PageBehaviours {
 
   "MainCarerNinoPage" - {
 
-    beRetrievable[String](MainCarerNinoPage)
+    beRetrievable[Nino](MainCarerNinoPage)
 
-    beSettable[String](MainCarerNinoPage)
+    beSettable[Nino](MainCarerNinoPage)
 
-    beRemovable[String](MainCarerNinoPage)
+    beRemovable[Nino](MainCarerNinoPage)
   }
 }
