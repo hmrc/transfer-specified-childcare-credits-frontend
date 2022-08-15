@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.PeriodFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode}
 import navigation.Navigator
 import pages.PeriodPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -44,29 +45,29 @@ class PeriodController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(PeriodPage) match {
+      val preparedForm = request.userAnswers.get(PeriodPage(index)) match {
         case None => form
         case Some(value) => form.fill(value)
       }
 
-      Ok(view(preparedForm, mode))
+      Ok(view(preparedForm, mode, index))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
 
       form.bindFromRequest().fold(
         formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
+          Future.successful(BadRequest(view(formWithErrors, mode, index))),
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(PeriodPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(PeriodPage(index), value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(PeriodPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(PeriodPage(index), mode, updatedAnswers))
       )
   }
 }

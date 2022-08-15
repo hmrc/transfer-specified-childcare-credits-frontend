@@ -16,6 +16,7 @@
 
 package generators
 
+import models.Index
 import org.scalacheck.Arbitrary
 import pages._
 
@@ -57,8 +58,8 @@ trait PageGenerators {
   implicit lazy val arbitraryAddPeriodPage: Arbitrary[AddPeriodPage.type] =
     Arbitrary(AddPeriodPage)
 
-  implicit lazy val arbitraryPeriodPage: Arbitrary[PeriodPage.type] =
-    Arbitrary(PeriodPage)
+  implicit lazy val arbitraryPeriodPage: Arbitrary[PeriodPage] =
+    Arbitrary(PeriodPage(Index(0)))
 
   implicit lazy val arbitraryChildDateOfBirthPage: Arbitrary[ChildDateOfBirthPage.type] =
     Arbitrary(ChildDateOfBirthPage)

@@ -16,17 +16,17 @@
 
 package pages
 
-import models.Period
+import models.{Index, Period}
 import pages.behaviours.PageBehaviours
 
 class PeriodPageSpec extends PageBehaviours {
 
   "PeriodPage" - {
 
-    beRetrievable[Period](PeriodPage)
+    beRetrievable[Period](PeriodPage(Index(0)))
 
-    beSettable[Period](PeriodPage)
+    beSettable[Period](PeriodPage(Index(0)))
 
-    beRemovable[Period](PeriodPage)
+    beRemovable[Period](PeriodPage(Index(0)))
   }
 }

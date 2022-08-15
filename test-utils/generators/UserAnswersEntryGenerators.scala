@@ -120,10 +120,10 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryPeriodUserAnswersEntry: Arbitrary[(PeriodPage.type, JsValue)] =
+  implicit lazy val arbitraryPeriodUserAnswersEntry: Arbitrary[(PeriodPage, JsValue)] =
     Arbitrary {
       for {
-        page  <- arbitrary[PeriodPage.type]
+        page  <- arbitrary[PeriodPage]
         value <- arbitrary[Period].map(Json.toJson(_))
       } yield (page, value)
     }
