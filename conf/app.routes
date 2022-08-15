@@ -24,3 +24,8 @@ GET        /applicantRelationshipToChild                        controllers.Appl
 POST       /applicantRelationshipToChild                        controllers.ApplicantRelationshipToChildController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantRelationshipToChild                  controllers.ApplicantRelationshipToChildController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantRelationshipToChild                  controllers.ApplicantRelationshipToChildController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantClaimsChildBenefitForThisChild                        controllers.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantClaimsChildBenefitForThisChild                        controllers.ApplicantClaimsChildBenefitForThisChildController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantClaimsChildBenefitForThisChild                  controllers.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantClaimsChildBenefitForThisChild                  controllers.ApplicantClaimsChildBenefitForThisChildController.onSubmit(mode: Mode = CheckMode)
