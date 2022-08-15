@@ -20,4 +20,28 @@ import org.scalacheck.Arbitrary
 import pages._
 
 trait PageGenerators {
+
+  implicit lazy val arbitraryApplicantHasFullNIContributionsPage: Arbitrary[ApplicantHasFullNIContributionsPage.type] =
+    Arbitrary(ApplicantHasFullNIContributionsPage)
+
+  implicit lazy val arbitraryWasChildUnder12YearsOldPage: Arbitrary[WasChildUnder12YearsOldPage.type] =
+    Arbitrary(WasChildUnder12YearsOldPage)
+
+  implicit lazy val arbitraryApplicantWasUkResidentPage: Arbitrary[ApplicantWasUkResidentPage.type] =
+    Arbitrary(ApplicantWasUkResidentPage)
+
+  implicit lazy val arbitraryApplicantIsValidAgePage: Arbitrary[ApplicantIsValidAgePage.type] =
+    Arbitrary(ApplicantIsValidAgePage)
+
+  implicit lazy val arbitraryApplicantChildcareAfterCutoffPage: Arbitrary[ApplicantChildcareAfterCutoffPage.type] =
+    Arbitrary(ApplicantChildcareAfterCutoffPage)
+
+  implicit lazy val arbitraryApplicantIsPartnerOfClaimantPage: Arbitrary[ApplicantIsPartnerOfClaimantPage.type] =
+    Arbitrary(ApplicantIsPartnerOfClaimantPage)
+
+  implicit lazy val arbitraryApplicantClaimsChildBenefitForThisChildPage: Arbitrary[ApplicantClaimsChildBenefitForThisChildPage.type] =
+    Arbitrary(ApplicantClaimsChildBenefitForThisChildPage)
+
+  implicit lazy val arbitraryApplicantRelationshipToChildPage: Arbitrary[ApplicantRelationshipToChildPage.type] =
+    Arbitrary(ApplicantRelationshipToChildPage)
 }

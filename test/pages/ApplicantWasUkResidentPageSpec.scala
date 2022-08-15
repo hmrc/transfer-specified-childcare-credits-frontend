@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import models._
-import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.{Arbitrary, Gen}
+import pages.behaviours.PageBehaviours
 
-trait ModelGenerators {
+class ApplicantWasUkResidentPageSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryApplicantHasFullNIContributions: Arbitrary[ApplicantHasFullNIContributions] =
-    Arbitrary {
-      Gen.oneOf(ApplicantHasFullNIContributions.values.toSeq)
-    }
+  "ApplicantWasUkResidentPage" - {
 
-  implicit lazy val arbitraryApplicantRelationshipToChild: Arbitrary[ApplicantRelationshipToChild] =
-    Arbitrary {
-      Gen.oneOf(ApplicantRelationshipToChild.values.toSeq)
-    }
+    beRetrievable[Boolean](ApplicantWasUkResidentPage)
+
+    beSettable[Boolean](ApplicantWasUkResidentPage)
+
+    beRemovable[Boolean](ApplicantWasUkResidentPage)
+  }
 }

@@ -14,21 +14,18 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import models._
-import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.{Arbitrary, Gen}
+import pages.behaviours.PageBehaviours
 
-trait ModelGenerators {
+class WasChildUnder12YearsOldPageSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryApplicantHasFullNIContributions: Arbitrary[ApplicantHasFullNIContributions] =
-    Arbitrary {
-      Gen.oneOf(ApplicantHasFullNIContributions.values.toSeq)
-    }
+  "WasChildUnder12YearsOldPage" - {
 
-  implicit lazy val arbitraryApplicantRelationshipToChild: Arbitrary[ApplicantRelationshipToChild] =
-    Arbitrary {
-      Gen.oneOf(ApplicantRelationshipToChild.values.toSeq)
-    }
+    beRetrievable[Boolean](WasChildUnder12YearsOldPage)
+
+    beSettable[Boolean](WasChildUnder12YearsOldPage)
+
+    beRemovable[Boolean](WasChildUnder12YearsOldPage)
+  }
 }

@@ -14,21 +14,17 @@
  * limitations under the License.
  */
 
-package generators
+package forms
 
-import models._
-import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.{Arbitrary, Gen}
+import javax.inject.Inject
 
-trait ModelGenerators {
+import forms.mappings.Mappings
+import play.api.data.Form
 
-  implicit lazy val arbitraryApplicantHasFullNIContributions: Arbitrary[ApplicantHasFullNIContributions] =
-    Arbitrary {
-      Gen.oneOf(ApplicantHasFullNIContributions.values.toSeq)
-    }
+class WasChildUnder12YearsOldFormProvider @Inject() extends Mappings {
 
-  implicit lazy val arbitraryApplicantRelationshipToChild: Arbitrary[ApplicantRelationshipToChild] =
-    Arbitrary {
-      Gen.oneOf(ApplicantRelationshipToChild.values.toSeq)
-    }
+  def apply(): Form[Boolean] =
+    Form(
+      "value" -> boolean("wasChildUnder12YearsOld.error.required")
+    )
 }

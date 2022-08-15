@@ -55,3 +55,55 @@ signedOut.guidance = We did not save your answers.
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
+
+applicantRelationshipToChild.title = applicantRelationshipToChild
+applicantRelationshipToChild.heading = applicantRelationshipToChild
+applicantRelationshipToChild.grandparent = Grandparent
+applicantRelationshipToChild.nonResidentParent = Non-resident Parent
+applicantRelationshipToChild.checkYourAnswersLabel = applicantRelationshipToChild
+applicantRelationshipToChild.error.required = Select applicantRelationshipToChild
+applicantRelationshipToChild.change.hidden = ApplicantRelationshipToChild
+
+applicantClaimsChildBenefitForThisChild.title = applicantClaimsChildBenefitForThisChild
+applicantClaimsChildBenefitForThisChild.heading = applicantClaimsChildBenefitForThisChild
+applicantClaimsChildBenefitForThisChild.checkYourAnswersLabel = applicantClaimsChildBenefitForThisChild
+applicantClaimsChildBenefitForThisChild.error.required = Select yes if applicantClaimsChildBenefitForThisChild
+applicantClaimsChildBenefitForThisChild.change.hidden = ApplicantClaimsChildBenefitForThisChild
+
+applicantIsPartnerOfClaimant.title = applicantIsPartnerOfClaimant
+applicantIsPartnerOfClaimant.heading = applicantIsPartnerOfClaimant
+applicantIsPartnerOfClaimant.checkYourAnswersLabel = applicantIsPartnerOfClaimant
+applicantIsPartnerOfClaimant.error.required = Select yes if applicantIsPartnerOfClaimant
+applicantIsPartnerOfClaimant.change.hidden = ApplicantIsPartnerOfClaimant
+
+applicantChildcareAfterCutoff.title = applicantChildcareAfterCutoff
+applicantChildcareAfterCutoff.heading = applicantChildcareAfterCutoff
+applicantChildcareAfterCutoff.checkYourAnswersLabel = applicantChildcareAfterCutoff
+applicantChildcareAfterCutoff.error.required = Select yes if applicantChildcareAfterCutoff
+applicantChildcareAfterCutoff.change.hidden = ApplicantChildcareAfterCutoff
+
+applicantIsValidAge.title = applicantIsValidAge
+applicantIsValidAge.heading = applicantIsValidAge
+applicantIsValidAge.checkYourAnswersLabel = applicantIsValidAge
+applicantIsValidAge.error.required = Select yes if applicantIsValidAge
+applicantIsValidAge.change.hidden = ApplicantIsValidAge
+
+applicantWasUkResident.title = applicantWasUkResident
+applicantWasUkResident.heading = applicantWasUkResident
+applicantWasUkResident.checkYourAnswersLabel = applicantWasUkResident
+applicantWasUkResident.error.required = Select yes if applicantWasUkResident
+applicantWasUkResident.change.hidden = ApplicantWasUkResident
+
+wasChildUnder12YearsOld.title = wasChildUnder12YearsOld
+wasChildUnder12YearsOld.heading = wasChildUnder12YearsOld
+wasChildUnder12YearsOld.checkYourAnswersLabel = wasChildUnder12YearsOld
+wasChildUnder12YearsOld.error.required = Select yes if wasChildUnder12YearsOld
+wasChildUnder12YearsOld.change.hidden = WasChildUnder12YearsOld
+
+applicantHasFullNIContributions.title = applicantHasFullNIContributions
+applicantHasFullNIContributions.heading = applicantHasFullNIContributions
+applicantHasFullNIContributions.yes = Yes
+applicantHasFullNIContributions.no = No
+applicantHasFullNIContributions.checkYourAnswersLabel = applicantHasFullNIContributions
+applicantHasFullNIContributions.error.required = Select applicantHasFullNIContributions
+applicantHasFullNIContributions.change.hidden = ApplicantHasFullNIContributions
