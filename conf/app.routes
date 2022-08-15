@@ -44,3 +44,8 @@ GET        /applicantIsValidAge                        controllers.ApplicantIsVa
 POST       /applicantIsValidAge                        controllers.ApplicantIsValidAgeController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantIsValidAge                  controllers.ApplicantIsValidAgeController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantIsValidAge                  controllers.ApplicantIsValidAgeController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantWasUkResident                        controllers.ApplicantWasUkResidentController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantWasUkResident                        controllers.ApplicantWasUkResidentController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantWasUkResident                  controllers.ApplicantWasUkResidentController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantWasUkResident                  controllers.ApplicantWasUkResidentController.onSubmit(mode: Mode = CheckMode)
