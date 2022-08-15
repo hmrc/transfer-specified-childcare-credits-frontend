@@ -14,16 +14,19 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import models._
-import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.{Arbitrary, Gen}
+import models.ApplicantRelationshipToChild
+import pages.behaviours.PageBehaviours
 
-trait ModelGenerators {
+class ApplicantRelationshipToChildSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryApplicantRelationshipToChild: Arbitrary[ApplicantRelationshipToChild] =
-    Arbitrary {
-      Gen.oneOf(ApplicantRelationshipToChild.values.toSeq)
-    }
+  "ApplicantRelationshipToChildPage" - {
+
+    beRetrievable[ApplicantRelationshipToChild](ApplicantRelationshipToChildPage)
+
+    beSettable[ApplicantRelationshipToChild](ApplicantRelationshipToChildPage)
+
+    beRemovable[ApplicantRelationshipToChild](ApplicantRelationshipToChildPage)
+  }
 }

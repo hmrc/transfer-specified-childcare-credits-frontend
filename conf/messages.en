@@ -55,3 +55,11 @@ signedOut.guidance = We did not save your answers.
 
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
+
+applicantRelationshipToChild.title = applicantRelationshipToChild
+applicantRelationshipToChild.heading = applicantRelationshipToChild
+applicantRelationshipToChild.grandparent = Grandparent
+applicantRelationshipToChild.nonResidentParent = Non-resident Parent
+applicantRelationshipToChild.checkYourAnswersLabel = applicantRelationshipToChild
+applicantRelationshipToChild.error.required = Select applicantRelationshipToChild
+applicantRelationshipToChild.change.hidden = ApplicantRelationshipToChild

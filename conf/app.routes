@@ -19,3 +19,8 @@ GET         /account/sign-out                            controllers.auth.AuthCo
 GET         /account/signed-out                          controllers.auth.SignedOutController.onPageLoad
 
 GET         /unauthorised                                controllers.UnauthorisedController.onPageLoad
+
+GET        /applicantRelationshipToChild                        controllers.ApplicantRelationshipToChildController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantRelationshipToChild                        controllers.ApplicantRelationshipToChildController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantRelationshipToChild                  controllers.ApplicantRelationshipToChildController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantRelationshipToChild                  controllers.ApplicantRelationshipToChildController.onSubmit(mode: Mode = CheckMode)
