@@ -200,3 +200,10 @@ applicntTelephoneNumber.checkYourAnswersLabel = applicntTelephoneNumber
 applicntTelephoneNumber.error.required = Enter applicntTelephoneNumber
 applicntTelephoneNumber.error.length = ApplicntTelephoneNumber must be 100 characters or less
 applicntTelephoneNumber.change.hidden = ApplicntTelephoneNumber
+
+applicantNino.title = applicantNino
+applicantNino.heading = applicantNino
+applicantNino.checkYourAnswersLabel = applicantNino
+applicantNino.error.required = Enter applicantNino
+applicantNino.error.length = ApplicantNino must be 100 characters or less
+applicantNino.change.hidden = ApplicantNino

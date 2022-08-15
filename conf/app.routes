@@ -104,3 +104,8 @@ GET        /applicntTelephoneNumber                        controllers.ApplicntT
 POST       /applicntTelephoneNumber                        controllers.ApplicntTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicntTelephoneNumber                  controllers.ApplicntTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicntTelephoneNumber                  controllers.ApplicntTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantNino                        controllers.ApplicantNinoController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantNino                        controllers.ApplicantNinoController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantNino                  controllers.ApplicantNinoController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantNino                  controllers.ApplicantNinoController.onSubmit(mode: Mode = CheckMode)
