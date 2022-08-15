@@ -18,6 +18,7 @@ package models
 
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
 sealed trait ApplicantRelationshipToChild
@@ -25,20 +26,55 @@ sealed trait ApplicantRelationshipToChild
 object ApplicantRelationshipToChild extends Enumerable.Implicits {
 
   case object Grandparent extends WithName("grandparent") with ApplicantRelationshipToChild
-  case object Nonresidentparent extends WithName("nonResidentParent") with ApplicantRelationshipToChild
+  case object NonResidentParent extends WithName("nonResidentParent") with ApplicantRelationshipToChild
+  case object AuntOrUncle extends WithName("auntOrUncle") with ApplicantRelationshipToChild
+  case object BrotherOrSister extends WithName("brotherOrSister") with ApplicantRelationshipToChild
+  case object Other extends WithName("other") with ApplicantRelationshipToChild
 
   val values: Seq[ApplicantRelationshipToChild] = Seq(
-    Grandparent, Nonresidentparent
+    Grandparent, NonResidentParent, AuntOrUncle, BrotherOrSister, Other
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"applicantRelationshipToChild.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
-  }
+  def options(implicit messages: Messages): Seq[RadioItem] = Seq(
+    RadioItem(
+      content = Text(messages("applicantRelationshipToChild.grandparent")),
+      hint = Some(Hint(
+        content = Text(messages("applicantRelationshipToChild.grandparent.hint"))
+      )),
+      value = Some(Grandparent.toString),
+      id = Some(s"value_$Grandparent")
+    ),
+    RadioItem(
+      content = Text(messages("applicantRelationshipToChild.nonResidentParent")),
+      hint = Some(Hint(
+        content = Text(messages("applicantRelationshipToChild.nonResidentParent.hint"))
+      )),
+      value = Some(NonResidentParent.toString),
+      id = Some(s"value_$NonResidentParent")
+    ),
+    RadioItem(
+      content = Text(messages("applicantRelationshipToChild.auntOrUncle")),
+      hint = Some(Hint(
+        content = Text(messages("applicantRelationshipToChild.auntOrUncle.hint"))
+      )),
+      value = Some(AuntOrUncle.toString),
+      id = Some(s"value_$AuntOrUncle")
+    ),
+    RadioItem(
+      content = Text(messages("applicantRelationshipToChild.brotherOrSister")),
+      hint = Some(Hint(
+        content = Text(messages("applicantRelationshipToChild.brotherOrSister.hint"))
+      )),
+      value = Some(BrotherOrSister.toString),
+      id = Some(s"value_$BrotherOrSister")
+    ),
+    RadioItem(divider = Some(messages("site.or"))),
+    RadioItem(
+      content = Text(messages("applicantRelationshipToChild.other")),
+      value = Some(Other.toString),
+      id = Some(s"value_$Other")
+    )
+  )
 
   implicit val enumerable: Enumerable[ApplicantRelationshipToChild] =
     Enumerable(values.map(v => v.toString -> v): _*)

@@ -10,6 +10,7 @@ site.start = Start now
 site.startAgain = Start again
 site.signIn = Sign in
 site.govuk = GOV.UK
+site.or = or
 
 date.day = Day
 date.month = Month
@@ -56,13 +57,20 @@ signedOut.guidance = We did not save your answers.
 unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
-applicantRelationshipToChild.title = applicantRelationshipToChild
-applicantRelationshipToChild.heading = applicantRelationshipToChild
+applicantRelationshipToChild.title = What is the applicant’s relationship to the child?
+applicantRelationshipToChild.heading = What is the applicant’s relationship to the child?
 applicantRelationshipToChild.grandparent = Grandparent
+applicantRelationshipToChild.grandparent.hint = The child’s grandparent, great-grandparent or great-great-grandparent
 applicantRelationshipToChild.nonResidentParent = Non-resident Parent
-applicantRelationshipToChild.checkYourAnswersLabel = applicantRelationshipToChild
-applicantRelationshipToChild.error.required = Select applicantRelationshipToChild
-applicantRelationshipToChild.change.hidden = ApplicantRelationshipToChild
+applicantRelationshipToChild.nonResidentParent.hint = Mother or father who does not live with the child
+applicantRelationshipToChild.auntOrUncle = Aunt or uncle
+applicantRelationshipToChild.auntOrUncle.hint = The parent’s biological, half, step or adopted brother or sister
+applicantRelationshipToChild.brotherOrSister = Brother or sister
+applicantRelationshipToChild.brotherOrSister.hint = The child’s biological, half, step or adopted brother or sister
+applicantRelationshipToChild.other = None of these apply
+applicantRelationshipToChild.checkYourAnswersLabel = The applicant’s relationship to the child
+applicantRelationshipToChild.error.required = Select the applicant’s relationship to the child
+applicantRelationshipToChild.change.hidden = The applicant’s relationship to the child
 
 applicantClaimsChildBenefitForThisChild.title = applicantClaimsChildBenefitForThisChild
 applicantClaimsChildBenefitForThisChild.heading = applicantClaimsChildBenefitForThisChild
