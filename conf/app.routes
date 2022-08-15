@@ -34,3 +34,8 @@ GET        /applicantIsPartnerOfClaimant                        controllers.Appl
 POST       /applicantIsPartnerOfClaimant                        controllers.ApplicantIsPartnerOfClaimantController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantIsPartnerOfClaimant                  controllers.ApplicantIsPartnerOfClaimantController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantIsPartnerOfClaimant                  controllers.ApplicantIsPartnerOfClaimantController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantChildcareAfterCutoff                        controllers.ApplicantChildcareAfterCutoffController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantChildcareAfterCutoff                        controllers.ApplicantChildcareAfterCutoffController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantChildcareAfterCutoff                  controllers.ApplicantChildcareAfterCutoffController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantChildcareAfterCutoff                  controllers.ApplicantChildcareAfterCutoffController.onSubmit(mode: Mode = CheckMode)

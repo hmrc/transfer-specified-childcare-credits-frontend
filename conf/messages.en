@@ -75,3 +75,9 @@ applicantIsPartnerOfClaimant.heading = applicantIsPartnerOfClaimant
 applicantIsPartnerOfClaimant.checkYourAnswersLabel = applicantIsPartnerOfClaimant
 applicantIsPartnerOfClaimant.error.required = Select yes if applicantIsPartnerOfClaimant
 applicantIsPartnerOfClaimant.change.hidden = ApplicantIsPartnerOfClaimant
+
+applicantChildcareAfterCutoff.title = applicantChildcareAfterCutoff
+applicantChildcareAfterCutoff.heading = applicantChildcareAfterCutoff
+applicantChildcareAfterCutoff.checkYourAnswersLabel = applicantChildcareAfterCutoff
+applicantChildcareAfterCutoff.error.required = Select yes if applicantChildcareAfterCutoff
+applicantChildcareAfterCutoff.change.hidden = ApplicantChildcareAfterCutoff

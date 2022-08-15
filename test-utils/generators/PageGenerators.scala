@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryApplicantChildcareAfterCutoffPage: Arbitrary[ApplicantChildcareAfterCutoffPage.type] =
+    Arbitrary(ApplicantChildcareAfterCutoffPage)
+
   implicit lazy val arbitraryApplicantIsPartnerOfClaimantPage: Arbitrary[ApplicantIsPartnerOfClaimantPage.type] =
     Arbitrary(ApplicantIsPartnerOfClaimantPage)
 
