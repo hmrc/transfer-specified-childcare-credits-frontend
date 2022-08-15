@@ -49,3 +49,8 @@ GET        /applicantWasUkResident                        controllers.ApplicantW
 POST       /applicantWasUkResident                        controllers.ApplicantWasUkResidentController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantWasUkResident                  controllers.ApplicantWasUkResidentController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantWasUkResident                  controllers.ApplicantWasUkResidentController.onSubmit(mode: Mode = CheckMode)
+
+GET        /wasChildUnder12YearsOld                        controllers.WasChildUnder12YearsOldController.onPageLoad(mode: Mode = NormalMode)
+POST       /wasChildUnder12YearsOld                        controllers.WasChildUnder12YearsOldController.onSubmit(mode: Mode = NormalMode)
+GET        /changeWasChildUnder12YearsOld                  controllers.WasChildUnder12YearsOldController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeWasChildUnder12YearsOld                  controllers.WasChildUnder12YearsOldController.onSubmit(mode: Mode = CheckMode)
