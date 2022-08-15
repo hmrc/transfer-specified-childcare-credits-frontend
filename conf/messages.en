@@ -193,3 +193,10 @@ applicantAddress.error.line1.length = line1 must be 100 characters or less
 applicantAddress.error.line2.length = line2 must be 100 characters or less
 applicantAddress.line1.change.hidden = line1
 applicantAddress.line2.change.hidden = line2
+
+applicntTelephoneNumber.title = applicntTelephoneNumber
+applicntTelephoneNumber.heading = applicntTelephoneNumber
+applicntTelephoneNumber.checkYourAnswersLabel = applicntTelephoneNumber
+applicntTelephoneNumber.error.required = Enter applicntTelephoneNumber
+applicntTelephoneNumber.error.length = ApplicntTelephoneNumber must be 100 characters or less
+applicntTelephoneNumber.change.hidden = ApplicntTelephoneNumber

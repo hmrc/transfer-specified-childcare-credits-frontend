@@ -99,3 +99,8 @@ GET        /applicantAddress                        controllers.ApplicantAddress
 POST       /applicantAddress                        controllers.ApplicantAddressController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantAddress                  controllers.ApplicantAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantAddress                  controllers.ApplicantAddressController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicntTelephoneNumber                        controllers.ApplicntTelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicntTelephoneNumber                        controllers.ApplicntTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicntTelephoneNumber                  controllers.ApplicntTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicntTelephoneNumber                  controllers.ApplicntTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
