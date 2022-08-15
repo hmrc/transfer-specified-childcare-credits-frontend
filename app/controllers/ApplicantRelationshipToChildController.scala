@@ -18,9 +18,8 @@ package controllers
 
 import controllers.actions._
 import forms.ApplicantRelationshipToChildFormProvider
-
 import javax.inject.Inject
-import models.{Mode, UserAnswers}
+import models.Mode
 import navigation.Navigator
 import pages.ApplicantRelationshipToChildPage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -45,12 +44,10 @@ class ApplicantRelationshipToChildController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val answers = request.userAnswers.getOrElse(UserAnswers(request.userId))
-
-      val preparedForm = answers.get(ApplicantRelationshipToChildPage) match {
+      val preparedForm = request.userAnswers.get(ApplicantRelationshipToChildPage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -58,10 +55,8 @@ class ApplicantRelationshipToChildController @Inject()(
       Ok(view(preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      val answers = request.userAnswers.getOrElse(UserAnswers(request.userId))
 
       form.bindFromRequest().fold(
         formWithErrors =>
@@ -69,7 +64,7 @@ class ApplicantRelationshipToChildController @Inject()(
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(answers.set(ApplicantRelationshipToChildPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantRelationshipToChildPage, value))
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(ApplicantRelationshipToChildPage, mode, updatedAnswers))
       )

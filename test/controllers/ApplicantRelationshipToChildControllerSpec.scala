@@ -124,34 +124,23 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
       }
     }
 
-    "must return OK and the correct view when no data is found" in {
+    "must redirect to Journey Recovery for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
         val request = FakeRequest(GET, applicantRelationshipToChildRoute)
-        val view = application.injector.instanceOf[ApplicantRelationshipToChildView]
 
         val result = route(application, request).value
 
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }
 
-    "redirect to the next page when valid data is submitted even if no existing data is found" in {
+    "redirect to Journey Recovery for a POST if no existing data is found" in {
 
-      val mockSessionRepository = mock[SessionRepository]
-
-      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
-
-      val application =
-        applicationBuilder(userAnswers = None)
-          .overrides(
-            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
-            bind[SessionRepository].toInstance(mockSessionRepository)
-          )
-          .build()
+      val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
         val request =
@@ -161,7 +150,8 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
-        redirectLocation(result).value mustEqual onwardRoute.url
+
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }
   }
