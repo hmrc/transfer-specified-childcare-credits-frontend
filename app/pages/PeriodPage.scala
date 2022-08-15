@@ -16,12 +16,12 @@
 
 package pages
 
-import models.Period
+import models.{Index, Period}
 import play.api.libs.json.JsPath
 
-case object PeriodPage extends QuestionPage[Period] {
+final case class PeriodPage(index: Index) extends QuestionPage[Period] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "periods" \ index.position \ toString
 
   override def toString: String = "period"
 }

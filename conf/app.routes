@@ -70,20 +70,20 @@ POST       /childDateOfBirth                  controllers.ChildDateOfBirthContro
 GET        /changeChildDateOfBirth                        controllers.ChildDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeChildDateOfBirth                        controllers.ChildDateOfBirthController.onSubmit(mode: Mode = CheckMode)
 
-GET        /period                        controllers.PeriodController.onPageLoad(mode: Mode = NormalMode)
-POST       /period                        controllers.PeriodController.onSubmit(mode: Mode = NormalMode)
-GET        /changePeriod                  controllers.PeriodController.onPageLoad(mode: Mode = CheckMode)
-POST       /changePeriod                  controllers.PeriodController.onSubmit(mode: Mode = CheckMode)
+GET        /period/:index                        controllers.PeriodController.onPageLoad(mode: Mode = NormalMode, index: Index)
+POST       /period/:index                        controllers.PeriodController.onSubmit(mode: Mode = NormalMode, index: Index)
+GET        /changePeriod/:index                  controllers.PeriodController.onPageLoad(mode: Mode = CheckMode, index: Index)
+POST       /changePeriod/:index                  controllers.PeriodController.onSubmit(mode: Mode = CheckMode, index: Index)
 
 GET        /addPeriod                        controllers.AddPeriodController.onPageLoad(mode: Mode = NormalMode)
 POST       /addPeriod                        controllers.AddPeriodController.onSubmit(mode: Mode = NormalMode)
 GET        /changeAddPeriod                  controllers.AddPeriodController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeAddPeriod                  controllers.AddPeriodController.onSubmit(mode: Mode = CheckMode)
 
-GET        /removePeriod                        controllers.RemovePeriodController.onPageLoad(mode: Mode = NormalMode)
-POST       /removePeriod                        controllers.RemovePeriodController.onSubmit(mode: Mode = NormalMode)
-GET        /changeRemovePeriod                  controllers.RemovePeriodController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeRemovePeriod                  controllers.RemovePeriodController.onSubmit(mode: Mode = CheckMode)
+GET        /removePeriod/:index                        controllers.RemovePeriodController.onPageLoad(mode: Mode = NormalMode, index: Index)
+POST       /removePeriod/:index                        controllers.RemovePeriodController.onSubmit(mode: Mode = NormalMode, index: Index)
+GET        /changeRemovePeriod/:index                  controllers.RemovePeriodController.onPageLoad(mode: Mode = CheckMode, index: Index)
+POST       /changeRemovePeriod/:index                  controllers.RemovePeriodController.onSubmit(mode: Mode = CheckMode, index: Index)
 
 GET        /applicantName                        controllers.ApplicantNameController.onPageLoad(mode: Mode = NormalMode)
 POST       /applicantName                        controllers.ApplicantNameController.onSubmit(mode: Mode = NormalMode)

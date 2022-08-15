@@ -16,16 +16,17 @@
 
 package pages
 
+import models.Index
 import pages.behaviours.PageBehaviours
 
 class RemovePeriodPageSpec extends PageBehaviours {
 
   "RemovePeriodPage" - {
 
-    beRetrievable[Boolean](RemovePeriodPage)
+    beRetrievable[Boolean](RemovePeriodPage(Index(0)))
 
-    beSettable[Boolean](RemovePeriodPage)
+    beSettable[Boolean](RemovePeriodPage(Index(0)))
 
-    beRemovable[Boolean](RemovePeriodPage)
+    beRemovable[Boolean](RemovePeriodPage(Index(0)))
   }
 }

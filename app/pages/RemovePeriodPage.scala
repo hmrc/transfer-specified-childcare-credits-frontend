@@ -16,11 +16,12 @@
 
 package pages
 
+import models.Index
 import play.api.libs.json.JsPath
 
-case object RemovePeriodPage extends QuestionPage[Boolean] {
+final case class RemovePeriodPage(index: Index) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ toString
+  override def path: JsPath = JsPath \ "periods" \ index.position \ toString
 
   override def toString: String = "removePeriod"
 }

@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.RemovePeriodFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Index, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -40,7 +40,7 @@ class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
   val formProvider = new RemovePeriodFormProvider()
   val form = formProvider()
 
-  lazy val removePeriodRoute = routes.RemovePeriodController.onPageLoad(NormalMode).url
+  lazy val removePeriodRoute = routes.RemovePeriodController.onPageLoad(NormalMode, Index(0)).url
 
   "RemovePeriod Controller" - {
 
@@ -50,31 +50,26 @@ class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, removePeriodRoute)
-
         val result = route(application, request).value
-
         val view = application.injector.instanceOf[RemovePeriodView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(RemovePeriodPage, true).success.value
-
+      val userAnswers = UserAnswers(userAnswersId).set(RemovePeriodPage(Index(0)), true).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, removePeriodRoute)
-
         val view = application.injector.instanceOf[RemovePeriodView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -114,13 +109,11 @@ class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
-
         val view = application.injector.instanceOf[RemovePeriodView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -130,7 +123,6 @@ class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, removePeriodRoute)
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -146,7 +138,6 @@ class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, removePeriodRoute)
             .withFormUrlEncodedBody(("value", "true"))
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

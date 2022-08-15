@@ -18,10 +18,11 @@ package controllers
 
 import base.SpecBase
 import forms.PeriodFormProvider
-import models.{NormalMode, Period, UserAnswers}
+import models.{Index, NormalMode, Period, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
+import org.scalatest.TryValues
 import org.scalatestplus.mockito.MockitoSugar
 import pages.PeriodPage
 import play.api.inject.bind
@@ -34,24 +35,17 @@ import views.html.PeriodView
 
 import scala.concurrent.Future
 
-class PeriodControllerSpec extends SpecBase with MockitoSugar {
+class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
 
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new PeriodFormProvider()
   val form = formProvider()
 
-  lazy val periodRoute = routes.PeriodController.onPageLoad(NormalMode).url
+  lazy val periodRoute = routes.PeriodController.onPageLoad(NormalMode, Index(0)).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      PeriodPage.toString -> Json.obj(
-        "startDate" -> "value 1",
-        "ndDate" -> "value 2"
-      )
-    )
-  )
+  val userAnswers = UserAnswers(userAnswersId)
+    .set(PeriodPage(Index(0)), Period("value 1", "value 2")).success.value
 
   "Period Controller" - {
 
@@ -61,13 +55,11 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, periodRoute)
-
         val view = application.injector.instanceOf[PeriodView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -77,13 +69,11 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, periodRoute)
-
         val view = application.injector.instanceOf[PeriodView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(Period("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(Period("value 1", "value 2")), NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -121,15 +111,12 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, periodRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
-
         val boundForm = form.bind(Map("value" -> "invalid value"))
-
         val view = application.injector.instanceOf[PeriodView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -139,7 +126,6 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, periodRoute)
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -155,7 +141,6 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, periodRoute)
             .withFormUrlEncodedBody(("startDate", "value 1"), ("ndDate", "value 2"))
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
