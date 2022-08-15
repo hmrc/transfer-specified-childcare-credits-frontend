@@ -229,3 +229,15 @@ mainCarerDateOfBirth.error.required.two = The mainCarerDateOfBirth must include 
 mainCarerDateOfBirth.error.required = The mainCarerDateOfBirth must include {0}
 mainCarerDateOfBirth.error.invalid = Enter a real MainCarerDateOfBirth
 mainCarerDateOfBirth.change.hidden = MainCarerDateOfBirth
+
+mainCarerAddress.title = mainCarerAddress
+mainCarerAddress.heading = mainCarerAddress
+mainCarerAddress.line1 = line1
+mainCarerAddress.line2 = line2
+mainCarerAddress.checkYourAnswersLabel = MainCarerAddress
+mainCarerAddress.error.line1.required = Enter line1
+mainCarerAddress.error.line2.required = Enter line2
+mainCarerAddress.error.line1.length = line1 must be 100 characters or less
+mainCarerAddress.error.line2.length = line2 must be 100 characters or less
+mainCarerAddress.line1.change.hidden = line1
+mainCarerAddress.line2.change.hidden = line2

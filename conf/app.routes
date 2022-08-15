@@ -119,3 +119,8 @@ GET        /mainCarerDateOfBirth                  controllers.MainCarerDateOfBir
 POST       /mainCarerDateOfBirth                  controllers.MainCarerDateOfBirthController.onSubmit(mode: Mode = NormalMode)
 GET        /changeMainCarerDateOfBirth                        controllers.MainCarerDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeMainCarerDateOfBirth                        controllers.MainCarerDateOfBirthController.onSubmit(mode: Mode = CheckMode)
+
+GET        /mainCarerAddress                        controllers.MainCarerAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /mainCarerAddress                        controllers.MainCarerAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeMainCarerAddress                  controllers.MainCarerAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeMainCarerAddress                  controllers.MainCarerAddressController.onSubmit(mode: Mode = CheckMode)
