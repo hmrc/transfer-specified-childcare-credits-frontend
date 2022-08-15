@@ -99,3 +99,11 @@ wasChildUnder12YearsOld.heading = wasChildUnder12YearsOld
 wasChildUnder12YearsOld.checkYourAnswersLabel = wasChildUnder12YearsOld
 wasChildUnder12YearsOld.error.required = Select yes if wasChildUnder12YearsOld
 wasChildUnder12YearsOld.change.hidden = WasChildUnder12YearsOld
+
+applicantHasFullNIContributions.title = applicantHasFullNIContributions
+applicantHasFullNIContributions.heading = applicantHasFullNIContributions
+applicantHasFullNIContributions.yes = Yes
+applicantHasFullNIContributions.no = No
+applicantHasFullNIContributions.checkYourAnswersLabel = applicantHasFullNIContributions
+applicantHasFullNIContributions.error.required = Select applicantHasFullNIContributions
+applicantHasFullNIContributions.change.hidden = ApplicantHasFullNIContributions

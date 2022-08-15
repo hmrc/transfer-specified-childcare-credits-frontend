@@ -54,3 +54,8 @@ GET        /wasChildUnder12YearsOld                        controllers.WasChildU
 POST       /wasChildUnder12YearsOld                        controllers.WasChildUnder12YearsOldController.onSubmit(mode: Mode = NormalMode)
 GET        /changeWasChildUnder12YearsOld                  controllers.WasChildUnder12YearsOldController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeWasChildUnder12YearsOld                  controllers.WasChildUnder12YearsOldController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantHasFullNIContributions                        controllers.ApplicantHasFullNIContributionsController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantHasFullNIContributions                        controllers.ApplicantHasFullNIContributionsController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantHasFullNIContributions                  controllers.ApplicantHasFullNIContributionsController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantHasFullNIContributions                  controllers.ApplicantHasFullNIContributionsController.onSubmit(mode: Mode = CheckMode)

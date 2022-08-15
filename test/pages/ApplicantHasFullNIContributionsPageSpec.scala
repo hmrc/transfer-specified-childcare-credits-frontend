@@ -14,21 +14,19 @@
  * limitations under the License.
  */
 
-package generators
+package pages
 
-import models._
-import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.{Arbitrary, Gen}
+import models.ApplicantHasFullNIContributions
+import pages.behaviours.PageBehaviours
 
-trait ModelGenerators {
+class ApplicantHasFullNIContributionsSpec extends PageBehaviours {
 
-  implicit lazy val arbitraryApplicantHasFullNIContributions: Arbitrary[ApplicantHasFullNIContributions] =
-    Arbitrary {
-      Gen.oneOf(ApplicantHasFullNIContributions.values.toSeq)
-    }
+  "ApplicantHasFullNIContributionsPage" - {
 
-  implicit lazy val arbitraryApplicantRelationshipToChild: Arbitrary[ApplicantRelationshipToChild] =
-    Arbitrary {
-      Gen.oneOf(ApplicantRelationshipToChild.values.toSeq)
-    }
+    beRetrievable[ApplicantHasFullNIContributions](ApplicantHasFullNIContributionsPage)
+
+    beSettable[ApplicantHasFullNIContributions](ApplicantHasFullNIContributionsPage)
+
+    beRemovable[ApplicantHasFullNIContributions](ApplicantHasFullNIContributionsPage)
+  }
 }
