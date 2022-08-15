@@ -181,3 +181,15 @@ applicantDateOfBirth.error.required.two = The applicantDateOfBirth must include 
 applicantDateOfBirth.error.required = The applicantDateOfBirth must include {0}
 applicantDateOfBirth.error.invalid = Enter a real ApplicantDateOfBirth
 applicantDateOfBirth.change.hidden = ApplicantDateOfBirth
+
+applicantAddress.title = applicantAddress
+applicantAddress.heading = applicantAddress
+applicantAddress.line1 = line1
+applicantAddress.line2 = line2
+applicantAddress.checkYourAnswersLabel = ApplicantAddress
+applicantAddress.error.line1.required = Enter line1
+applicantAddress.error.line2.required = Enter line2
+applicantAddress.error.line1.length = line1 must be 100 characters or less
+applicantAddress.error.line2.length = line2 must be 100 characters or less
+applicantAddress.line1.change.hidden = line1
+applicantAddress.line2.change.hidden = line2

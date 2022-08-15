@@ -94,3 +94,8 @@ GET        /applicantDateOfBirth                  controllers.ApplicantDateOfBir
 POST       /applicantDateOfBirth                  controllers.ApplicantDateOfBirthController.onSubmit(mode: Mode = NormalMode)
 GET        /changeApplicantDateOfBirth                        controllers.ApplicantDateOfBirthController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantDateOfBirth                        controllers.ApplicantDateOfBirthController.onSubmit(mode: Mode = CheckMode)
+
+GET        /applicantAddress                        controllers.ApplicantAddressController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantAddress                        controllers.ApplicantAddressController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantAddress                  controllers.ApplicantAddressController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantAddress                  controllers.ApplicantAddressController.onSubmit(mode: Mode = CheckMode)
