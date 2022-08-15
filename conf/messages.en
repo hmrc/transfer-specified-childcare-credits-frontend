@@ -219,3 +219,13 @@ mainCarerName.error.firstName.length = firstName must be 100 characters or less
 mainCarerName.error.lastName.length = lastName must be 100 characters or less
 mainCarerName.firstName.change.hidden = firstName
 mainCarerName.lastName.change.hidden = lastName
+
+mainCarerDateOfBirth.title = MainCarerDateOfBirth
+mainCarerDateOfBirth.heading = MainCarerDateOfBirth
+mainCarerDateOfBirth.hint = For example, 12 11 2007
+mainCarerDateOfBirth.checkYourAnswersLabel = MainCarerDateOfBirth
+mainCarerDateOfBirth.error.required.all = Enter the mainCarerDateOfBirth
+mainCarerDateOfBirth.error.required.two = The mainCarerDateOfBirth must include {0} and {1}
+mainCarerDateOfBirth.error.required = The mainCarerDateOfBirth must include {0}
+mainCarerDateOfBirth.error.invalid = Enter a real MainCarerDateOfBirth
+mainCarerDateOfBirth.change.hidden = MainCarerDateOfBirth

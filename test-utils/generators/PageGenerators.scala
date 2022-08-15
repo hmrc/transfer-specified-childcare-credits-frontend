@@ -21,6 +21,9 @@ import pages._
 
 trait PageGenerators {
 
+  implicit lazy val arbitraryMainCarerDateOfBirthPage: Arbitrary[MainCarerDateOfBirthPage.type] =
+    Arbitrary(MainCarerDateOfBirthPage)
+
   implicit lazy val arbitraryMainCarerNamePage: Arbitrary[MainCarerNamePage.type] =
     Arbitrary(MainCarerNamePage)
 
