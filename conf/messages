@@ -96,11 +96,11 @@ applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years o
 applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they were caring for the child
 applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they were caring for the child
 
-applicantWasUkResident.title = applicantWasUkResident
-applicantWasUkResident.heading = applicantWasUkResident
-applicantWasUkResident.checkYourAnswersLabel = applicantWasUkResident
-applicantWasUkResident.error.required = Select yes if applicantWasUkResident
-applicantWasUkResident.change.hidden = ApplicantWasUkResident
+applicantWasUkResident.title = Was the applicant a resident of the UK when they were caring for the child?
+applicantWasUkResident.heading = Was the applicant a resident of the UK when they were caring for {0}?
+applicantWasUkResident.checkYourAnswersLabel = Was the applicant a resident of the UK when they were caring for the child?
+applicantWasUkResident.error.required = Select yes if the applicant was a resident of the UK when they were caring for the child
+applicantWasUkResident.change.hidden = whether the applicant was a resident of the UK when they were caring for the child
 
 wasChildUnder12YearsOld.title = wasChildUnder12YearsOld
 wasChildUnder12YearsOld.heading = wasChildUnder12YearsOld
