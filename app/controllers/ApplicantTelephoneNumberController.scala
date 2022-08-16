@@ -17,37 +17,37 @@
 package controllers
 
 import controllers.actions._
-import forms.ApplicntTelephoneNumberFormProvider
-import javax.inject.Inject
+import forms.ApplicantTelephoneNumberFormProvider
 import models.Mode
 import navigation.Navigator
-import pages.ApplicntTelephoneNumberPage
+import pages.ApplicantTelephoneNumberPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
-import views.html.ApplicntTelephoneNumberView
+import views.html.ApplicantTelephoneNumberView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
-class ApplicntTelephoneNumberController @Inject()(
-                                        override val messagesApi: MessagesApi,
-                                        sessionRepository: SessionRepository,
-                                        navigator: Navigator,
-                                        identify: IdentifierAction,
-                                        getData: DataRetrievalAction,
-                                        requireData: DataRequiredAction,
-                                        formProvider: ApplicntTelephoneNumberFormProvider,
-                                        val controllerComponents: MessagesControllerComponents,
-                                        view: ApplicntTelephoneNumberView
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+class ApplicantTelephoneNumberController @Inject()(
+                                                    override val messagesApi: MessagesApi,
+                                                    sessionRepository: SessionRepository,
+                                                    navigator: Navigator,
+                                                    identify: IdentifierAction,
+                                                    getData: DataRetrievalAction,
+                                                    requireData: DataRequiredAction,
+                                                    formProvider: ApplicantTelephoneNumberFormProvider,
+                                                    val controllerComponents: MessagesControllerComponents,
+                                                    view: ApplicantTelephoneNumberView
+                                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
 
-      val preparedForm = request.userAnswers.get(ApplicntTelephoneNumberPage) match {
+      val preparedForm = request.userAnswers.get(ApplicantTelephoneNumberPage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
@@ -64,9 +64,9 @@ class ApplicntTelephoneNumberController @Inject()(
 
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicntTelephoneNumberPage, value))
+            updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantTelephoneNumberPage, value))
             _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(ApplicntTelephoneNumberPage, mode, updatedAnswers))
+          } yield Redirect(navigator.nextPage(ApplicantTelephoneNumberPage, mode, updatedAnswers))
       )
   }
 }

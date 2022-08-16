@@ -17,43 +17,43 @@
 package controllers
 
 import base.SpecBase
-import forms.ApplicntTelephoneNumberFormProvider
+import forms.ApplicantTelephoneNumberFormProvider
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ApplicntTelephoneNumberPage
+import pages.ApplicantTelephoneNumberPage
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
-import views.html.ApplicntTelephoneNumberView
+import views.html.ApplicantTelephoneNumberView
 
 import scala.concurrent.Future
 
-class ApplicntTelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
+class ApplicantTelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new ApplicntTelephoneNumberFormProvider()
+  val formProvider = new ApplicantTelephoneNumberFormProvider()
   val form = formProvider()
 
-  lazy val applicntTelephoneNumberRoute = routes.ApplicntTelephoneNumberController.onPageLoad(NormalMode).url
+  lazy val ApplicantTelephoneNumberRoute = routes.ApplicantTelephoneNumberController.onPageLoad(NormalMode).url
 
-  "ApplicntTelephoneNumber Controller" - {
+  "ApplicantTelephoneNumber Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, applicntTelephoneNumberRoute)
+        val request = FakeRequest(GET, ApplicantTelephoneNumberRoute)
 
         val result = route(application, request).value
 
-        val view = application.injector.instanceOf[ApplicntTelephoneNumberView]
+        val view = application.injector.instanceOf[ApplicantTelephoneNumberView]
 
         status(result) mustEqual OK
         contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
@@ -62,14 +62,14 @@ class ApplicntTelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ApplicntTelephoneNumberPage, "answer").success.value
+      val userAnswers = UserAnswers(userAnswersId).set(ApplicantTelephoneNumberPage, "answer").success.value
 
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
-        val request = FakeRequest(GET, applicntTelephoneNumberRoute)
+        val request = FakeRequest(GET, ApplicantTelephoneNumberRoute)
 
-        val view = application.injector.instanceOf[ApplicntTelephoneNumberView]
+        val view = application.injector.instanceOf[ApplicantTelephoneNumberView]
 
         val result = route(application, request).value
 
@@ -94,7 +94,7 @@ class ApplicntTelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, applicntTelephoneNumberRoute)
+          FakeRequest(POST, ApplicantTelephoneNumberRoute)
             .withFormUrlEncodedBody(("value", "answer"))
 
         val result = route(application, request).value
@@ -110,12 +110,12 @@ class ApplicntTelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, applicntTelephoneNumberRoute)
+          FakeRequest(POST, ApplicantTelephoneNumberRoute)
             .withFormUrlEncodedBody(("value", ""))
 
         val boundForm = form.bind(Map("value" -> ""))
 
-        val view = application.injector.instanceOf[ApplicntTelephoneNumberView]
+        val view = application.injector.instanceOf[ApplicantTelephoneNumberView]
 
         val result = route(application, request).value
 
@@ -129,7 +129,7 @@ class ApplicntTelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
-        val request = FakeRequest(GET, applicntTelephoneNumberRoute)
+        val request = FakeRequest(GET, ApplicantTelephoneNumberRoute)
 
         val result = route(application, request).value
 
@@ -144,7 +144,7 @@ class ApplicntTelephoneNumberControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request =
-          FakeRequest(POST, applicntTelephoneNumberRoute)
+          FakeRequest(POST, ApplicantTelephoneNumberRoute)
             .withFormUrlEncodedBody(("value", "answer"))
 
         val result = route(application, request).value

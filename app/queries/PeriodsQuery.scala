@@ -14,19 +14,11 @@
  * limitations under the License.
  */
 
-package pages
+package queries
 
-import pages.behaviours.PageBehaviours
+import play.api.libs.json.{JsObject, JsPath, __}
 
+object PeriodsQuery extends Gettable[List[JsObject]] {
 
-class ApplicntTelephoneNumberPageSpec extends PageBehaviours {
-
-  "ApplicntTelephoneNumberPage" - {
-
-    beRetrievable[String](ApplicntTelephoneNumberPage)
-
-    beSettable[String](ApplicntTelephoneNumberPage)
-
-    beRemovable[String](ApplicntTelephoneNumberPage)
-  }
+  override def path: JsPath = __ \ "periods"
 }

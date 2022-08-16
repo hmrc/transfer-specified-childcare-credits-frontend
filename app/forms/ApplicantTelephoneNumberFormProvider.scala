@@ -21,7 +21,7 @@ import javax.inject.Inject
 import forms.mappings.Mappings
 import play.api.data.Form
 
-class ApplicntTelephoneNumberFormProvider @Inject() extends Mappings {
+class ApplicantTelephoneNumberFormProvider @Inject() extends Mappings {
 
   def apply(): Form[String] =
     Form(
