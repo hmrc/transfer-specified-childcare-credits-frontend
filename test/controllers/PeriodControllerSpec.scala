@@ -26,26 +26,28 @@ import org.scalatest.TryValues
 import org.scalatestplus.mockito.MockitoSugar
 import pages.PeriodPage
 import play.api.inject.bind
-import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.PeriodView
 
+import java.time.{Clock, Instant, LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
 class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
 
   def onwardRoute = Call("GET", "/foo")
 
-  val formProvider = new PeriodFormProvider()
+  val clock = Clock.fixed(Instant.now, ZoneOffset.UTC)
+  val formProvider = new PeriodFormProvider(clock)
   val form = formProvider()
 
   lazy val periodRoute = routes.PeriodController.onPageLoad(NormalMode, Index(0)).url
 
+  val validPeriod = Period(LocalDate.now.minusDays(10), LocalDate.now.minusDays(9))
   val userAnswers = UserAnswers(userAnswersId)
-    .set(PeriodPage(Index(0)), Period("value 1", "value 2")).success.value
+    .set(PeriodPage(Index(0)), validPeriod).success.value
 
   "Period Controller" - {
 
@@ -73,7 +75,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(Period("value 1", "value 2")), NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validPeriod), NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -91,10 +93,19 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
           )
           .build()
 
+      val date = LocalDate.now(clock)
+
       running(application) {
         val request =
           FakeRequest(POST, periodRoute)
-            .withFormUrlEncodedBody(("startDate", "value 1"), ("ndDate", "value 2"))
+            .withFormUrlEncodedBody(
+              "startDate.year" -> date.getYear.toString,
+              "startDate.month" -> date.getMonthValue.toString,
+              "startDate.day" -> date.getDayOfMonth.toString,
+              "endDate.year" -> date.getYear.toString,
+              "endDate.month" -> date.getMonthValue.toString,
+              "endDate.day" -> date.getDayOfMonth.toString,
+            )
 
         val result = route(application, request).value
 
@@ -140,7 +151,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
       running(application) {
         val request =
           FakeRequest(POST, periodRoute)
-            .withFormUrlEncodedBody(("startDate", "value 1"), ("ndDate", "value 2"))
+            .withFormUrlEncodedBody(("startDate", "value 1"), ("endDate", "value 2"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

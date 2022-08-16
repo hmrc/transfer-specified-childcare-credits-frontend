@@ -16,64 +16,32 @@
 
 package forms
 
-import forms.behaviours.StringFieldBehaviours
+import forms.behaviours.DateBehaviours
 import play.api.data.FormError
 
-class PeriodFormProviderSpec extends StringFieldBehaviours {
+import java.time.{Clock, Instant, LocalDate, ZoneOffset}
 
-  val form = new PeriodFormProvider()()
+class PeriodFormProviderSpec extends DateBehaviours {
+
+  val clock = Clock.fixed(Instant.now, ZoneOffset.UTC)
+  val form = new PeriodFormProvider(clock)()
+
+  val validData = datesBetween(
+    min = LocalDate.of(2000, 1, 1),
+    max = LocalDate.now(ZoneOffset.UTC)
+  )
 
   ".startDate" - {
 
-    val fieldName = "startDate"
-    val requiredKey = "period.error.startDate.required"
-    val lengthKey = "period.error.startDate.length"
-    val maxLength = 100
-
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
-
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like dateField(form, "startDate", validData)
+    behave like mandatoryDateField(form, "startDate", "period.startDate.error.required.all")
+    behave like dateFieldWithMax(form, "startDate", LocalDate.now(clock), FormError("startDate", "period.startDate.error.max"))
   }
 
-  ".ndDate" - {
+  ".endDate" - {
 
-    val fieldName = "ndDate"
-    val requiredKey = "period.error.ndDate.required"
-    val lengthKey = "period.error.ndDate.length"
-    val maxLength = 100
-
-    behave like fieldThatBindsValidData(
-      form,
-      fieldName,
-      stringsWithMaxLength(maxLength)
-    )
-
-    behave like fieldWithMaxLength(
-      form,
-      fieldName,
-      maxLength = maxLength,
-      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
-    )
-
-    behave like mandatoryField(
-      form,
-      fieldName,
-      requiredError = FormError(fieldName, requiredKey)
-    )
+    behave like dateField(form, "endDate", validData)
+    behave like mandatoryDateField(form, "endDate", "period.endDate.error.required.all")
+    behave like dateFieldWithMax(form, "endDate", LocalDate.now(clock), FormError("endDate", "period.endDate.error.max"))
   }
 }

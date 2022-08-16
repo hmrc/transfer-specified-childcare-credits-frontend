@@ -18,8 +18,10 @@ package models
 
 import play.api.libs.json._
 
-case class Period (startDate: String, ndDate: String)
+import java.time.LocalDate
+
+final case class Period(startDate: LocalDate, endDate: LocalDate)
 
 object Period {
-  implicit val format = Json.format[Period]
+  implicit val format: Format[Period] = Json.format[Period]
 }

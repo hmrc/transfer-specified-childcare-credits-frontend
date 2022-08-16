@@ -39,8 +39,7 @@ class DateBehaviours extends FieldBehaviours {
 
           val result = form.bind(data)
 
-          result.value.value mustEqual date
-          result.errors mustBe empty
+          result(key).errors mustBe empty
       }
     }
   }
@@ -62,7 +61,7 @@ class DateBehaviours extends FieldBehaviours {
 
           val result = form.bind(data)
 
-          result.errors must contain only formError
+          result(key).errors must contain only formError
       }
     }
   }
@@ -84,7 +83,7 @@ class DateBehaviours extends FieldBehaviours {
 
           val result = form.bind(data)
 
-          result.errors must contain only formError
+          result(key).errors must contain only formError
       }
     }
   }
@@ -92,10 +91,8 @@ class DateBehaviours extends FieldBehaviours {
   def mandatoryDateField(form: Form[_], key: String, requiredAllKey: String, errorArgs: Seq[String] = Seq.empty): Unit = {
 
     "fail to bind an empty date" in {
-
       val result = form.bind(Map.empty[String, String])
-
-      result.errors must contain only FormError(key, requiredAllKey, errorArgs)
+      result(key).errors must contain only FormError(key, requiredAllKey, errorArgs)
     }
   }
 }
