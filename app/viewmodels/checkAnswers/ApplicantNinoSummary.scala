@@ -33,7 +33,7 @@ object ApplicantNinoSummary  {
 
         SummaryListRowViewModel(
           key     = "applicantNino.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
+          value   = ValueViewModel(HtmlFormat.escape(answer.formatted).toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.ApplicantNinoController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("applicantNino.change.hidden"))

@@ -17,7 +17,9 @@
 package controllers
 
 import base.SpecBase
+import org.scalacheck.Arbitrary.arbitrary
 import forms.MainCarerNinoFormProvider
+import generators.ModelGenerators
 import models.{NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
@@ -29,11 +31,12 @@ import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import uk.gov.hmrc.domain.Nino
 import views.html.MainCarerNinoView
 
 import scala.concurrent.Future
 
-class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar {
+class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar with ModelGenerators {
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -50,9 +53,7 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, mainCarerNinoRoute)
-
         val result = route(application, request).value
-
         val view = application.injector.instanceOf[MainCarerNinoView]
 
         status(result) mustEqual OK
@@ -62,26 +63,23 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar {
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(MainCarerNinoPage, "answer").success.value
-
+      val nino = arbitrary[Nino].sample.value
+      val userAnswers = UserAnswers(userAnswersId).set(MainCarerNinoPage, nino).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, mainCarerNinoRoute)
-
         val view = application.injector.instanceOf[MainCarerNinoView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(nino), NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
@@ -95,8 +93,7 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, mainCarerNinoRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
-
+            .withFormUrlEncodedBody(("value", arbitrary[Nino].sample.value.toString))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -112,11 +109,8 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, mainCarerNinoRoute)
             .withFormUrlEncodedBody(("value", ""))
-
         val boundForm = form.bind(Map("value" -> ""))
-
         val view = application.injector.instanceOf[MainCarerNinoView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
@@ -130,7 +124,6 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, mainCarerNinoRoute)
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -146,7 +139,6 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, mainCarerNinoRoute)
             .withFormUrlEncodedBody(("value", "answer"))
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

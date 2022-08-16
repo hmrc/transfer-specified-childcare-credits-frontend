@@ -33,7 +33,7 @@ object MainCarerNinoSummary  {
 
         SummaryListRowViewModel(
           key     = "mainCarerNino.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlFormat.escape(answer).toString),
+          value   = ValueViewModel(HtmlFormat.escape(answer.formatted).toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.MainCarerNinoController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("mainCarerNino.change.hidden"))
