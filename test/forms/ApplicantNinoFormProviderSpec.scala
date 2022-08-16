@@ -36,7 +36,12 @@ class ApplicantNinoFormProviderSpec extends StringFieldBehaviours {
       spaceBefore <- Gen.stringOf(Gen.const(' '))
       spaceAfter <- Gen.stringOf(Gen.const(' '))
       nino <- ninoGen
-    } yield s"$spaceBefore$nino$spaceAfter"
+      spaceInside <- Gen.stringOf(Gen.const(' '))
+      spaceIndex <- Gen.choose(1, nino.length - 1)
+    } yield {
+      val (beginning, end) = nino.splitAt(spaceIndex)
+      s"$spaceBefore$beginning$spaceInside$end$spaceAfter"
+    }
     val gen = Gen.oneOf(ninoGen, ninoWithSpacesGen)
 
     behave like fieldThatBindsValidData(
