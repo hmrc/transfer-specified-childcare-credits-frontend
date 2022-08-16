@@ -21,6 +21,9 @@ import play.api.i18n.Messages
 
 object ViewUtils {
 
+  def indexTitle()(implicit messages: Messages): String =
+    s"${messages("service.name")} - ${messages("site.govuk")}"
+
   def title(form: Form[_], title: String, section: Option[String] = None)(implicit messages: Messages): String =
     titleNoForm(
       title   = s"${errorPrefix(form)} ${messages(title)}",
