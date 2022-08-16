@@ -40,8 +40,8 @@ trait PageGenerators {
   implicit lazy val arbitraryApplicantNinoPage: Arbitrary[ApplicantNinoPage.type] =
     Arbitrary(ApplicantNinoPage)
 
-  implicit lazy val arbitraryApplicntTelephoneNumberPage: Arbitrary[ApplicntTelephoneNumberPage.type] =
-    Arbitrary(ApplicntTelephoneNumberPage)
+  implicit lazy val arbitraryApplicntTelephoneNumberPage: Arbitrary[ApplicantTelephoneNumberPage.type] =
+    Arbitrary(ApplicantTelephoneNumberPage)
 
   implicit lazy val arbitraryApplicantAddressPage: Arbitrary[ApplicantAddressPage.type] =
     Arbitrary(ApplicantAddressPage)

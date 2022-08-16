@@ -143,11 +143,11 @@ class NavigatorSpec extends SpecBase {
       }
 
       "must go from applicant address page to applicant telephone number page" in {
-        navigator.nextPage(ApplicantAddressPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicntTelephoneNumberController.onPageLoad(NormalMode)
+        navigator.nextPage(ApplicantAddressPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantTelephoneNumberController.onPageLoad(NormalMode)
       }
 
       "must go from applicant telephone number page to applicant nino page" in {
-        navigator.nextPage(ApplicntTelephoneNumberPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantNinoController.onPageLoad(NormalMode)
+        navigator.nextPage(ApplicantTelephoneNumberPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantNinoController.onPageLoad(NormalMode)
       }
 
       "must go from applicant nino page to main carer name page" in {

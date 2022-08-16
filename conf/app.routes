@@ -100,10 +100,10 @@ POST       /applicantAddress                        controllers.ApplicantAddress
 GET        /changeApplicantAddress                  controllers.ApplicantAddressController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantAddress                  controllers.ApplicantAddressController.onSubmit(mode: Mode = CheckMode)
 
-GET        /applicntTelephoneNumber                        controllers.ApplicntTelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
-POST       /applicntTelephoneNumber                        controllers.ApplicntTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
-GET        /changeApplicntTelephoneNumber                  controllers.ApplicntTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeApplicntTelephoneNumber                  controllers.ApplicntTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
+GET        /applicantTelephoneNumber                        controllers.ApplicantTelephoneNumberController.onPageLoad(mode: Mode = NormalMode)
+POST       /applicantTelephoneNumber                        controllers.ApplicantTelephoneNumberController.onSubmit(mode: Mode = NormalMode)
+GET        /changeApplicantTelephoneNumber                  controllers.ApplicantTelephoneNumberController.onPageLoad(mode: Mode = CheckMode)
+POST       /changeApplicantTelephoneNumber                  controllers.ApplicantTelephoneNumberController.onSubmit(mode: Mode = CheckMode)
 
 GET        /applicantNino                        controllers.ApplicantNinoController.onPageLoad(mode: Mode = NormalMode)
 POST       /applicantNino                        controllers.ApplicantNinoController.onSubmit(mode: Mode = NormalMode)

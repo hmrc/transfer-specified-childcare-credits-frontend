@@ -16,17 +16,11 @@
 
 package pages
 
-import pages.behaviours.PageBehaviours
+import play.api.libs.json.JsPath
 
+case object ApplicantTelephoneNumberPage extends QuestionPage[String] {
 
-class ApplicntTelephoneNumberPageSpec extends PageBehaviours {
+  override def path: JsPath = JsPath \ toString
 
-  "ApplicntTelephoneNumberPage" - {
-
-    beRetrievable[String](ApplicntTelephoneNumberPage)
-
-    beSettable[String](ApplicntTelephoneNumberPage)
-
-    beRemovable[String](ApplicntTelephoneNumberPage)
-  }
+  override def toString: String = "applicntTelephoneNumber"
 }

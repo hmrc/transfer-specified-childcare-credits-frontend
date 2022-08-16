@@ -18,24 +18,24 @@ package viewmodels.checkAnswers
 
 import controllers.routes
 import models.{CheckMode, UserAnswers}
-import pages.ApplicntTelephoneNumberPage
+import pages.ApplicantTelephoneNumberPage
 import play.api.i18n.Messages
 import play.twirl.api.HtmlFormat
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
 
-object ApplicntTelephoneNumberSummary  {
+object ApplicantTelephoneNumberSummary  {
 
   def row(answers: UserAnswers)(implicit messages: Messages): Option[SummaryListRow] =
-    answers.get(ApplicntTelephoneNumberPage).map {
+    answers.get(ApplicantTelephoneNumberPage).map {
       answer =>
 
         SummaryListRowViewModel(
           key     = "applicntTelephoneNumber.checkYourAnswersLabel",
           value   = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
-            ActionItemViewModel("site.change", routes.ApplicntTelephoneNumberController.onPageLoad(CheckMode).url)
+            ActionItemViewModel("site.change", routes.ApplicantTelephoneNumberController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("applicntTelephoneNumber.change.hidden"))
           )
         )
