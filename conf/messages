@@ -78,11 +78,11 @@ applicantClaimsChildBenefitForThisChild.checkYourAnswersLabel = Does the applica
 applicantClaimsChildBenefitForThisChild.error.required = Select yes if the applicant already receives Child Benefit for the child
 applicantClaimsChildBenefitForThisChild.change.hidden = whether the applicant already receives Child Benefit for the child
 
-applicantIsPartnerOfClaimant.title = applicantIsPartnerOfClaimant
-applicantIsPartnerOfClaimant.heading = applicantIsPartnerOfClaimant
-applicantIsPartnerOfClaimant.checkYourAnswersLabel = applicantIsPartnerOfClaimant
-applicantIsPartnerOfClaimant.error.required = Select yes if applicantIsPartnerOfClaimant
-applicantIsPartnerOfClaimant.change.hidden = ApplicantIsPartnerOfClaimant
+applicantIsPartnerOfClaimant.title = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
+applicantIsPartnerOfClaimant.heading = Is the applicant the partner of, and living with, the person who receives Child Benefit for {0}?
+applicantIsPartnerOfClaimant.checkYourAnswersLabel = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
+applicantIsPartnerOfClaimant.error.required = Select yes if the applicant is the partner of, and living with, the person who receives Child Benefit for the child
+applicantIsPartnerOfClaimant.change.hidden = whether the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 
 applicantChildcareAfterCutoff.title = applicantChildcareAfterCutoff
 applicantChildcareAfterCutoff.heading = applicantChildcareAfterCutoff
