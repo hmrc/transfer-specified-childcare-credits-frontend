@@ -18,10 +18,11 @@ package controllers
 
 import controllers.actions._
 import forms.ApplicantRelationshipToChildFormProvider
+
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.ApplicantRelationshipToChildPage
+import pages.{ApplicantRelationshipToChildPage, ChildNamePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -40,33 +41,36 @@ class ApplicantRelationshipToChildController @Inject()(
                                        formProvider: ApplicantRelationshipToChildFormProvider,
                                        val controllerComponents: MessagesControllerComponents,
                                        view: ApplicantRelationshipToChildView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      getAnswer(ChildNamePage) { childName =>
 
-      val preparedForm = request.userAnswers.get(ApplicantRelationshipToChildPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
+        val preparedForm = request.userAnswers.get(ApplicantRelationshipToChildPage) match {
+          case None => form
+          case Some(value) => form.fill(value)
+        }
+
+        Ok(view(preparedForm, childName, mode))
       }
-
-      Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
+      getAnswerAsync(ChildNamePage) { childName =>
+        form.bindFromRequest().fold(
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, childName, mode))),
 
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantRelationshipToChildPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(ApplicantRelationshipToChildPage, mode, updatedAnswers))
-      )
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantRelationshipToChildPage, value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(navigator.nextPage(ApplicantRelationshipToChildPage, mode, updatedAnswers))
+        )
+      }
   }
 }

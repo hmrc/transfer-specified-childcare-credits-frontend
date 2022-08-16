@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantRelationshipToChildFormProvider
-import models.{NormalMode, ApplicantRelationshipToChild, UserAnswers}
+import models.{ApplicantRelationshipToChild, ChildName, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ApplicantRelationshipToChildPage
+import pages.{ApplicantRelationshipToChildPage, ChildNamePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -42,50 +42,47 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
   val formProvider = new ApplicantRelationshipToChildFormProvider()
   val form = formProvider()
 
+  val childName = ChildName("Foo", "Bar")
+  val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
+
   "ApplicantRelationshipToChild Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, applicantRelationshipToChildRoute)
-
         val result = route(application, request).value
-
         val view = application.injector.instanceOf[ApplicantRelationshipToChildView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, childName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.values.head).success.value
-
+      val userAnswers = minimalUserAnswers.set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.values.head).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, applicantRelationshipToChildRoute)
-
         val view = application.injector.instanceOf[ApplicantRelationshipToChildView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ApplicantRelationshipToChild.values.head), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ApplicantRelationshipToChild.values.head), childName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -96,7 +93,6 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
         val request =
           FakeRequest(POST, applicantRelationshipToChildRoute)
             .withFormUrlEncodedBody(("value", ApplicantRelationshipToChild.values.head.toString))
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -106,21 +102,18 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
           FakeRequest(POST, applicantRelationshipToChildRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
-
         val boundForm = form.bind(Map("value" -> "invalid value"))
-
         val view = application.injector.instanceOf[ApplicantRelationshipToChildView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, childName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -130,7 +123,19 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
 
       running(application) {
         val request = FakeRequest(GET, applicantRelationshipToChildRoute)
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if child name hasn't been answered" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, applicantRelationshipToChildRoute)
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -146,11 +151,24 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
         val request =
           FakeRequest(POST, applicantRelationshipToChildRoute)
             .withFormUrlEncodedBody(("value", ApplicantRelationshipToChild.values.head.toString))
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
 
+    "redirect to Journey Recovery for a POST if child name has not been answered" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, applicantRelationshipToChildRoute)
+            .withFormUrlEncodedBody(("value", ApplicantRelationshipToChild.values.head.toString))
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }

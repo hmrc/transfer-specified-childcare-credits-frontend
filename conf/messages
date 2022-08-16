@@ -58,7 +58,7 @@ unauthorised.title = You can’t access this service with this account
 unauthorised.heading = You can’t access this service with this account
 
 applicantRelationshipToChild.title = What is the applicant’s relationship to the child?
-applicantRelationshipToChild.heading = What is the applicant’s relationship to the child?
+applicantRelationshipToChild.heading = What is the applicant’s relationship to {0}?
 applicantRelationshipToChild.grandparent = Grandparent
 applicantRelationshipToChild.grandparent.hint = The child’s grandparent, great-grandparent or great-great-grandparent
 applicantRelationshipToChild.nonResidentParent = Non-resident Parent

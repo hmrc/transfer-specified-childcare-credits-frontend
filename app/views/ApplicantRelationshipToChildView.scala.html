@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], childName: ChildName, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("applicantRelationshipToChild.title"))) {
 
@@ -35,7 +35,7 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("applicantRelationshipToChild.heading")).asPageHeading(),
+                legend = LegendViewModel(messages("applicantRelationshipToChild.heading", childName.firstName)).asPageHeading(),
                 items  = ApplicantRelationshipToChild.options
             )
         )
