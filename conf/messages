@@ -84,11 +84,11 @@ applicantIsPartnerOfClaimant.checkYourAnswersLabel = Is the applicant the partne
 applicantIsPartnerOfClaimant.error.required = Select yes if the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 applicantIsPartnerOfClaimant.change.hidden = whether the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 
-applicantChildcareAfterCutoff.title = applicantChildcareAfterCutoff
-applicantChildcareAfterCutoff.heading = applicantChildcareAfterCutoff
-applicantChildcareAfterCutoff.checkYourAnswersLabel = applicantChildcareAfterCutoff
-applicantChildcareAfterCutoff.error.required = Select yes if applicantChildcareAfterCutoff
-applicantChildcareAfterCutoff.change.hidden = ApplicantChildcareAfterCutoff
+applicantChildcareAfterCutoff.title = Was the applicant caring for the child after 6th April 2011?
+applicantChildcareAfterCutoff.heading = Was the applicant caring for {0} after 6th April 2011?
+applicantChildcareAfterCutoff.checkYourAnswersLabel = Was the applicant caring for the child after 6th April 2011?
+applicantChildcareAfterCutoff.error.required = Select yes if the applicant was caring for the child after 6th April 2011?
+applicantChildcareAfterCutoff.change.hidden = whether the applicant was caring for the child after 6th April 2011
 
 applicantIsValidAge.title = applicantIsValidAge
 applicantIsValidAge.heading = applicantIsValidAge
