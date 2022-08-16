@@ -18,6 +18,7 @@ package models
 
 import play.api.i18n.Messages
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
+import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
 
 sealed trait ApplicantHasFullNIContributions
@@ -26,19 +27,30 @@ object ApplicantHasFullNIContributions extends Enumerable.Implicits {
 
   case object Yes extends WithName("yes") with ApplicantHasFullNIContributions
   case object No extends WithName("no") with ApplicantHasFullNIContributions
+  case object DontKnow extends WithName("dontKnow") with ApplicantHasFullNIContributions
 
   val values: Seq[ApplicantHasFullNIContributions] = Seq(
-    Yes, No
+    Yes, No, DontKnow
   )
 
-  def options(implicit messages: Messages): Seq[RadioItem] = values.zipWithIndex.map {
-    case (value, index) =>
-      RadioItem(
-        content = Text(messages(s"applicantHasFullNIContributions.${value.toString}")),
-        value   = Some(value.toString),
-        id      = Some(s"value_$index")
-      )
-  }
+  def options(implicit messages: Messages): Seq[RadioItem] = Seq(
+    RadioItem(
+      content = Text(messages("applicantHasFullNIContributions.yes")),
+      value   = Some(Yes.toString),
+      id      = Some(s"value_$Yes")
+    ),
+    RadioItem(
+      content = Text(messages("applicantHasFullNIContributions.no")),
+      value   = Some(No.toString),
+      id      = Some(s"value_$No")
+    ),
+    RadioItem(
+      content = Text(messages("applicantHasFullNIContributions.dontKnow")),
+      value   = Some(DontKnow.toString),
+      id      = Some(s"value_$DontKnow"),
+      hint    = Some(Hint(content = Text(messages("applicantHasFullNIContributions.dontKnow.hint"))))
+    )
+  )
 
   implicit val enumerable: Enumerable[ApplicantHasFullNIContributions] =
     Enumerable(values.map(v => v.toString -> v): _*)

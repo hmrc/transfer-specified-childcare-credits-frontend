@@ -108,13 +108,15 @@ wasChildUnder12YearsOld.checkYourAnswersLabel = Was the child under 12 years old
 wasChildUnder12YearsOld.error.required = Select yes if the child was under 12 years old when the applicant was caring for them
 wasChildUnder12YearsOld.change.hidden = whether the child was under 12 years old when the applicant was caring for them
 
-applicantHasFullNIContributions.title = applicantHasFullNIContributions
-applicantHasFullNIContributions.heading = applicantHasFullNIContributions
+applicantHasFullNIContributions.title = Does the applicant have full National Insurance contributions for when they were caring for the child?
+applicantHasFullNIContributions.heading = Does the applicant have full National Insurance contributions for when they were caring for {0}?
 applicantHasFullNIContributions.yes = Yes
 applicantHasFullNIContributions.no = No
-applicantHasFullNIContributions.checkYourAnswersLabel = applicantHasFullNIContributions
-applicantHasFullNIContributions.error.required = Select applicantHasFullNIContributions
-applicantHasFullNIContributions.change.hidden = ApplicantHasFullNIContributions
+applicantHasFullNIContributions.dontKnow = I don’t know
+applicantHasFullNIContributions.dontKnow.hint = The applicant will only receive Specified Adult Childcare credits for the period(s) of care that align with any gaps in their contributions during a tax year.
+applicantHasFullNIContributions.checkYourAnswersLabel = Does the applicant have full National Insurance contributions for when they were caring for the child?
+applicantHasFullNIContributions.error.required = Select whether the applicant has full National Insurance contributions for when they were caring for the child
+applicantHasFullNIContributions.change.hidden = whether the applicant has full National Insurance contributions for when they were caring for the child
 
 childName.title = What is the child’s name
 childName.heading = What is the child’s name
