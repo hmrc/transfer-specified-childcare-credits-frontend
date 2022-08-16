@@ -16,21 +16,32 @@
 
 package forms
 
-import javax.inject.Inject
-
 import forms.mappings.Mappings
+import models.Period
 import play.api.data.Form
 import play.api.data.Forms._
-import models.Period
 
-class PeriodFormProvider @Inject() extends Mappings {
+import java.time.{Clock, LocalDate}
+import javax.inject.Inject
 
-   def apply(): Form[Period] = Form(
-     mapping(
-      "startDate" -> text("period.error.startDate.required")
-        .verifying(maxLength(100, "period.error.startDate.length")),
-      "ndDate" -> text("period.error.ndDate.required")
-        .verifying(maxLength(100, "period.error.ndDate.length"))
+class PeriodFormProvider @Inject()(clock: Clock) extends Mappings {
+
+  private def max: LocalDate = LocalDate.now(clock)
+
+  def apply(): Form[Period] = Form(
+    mapping(
+      "startDate" -> localDate(
+        invalidKey = "period.startDate.error.invalid",
+        allRequiredKey = "period.startDate.error.required.all",
+        twoRequiredKey = "period.startDate.error.required.two",
+        requiredKey = "period.startDate.error.required"
+      ).verifying(maxDate(max, "period.startDate.error.max")),
+      "endDate" -> localDate(
+        invalidKey = "period.endDate.error.invalid",
+        allRequiredKey = "period.endDate.error.required.all",
+        twoRequiredKey = "period.endDate.error.required.two",
+        requiredKey = "period.endDate.error.required"
+      ).verifying(maxDate(max, "period.endDate.error.max"))
     )(Period.apply)(Period.unapply)
-   )
- }
+  )
+}

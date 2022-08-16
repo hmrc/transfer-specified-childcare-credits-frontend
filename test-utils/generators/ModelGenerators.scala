@@ -21,6 +21,8 @@ import org.scalacheck.Arbitrary.arbitrary
 import org.scalacheck.{Arbitrary, Gen}
 import uk.gov.hmrc.domain.Nino
 
+import java.time.LocalDate
+
 trait ModelGenerators {
 
   implicit lazy val arbitraryMainCarerAddress: Arbitrary[MainCarerAddress] =
@@ -58,8 +60,8 @@ trait ModelGenerators {
   implicit lazy val arbitraryPeriod: Arbitrary[Period] =
     Arbitrary {
       for {
-        startDate <- arbitrary[String]
-        ndDate <- arbitrary[String]
+        startDate <- arbitrary[LocalDate]
+        ndDate <- arbitrary[LocalDate]
       } yield Period(startDate, ndDate)
     }
 
