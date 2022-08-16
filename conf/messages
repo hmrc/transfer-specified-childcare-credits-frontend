@@ -90,11 +90,11 @@ applicantChildcareAfterCutoff.checkYourAnswersLabel = Was the applicant caring f
 applicantChildcareAfterCutoff.error.required = Select yes if the applicant was caring for the child after 6th April 2011?
 applicantChildcareAfterCutoff.change.hidden = whether the applicant was caring for the child after 6th April 2011
 
-applicantIsValidAge.title = applicantIsValidAge
-applicantIsValidAge.heading = applicantIsValidAge
-applicantIsValidAge.checkYourAnswersLabel = applicantIsValidAge
-applicantIsValidAge.error.required = Select yes if applicantIsValidAge
-applicantIsValidAge.change.hidden = ApplicantIsValidAge
+applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they were caring for the child?
+applicantIsValidAge.heading = Was the applicant between 16 years old and State Pension age when they were caring for {0}?
+applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years old and State Pension age when they were caring for the child?
+applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they were caring for the child
+applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they were caring for the child
 
 applicantWasUkResident.title = applicantWasUkResident
 applicantWasUkResident.heading = applicantWasUkResident

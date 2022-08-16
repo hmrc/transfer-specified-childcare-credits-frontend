@@ -18,10 +18,11 @@ package controllers
 
 import controllers.actions._
 import forms.ApplicantIsValidAgeFormProvider
+
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.ApplicantIsValidAgePage
+import pages.{ApplicantIsValidAgePage, ChildNamePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -40,33 +41,35 @@ class ApplicantIsValidAgeController @Inject()(
                                          formProvider: ApplicantIsValidAgeFormProvider,
                                          val controllerComponents: MessagesControllerComponents,
                                          view: ApplicantIsValidAgeView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      getAnswer(ChildNamePage) { childName =>
 
-      val preparedForm = request.userAnswers.get(ApplicantIsValidAgePage) match {
-        case None => form
-        case Some(value) => form.fill(value)
+        val preparedForm = request.userAnswers.get(ApplicantIsValidAgePage) match {
+          case None => form
+          case Some(value) => form.fill(value)
+        }
+
+        Ok(view(preparedForm, childName, mode))
       }
-
-      Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantIsValidAgePage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(ApplicantIsValidAgePage, mode, updatedAnswers))
-      )
+      getAnswerAsync(ChildNamePage) { childName =>
+        form.bindFromRequest().fold(
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, childName, mode))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantIsValidAgePage, value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(navigator.nextPage(ApplicantIsValidAgePage, mode, updatedAnswers))
+        )
+      }
   }
 }
