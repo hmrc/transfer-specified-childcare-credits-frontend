@@ -28,7 +28,7 @@ class MainCarerNinoFormProvider @Inject() extends Mappings {
   def apply(): Form[Nino] =
     Form(
       "value" -> text("mainCarerNino.error.required")
-        .verifying("mainCarerNino.error.invalid", nonEmptyString => Try(Nino(nonEmptyString.trim.toUpperCase)).isSuccess)
-        .transform[Nino](nonEmptyString => Nino(nonEmptyString.trim.toUpperCase), _.toString)
+        .verifying("mainCarerNino.error.invalid", nonEmptyString => Try(Nino(nonEmptyString.replaceAll("\\s", "").toUpperCase)).isSuccess)
+        .transform[Nino](nonEmptyString => Nino(nonEmptyString.replaceAll("\\s", "").toUpperCase), _.toString)
     )
 }
