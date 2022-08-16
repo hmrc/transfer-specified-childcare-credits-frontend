@@ -102,11 +102,11 @@ applicantWasUkResident.checkYourAnswersLabel = Was the applicant a resident of t
 applicantWasUkResident.error.required = Select yes if the applicant was a resident of the UK when they were caring for the child
 applicantWasUkResident.change.hidden = whether the applicant was a resident of the UK when they were caring for the child
 
-wasChildUnder12YearsOld.title = wasChildUnder12YearsOld
-wasChildUnder12YearsOld.heading = wasChildUnder12YearsOld
-wasChildUnder12YearsOld.checkYourAnswersLabel = wasChildUnder12YearsOld
-wasChildUnder12YearsOld.error.required = Select yes if wasChildUnder12YearsOld
-wasChildUnder12YearsOld.change.hidden = WasChildUnder12YearsOld
+wasChildUnder12YearsOld.title = Was the child under 12 years old when the applicant was caring for them?
+wasChildUnder12YearsOld.heading = Was {0} under 12 years old when the applicant was caring for them?
+wasChildUnder12YearsOld.checkYourAnswersLabel = Was the child under 12 years old when the applicant was caring for them?
+wasChildUnder12YearsOld.error.required = Select yes if the child was under 12 years old when the applicant was caring for them
+wasChildUnder12YearsOld.change.hidden = whether the child was under 12 years old when the applicant was caring for them
 
 applicantHasFullNIContributions.title = applicantHasFullNIContributions
 applicantHasFullNIContributions.heading = applicantHasFullNIContributions
