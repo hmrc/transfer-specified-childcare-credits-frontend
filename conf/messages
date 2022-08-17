@@ -182,7 +182,7 @@ applicantName.firstName.change.hidden = the applicant’s first name
 applicantName.lastName.change.hidden = the applicant’s last name
 
 applicantDateOfBirth.title = What is the applicant’s date of birth?
-applicantDateOfBirth.heading = What is the applicant’s date of birth?
+applicantDateOfBirth.heading = What is {0}’s date of birth?
 applicantDateOfBirth.hint = For example, 12 11 2007
 applicantDateOfBirth.checkYourAnswersLabel = What is the applicant’s date of birth?
 applicantDateOfBirth.error.required.all = Enter the applicant’s date of birth

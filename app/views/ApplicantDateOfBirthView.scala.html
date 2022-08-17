@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], applicantName: ApplicantName, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("applicantDateOfBirth.title"))) {
 
@@ -35,7 +35,7 @@
         @govukDateInput(
             DateViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("applicantDateOfBirth.heading")).asPageHeading()
+                legend = LegendViewModel(messages("applicantDateOfBirth.heading", applicantName.firstName)).asPageHeading()
             )
             .withHint(HintViewModel(messages("applicantDateOfBirth.hint")))
         )
