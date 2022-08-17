@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantAddressFormProvider
-import models.{Address, ApplicantName, NormalMode}
+import models.{Address, Name, NormalMode}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -42,7 +42,7 @@ class ApplicantAddressControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val applicantAddressRoute = routes.ApplicantAddressController.onPageLoad(NormalMode).url
 
-  val applicantName = ApplicantName("Foo", "Bar")
+  val applicantName = Name("Foo", "Bar")
   val minimalUserAnswers = emptyUserAnswers.set(ApplicantNamePage, applicantName).success.value
 
   val address = Address(

@@ -16,10 +16,9 @@
 
 package controllers
 
-import java.time.{LocalDate, ZoneOffset}
 import base.SpecBase
 import forms.ApplicantDateOfBirthFormProvider
-import models.{ApplicantName, NormalMode, UserAnswers}
+import models.{Name, NormalMode}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -32,6 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.ApplicantDateOfBirthView
 
+import java.time.{LocalDate, ZoneOffset}
 import scala.concurrent.Future
 
 class ApplicantDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
@@ -45,7 +45,7 @@ class ApplicantDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val applicantDateOfBirthRoute = routes.ApplicantDateOfBirthController.onPageLoad(NormalMode).url
 
-  val applicantName = ApplicantName("Foo", "Bar")
+  val applicantName = Name("Foo", "Bar")
   val minimalUserAnswers = emptyUserAnswers.set(ApplicantNamePage, applicantName).success.value
 
   def getRequest: FakeRequest[AnyContentAsEmpty.type] =

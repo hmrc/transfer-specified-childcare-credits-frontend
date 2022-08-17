@@ -18,14 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantNameFormProvider
-import models.{NormalMode, ApplicantName, UserAnswers}
+import models.{Name, NormalMode}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
 import pages.ApplicantNamePage
 import play.api.inject.bind
-import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -43,15 +42,8 @@ class ApplicantNameControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val applicantNameRoute = routes.ApplicantNameController.onPageLoad(NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      ApplicantNamePage.toString -> Json.obj(
-        "firstName" -> "value 1",
-        "lastName" -> "value 2"
-      )
-    )
-  )
+  val applicantName = Name("Foo", "Bar")
+  val userAnswers = emptyUserAnswers.set(ApplicantNamePage, applicantName).success.value
 
   "ApplicantName Controller" - {
 
@@ -83,7 +75,7 @@ class ApplicantNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ApplicantName("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(applicantName), NormalMode)(request, messages(application)).toString
       }
     }
 
