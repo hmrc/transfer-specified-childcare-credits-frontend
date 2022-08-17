@@ -42,8 +42,12 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(ChildNamePage, NormalMode, emptyUserAnswers) mustBe routes.ChildDateOfBirthController.onPageLoad(NormalMode)
       }
 
-      "must go from child date of birth page to applicant relationship to child page" in {
-        navigator.nextPage(ChildDateOfBirthPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
+      "must go from child date of birth page to applicant name page" in {
+        navigator.nextPage(ChildDateOfBirthPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantNameController.onPageLoad(NormalMode)
+      }
+
+      "must go from applicant name page to applicant relationship to child page" in {
+        navigator.nextPage(ApplicantNamePage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
       }
 
       "must go from applicant relationship to child page to does applicant already receives child benefit for this child page" in {
@@ -113,9 +117,9 @@ class NavigatorSpec extends SpecBase {
           }
         }
 
-        "to the applicant name page when the answer is no" in {
+        "to the applicant date of birth page when the answer is no" in {
           val answers = emptyUserAnswers.set(AddPeriodPage, false).success.value
-          navigator.nextPage(AddPeriodPage, NormalMode, answers) mustBe routes.ApplicantNameController.onPageLoad(NormalMode)
+          navigator.nextPage(AddPeriodPage, NormalMode, answers) mustBe routes.ApplicantDateOfBirthController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery page when the answer is not present" in {
@@ -132,10 +136,6 @@ class NavigatorSpec extends SpecBase {
         "when the index is 1" in {
           navigator.nextPage(RemovePeriodPage(Index(1)), NormalMode, emptyUserAnswers) mustBe routes.AddPeriodController.onPageLoad(NormalMode)
         }
-      }
-
-      "must go from applicant name page to applicant date of birth page" in {
-        navigator.nextPage(ApplicantNamePage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantDateOfBirthController.onPageLoad(NormalMode)
       }
 
       "must go from applicant date of birth page to applicant address page" in {

@@ -28,7 +28,8 @@ class Navigator @Inject()() {
 
   private val normalRoutes: Page => UserAnswers => Call = {
     case ChildNamePage => _ => routes.ChildDateOfBirthController.onPageLoad(NormalMode)
-    case ChildDateOfBirthPage => _ => routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
+    case ChildDateOfBirthPage => _ => routes.ApplicantNameController.onPageLoad(NormalMode)
+    case ApplicantNamePage => _ => routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
     case ApplicantRelationshipToChildPage => _ => routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
     case ApplicantClaimsChildBenefitForThisChildPage => _ => routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
     case ApplicantIsPartnerOfClaimantPage => _ => routes.ApplicantChildcareAfterCutoffController.onPageLoad(NormalMode)
@@ -40,7 +41,6 @@ class Navigator @Inject()() {
     case PeriodPage(_) => _ => routes.AddPeriodController.onPageLoad(NormalMode)
     case AddPeriodPage => addPeriodRoutes
     case RemovePeriodPage(_) => _ => routes.AddPeriodController.onPageLoad(NormalMode)
-    case ApplicantNamePage => _ => routes.ApplicantDateOfBirthController.onPageLoad(NormalMode)
     case ApplicantDateOfBirthPage => _ => routes.ApplicantAddressController.onPageLoad(NormalMode)
     case ApplicantAddressPage => _ => routes.ApplicantTelephoneNumberController.onPageLoad(NormalMode)
     case ApplicantTelephoneNumberPage => _ => routes.ApplicantNinoController.onPageLoad(NormalMode)
@@ -59,7 +59,7 @@ class Navigator @Inject()() {
         val index = answers.get(PeriodsQuery).getOrElse(Nil).length
         routes.PeriodController.onPageLoad(NormalMode, Index(index))
       case false =>
-        routes.ApplicantNameController.onPageLoad(NormalMode)
+        routes.ApplicantDateOfBirthController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private val checkRouteMap: Page => UserAnswers => Call = {
