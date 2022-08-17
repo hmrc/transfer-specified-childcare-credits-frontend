@@ -22,7 +22,7 @@ import forms.PeriodFormProvider
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.PeriodPage
+import pages.{ChildNamePage, PeriodPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -41,33 +41,33 @@ class PeriodController @Inject()(
                                       formProvider: PeriodFormProvider,
                                       val controllerComponents: MessagesControllerComponents,
                                       view: PeriodView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
-  val form = formProvider()
+  def form = formProvider()
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(PeriodPage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
+      getAnswer(ChildNamePage) { childName =>
+        val preparedForm = request.userAnswers.get(PeriodPage(index)) match {
+          case None => form
+          case Some(value) => form.fill(value)
+        }
+        Ok(view(preparedForm, childName, mode, index))
       }
-
-      Ok(view(preparedForm, mode, index))
   }
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, index))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(PeriodPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(PeriodPage(index), mode, updatedAnswers))
-      )
+      getAnswerAsync(ChildNamePage) { childName =>
+        form.bindFromRequest().fold(
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, childName, mode, index))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(PeriodPage(index), value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(navigator.nextPage(PeriodPage(index), mode, updatedAnswers))
+        )
+      }
   }
 }

@@ -14,17 +14,15 @@
  * limitations under the License.
  *@
 
-@import viewmodels.InputWidth._
-
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
+    govukDateInput: GovukDateInput,
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], childName: ChildName, mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("period.title"))) {
 
@@ -34,22 +32,22 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("period.heading")</h1>
+        <h1 class="govuk-heading-xl">@messages("period.heading", childName.firstName)</h1>
 
-        @govukInput(
-            InputViewModel(
-                field = form("startDate"),
-                label = LabelViewModel(messages("period.startDate"))
-            )
-            .withWidth(Full)
+        <p class="govuk-body">@messages("period.hint")</p>
+
+        @govukDateInput(
+          DateViewModel(
+            field  = form("startDate"),
+            legend = LegendViewModel(messages("period.startDate"))
+          ).withHint(HintViewModel(messages("period.dateHint")))
         )
 
-        @govukInput(
-            InputViewModel(
-                field = form("ndDate"),
-                label = LabelViewModel(messages("period.ndDate"))
-            )
-            .withWidth(Full)
+        @govukDateInput(
+          DateViewModel(
+            field  = form("endDate"),
+            legend = LegendViewModel(messages("period.endDate"))
+          ).withHint(HintViewModel(messages("period.dateHint")))
         )
 
         @govukButton(
