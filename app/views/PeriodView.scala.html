@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], childName: ChildName, mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], childName: Name, mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("period.title"))) {
 

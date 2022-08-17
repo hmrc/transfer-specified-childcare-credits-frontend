@@ -19,7 +19,7 @@ package controllers
 import java.time.{Clock, Instant, LocalDate, ZoneId, ZoneOffset}
 import base.SpecBase
 import forms.ChildDateOfBirthFormProvider
-import models.{ChildName, NormalMode, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -45,7 +45,7 @@ class ChildDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val childDateOfBirthRoute = routes.ChildDateOfBirthController.onPageLoad(NormalMode).url
 
-  val childName = ChildName("Foo", "Bar")
+  val childName = Name("Foo", "Bar")
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
   val minimumUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value

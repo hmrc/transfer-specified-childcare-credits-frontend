@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantRelationshipToChildFormProvider
-import models.{ApplicantRelationshipToChild, ChildName, NormalMode, UserAnswers}
+import models.{ApplicantRelationshipToChild, Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -42,7 +42,7 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
   val formProvider = new ApplicantRelationshipToChildFormProvider()
   val form = formProvider()
 
-  val childName = ChildName("Foo", "Bar")
+  val childName = Name("Foo", "Bar")
   val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
 
   "ApplicantRelationshipToChild Controller" - {

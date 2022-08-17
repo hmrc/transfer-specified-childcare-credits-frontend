@@ -68,12 +68,12 @@ trait ModelGenerators {
       } yield Period(startDate, ndDate)
     }
 
-  implicit lazy val arbitraryChildName: Arbitrary[ChildName] =
+  implicit lazy val arbitraryChildName: Arbitrary[Name] =
     Arbitrary {
       for {
         firstName <- arbitrary[String]
         lastName <- arbitrary[String]
-      } yield ChildName(firstName, lastName)
+      } yield Name(firstName, lastName)
     }
 
   implicit lazy val arbitraryApplicantHasFullNIContributions: Arbitrary[ApplicantHasFullNIContributions] =

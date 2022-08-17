@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.PeriodFormProvider
-import models.{ChildName, Index, NormalMode, Period, UserAnswers}
+import models.{Name, Index, NormalMode, Period, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -45,7 +45,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
 
   lazy val periodRoute = routes.PeriodController.onPageLoad(NormalMode, Index(0)).url
 
-  val childName = ChildName("Foo", "Bar")
+  val childName = Name("Foo", "Bar")
   val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
 
   val validPeriod = Period(LocalDate.now.minusDays(10), LocalDate.now.minusDays(9))
