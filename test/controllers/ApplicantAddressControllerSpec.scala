@@ -18,14 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantAddressFormProvider
-import models.{NormalMode, ApplicantAddress, UserAnswers}
+import models.{Address, ApplicantName, NormalMode}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ApplicantAddressPage
+import pages.{ApplicantAddressPage, ApplicantNamePage}
 import play.api.inject.bind
-import play.api.libs.json.Json
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
@@ -43,31 +42,31 @@ class ApplicantAddressControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val applicantAddressRoute = routes.ApplicantAddressController.onPageLoad(NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      ApplicantAddressPage.toString -> Json.obj(
-        "line1" -> "value 1",
-        "line2" -> "value 2"
-      )
-    )
+  val applicantName = ApplicantName("Foo", "Bar")
+  val minimalUserAnswers = emptyUserAnswers.set(ApplicantNamePage, applicantName).success.value
+
+  val address = Address(
+    line1 = "1 Test Street",
+    line2 = None,
+    townOrCity = "Test Town",
+    county = None,
+    postcode = "ZZ1 1ZZ"
   )
+  val userAnswers = minimalUserAnswers.set(ApplicantAddressPage, address).success.value
 
   "ApplicantAddress Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, applicantAddressRoute)
-
         val view = application.injector.instanceOf[ApplicantAddressView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, applicantName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -77,24 +76,21 @@ class ApplicantAddressControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, applicantAddressRoute)
-
         val view = application.injector.instanceOf[ApplicantAddressView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ApplicantAddress("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(address), applicantName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -104,7 +100,11 @@ class ApplicantAddressControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, applicantAddressRoute)
-            .withFormUrlEncodedBody(("line1", "value 1"), ("line2", "value 2"))
+            .withFormUrlEncodedBody(
+              "line1" -> "1 Test Street",
+              "town" -> "Test Town",
+              "postcode" -> "ZZ1 1ZZ"
+            )
 
         val result = route(application, request).value
 
@@ -115,21 +115,18 @@ class ApplicantAddressControllerSpec extends SpecBase with MockitoSugar {
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
           FakeRequest(POST, applicantAddressRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
-
         val boundForm = form.bind(Map("value" -> "invalid value"))
-
         val view = application.injector.instanceOf[ApplicantAddressView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, applicantName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -139,7 +136,19 @@ class ApplicantAddressControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, applicantAddressRoute)
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if no applicant name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, applicantAddressRoute)
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -155,7 +164,21 @@ class ApplicantAddressControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, applicantAddressRoute)
             .withFormUrlEncodedBody(("line1", "value 1"), ("line2", "value 2"))
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no applicant name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, applicantAddressRoute)
+            .withFormUrlEncodedBody(("line1", "value 1"), ("line2", "value 2"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

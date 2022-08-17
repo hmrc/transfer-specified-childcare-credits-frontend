@@ -41,12 +41,15 @@ trait ModelGenerators {
       } yield MainCarerName(firstName, lastName)
     }
 
-  implicit lazy val arbitraryApplicantAddress: Arbitrary[ApplicantAddress] =
+  implicit lazy val arbitraryApplicantAddress: Arbitrary[Address] =
     Arbitrary {
       for {
-        line1 <- arbitrary[String]
-        line2 <- arbitrary[String]
-      } yield ApplicantAddress(line1, line2)
+        line1      <- arbitrary[String]
+        line2      <- arbitrary[Option[String]]
+        townOrCity <- arbitrary[String]
+        county     <- arbitrary[Option[String]]
+        postcode   <- arbitrary[String]
+      } yield Address(line1, line2, townOrCity, county, postcode)
     }
 
   implicit lazy val arbitraryApplicantName: Arbitrary[ApplicantName] =

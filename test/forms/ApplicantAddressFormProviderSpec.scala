@@ -53,8 +53,75 @@ class ApplicantAddressFormProviderSpec extends StringFieldBehaviours {
   ".line2" - {
 
     val fieldName = "line2"
-    val requiredKey = "applicantAddress.error.line2.required"
     val lengthKey = "applicantAddress.error.line2.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+  }
+
+  ".town" - {
+
+    val fieldName = "town"
+    val requiredKey = "applicantAddress.error.town.required"
+    val lengthKey = "applicantAddress.error.town.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+
+    behave like mandatoryField(
+      form,
+      fieldName,
+      requiredError = FormError(fieldName, requiredKey)
+    )
+  }
+
+  ".county" - {
+
+    val fieldName = "county"
+    val lengthKey = "applicantAddress.error.county.length"
+    val maxLength = 100
+
+    behave like fieldThatBindsValidData(
+      form,
+      fieldName,
+      stringsWithMaxLength(maxLength)
+    )
+
+    behave like fieldWithMaxLength(
+      form,
+      fieldName,
+      maxLength = maxLength,
+      lengthError = FormError(fieldName, lengthKey, Seq(maxLength))
+    )
+  }
+
+  ".postcode" - {
+
+    val fieldName = "postcode"
+    val requiredKey = "applicantAddress.error.postcode.required"
+    val lengthKey = "applicantAddress.error.postcode.length"
     val maxLength = 100
 
     behave like fieldThatBindsValidData(
