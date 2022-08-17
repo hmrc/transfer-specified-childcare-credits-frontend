@@ -19,12 +19,12 @@ package controllers
 import java.time.{Clock, Instant, LocalDate, ZoneId, ZoneOffset}
 import base.SpecBase
 import forms.ChildDateOfBirthFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{ChildName, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ChildDateOfBirthPage
+import pages.{ChildDateOfBirthPage, ChildNamePage}
 import play.api.inject.bind
 import play.api.mvc.{AnyContentAsEmpty, AnyContentAsFormUrlEncoded, Call}
 import play.api.test.FakeRequest
@@ -45,12 +45,15 @@ class ChildDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val childDateOfBirthRoute = routes.ChildDateOfBirthController.onPageLoad(NormalMode).url
 
-  override val emptyUserAnswers = UserAnswers(userAnswersId)
+  val childName = ChildName("Foo", "Bar")
 
-  def getRequest(): FakeRequest[AnyContentAsEmpty.type] =
+  override val emptyUserAnswers = UserAnswers(userAnswersId)
+  val minimumUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
+
+  def getRequest: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, childDateOfBirthRoute)
 
-  def postRequest(): FakeRequest[AnyContentAsFormUrlEncoded] =
+  def postRequest: FakeRequest[AnyContentAsFormUrlEncoded] =
     FakeRequest(POST, childDateOfBirthRoute)
       .withFormUrlEncodedBody(
         "value.day"   -> validAnswer.getDayOfMonth.toString,
@@ -61,43 +64,36 @@ class ChildDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
   "ChildDateOfBirth Controller" - {
 
     "must return OK and the correct view for a GET" in {
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimumUserAnswers)).build()
 
       running(application) {
         val result = route(application, getRequest).value
-
         val view = application.injector.instanceOf[ChildDateOfBirthView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form, childName, NormalMode)(getRequest, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(ChildDateOfBirthPage, validAnswer).success.value
-
+      val userAnswers = minimumUserAnswers.set(ChildDateOfBirthPage, validAnswer).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val view = application.injector.instanceOf[ChildDateOfBirthView]
-
         val result = route(application, getRequest).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validAnswer), NormalMode)(getRequest, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validAnswer), childName, NormalMode)(getRequest, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
-
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimumUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -113,27 +109,22 @@ class ChildDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
     }
 
     "must return a Bad Request and errors when invalid data is submitted" in {
-
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
-
+      val application = applicationBuilder(userAnswers = Some(minimumUserAnswers)).build()
       val request =
         FakeRequest(POST, childDateOfBirthRoute)
           .withFormUrlEncodedBody(("value", "invalid value"))
 
       running(application) {
         val boundForm = form.bind(Map("value" -> "invalid value"))
-
         val view = application.injector.instanceOf[ChildDateOfBirthView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, childName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to Journey Recovery for a GET if no existing data is found" in {
-
       val application = applicationBuilder(userAnswers = None).build()
 
       running(application) {
@@ -144,9 +135,31 @@ class ChildDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
-    "must redirect to Journey Recovery for a POST if no existing data is found" in {
+    "must redirect to Journey Recovery for a GET when child name is not answered" in {
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
+      running(application) {
+        val result = route(application, getRequest).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().toString
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no existing data is found" in {
       val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val result = route(application, postRequest).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST when child name is not answered" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
         val result = route(application, postRequest).value

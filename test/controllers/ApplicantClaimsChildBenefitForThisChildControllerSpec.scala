@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantClaimsChildBenefitForThisChildFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{ChildName, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ApplicantClaimsChildBenefitForThisChildPage
+import pages.{ApplicantClaimsChildBenefitForThisChildPage, ChildNamePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -42,50 +42,47 @@ class ApplicantClaimsChildBenefitForThisChildControllerSpec extends SpecBase wit
 
   lazy val applicantClaimsChildBenefitForThisChildRoute = routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode).url
 
+  val childName = ChildName("Foo", "Bar")
+  val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
+
   "ApplicantClaimsChildBenefitForThisChild Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, applicantClaimsChildBenefitForThisChildRoute)
-
         val result = route(application, request).value
-
         val view = application.injector.instanceOf[ApplicantClaimsChildBenefitForThisChildView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, childName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(ApplicantClaimsChildBenefitForThisChildPage, true).success.value
-
+      val userAnswers = minimalUserAnswers.set(ApplicantClaimsChildBenefitForThisChildPage, true).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, applicantClaimsChildBenefitForThisChildRoute)
-
         val view = application.injector.instanceOf[ApplicantClaimsChildBenefitForThisChildView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), childName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -96,7 +93,6 @@ class ApplicantClaimsChildBenefitForThisChildControllerSpec extends SpecBase wit
         val request =
           FakeRequest(POST, applicantClaimsChildBenefitForThisChildRoute)
             .withFormUrlEncodedBody(("value", "true"))
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -106,21 +102,18 @@ class ApplicantClaimsChildBenefitForThisChildControllerSpec extends SpecBase wit
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
           FakeRequest(POST, applicantClaimsChildBenefitForThisChildRoute)
             .withFormUrlEncodedBody(("value", ""))
-
         val boundForm = form.bind(Map("value" -> ""))
-
         val view = application.injector.instanceOf[ApplicantClaimsChildBenefitForThisChildView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, childName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -130,7 +123,19 @@ class ApplicantClaimsChildBenefitForThisChildControllerSpec extends SpecBase wit
 
       running(application) {
         val request = FakeRequest(GET, applicantClaimsChildBenefitForThisChildRoute)
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if the user has not answered child name" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, applicantClaimsChildBenefitForThisChildRoute)
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -146,7 +151,21 @@ class ApplicantClaimsChildBenefitForThisChildControllerSpec extends SpecBase wit
         val request =
           FakeRequest(POST, applicantClaimsChildBenefitForThisChildRoute)
             .withFormUrlEncodedBody(("value", "true"))
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no child name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, applicantClaimsChildBenefitForThisChildRoute)
+            .withFormUrlEncodedBody(("value", "true"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
