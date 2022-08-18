@@ -220,12 +220,12 @@ applicantTelephoneNumber.error.required = Enter the applicant’s phone number
 applicantTelephoneNumber.error.invalid = Enter a valid phone number
 applicantTelephoneNumber.change.hidden = the applicant’s phone number
 
-applicantNino.title = applicantNino
-applicantNino.heading = applicantNino
-applicantNino.checkYourAnswersLabel = applicantNino
-applicantNino.error.required = Enter applicantNino
-applicantNino.error.length = ApplicantNino must be 100 characters or less
-applicantNino.change.hidden = ApplicantNino
+applicantNino.title = What is the applicant’s National Insurance number?
+applicantNino.heading = What is {0}’s National Insurance number?
+applicantNino.checkYourAnswersLabel = What is the applicant’s National Insurance number?
+applicantNino.error.required = Enter the applicant’s National Insurance number
+applicantNino.error.invalid = Enter the applicant’s National Insurance number in the correct format
+applicantNino.change.hidden = the applicant’s National Insurance number
 
 mainCarerName.title = mainCarerName
 mainCarerName.heading = mainCarerName
