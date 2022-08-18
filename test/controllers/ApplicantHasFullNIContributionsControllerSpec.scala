@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantHasFullNIContributionsFormProvider
-import models.{ApplicantHasFullNIContributions, ChildName, NormalMode, UserAnswers}
+import models.{ApplicantHasFullNIContributions, Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -42,7 +42,7 @@ class ApplicantHasFullNIContributionsControllerSpec extends SpecBase with Mockit
   val formProvider = new ApplicantHasFullNIContributionsFormProvider()
   val form = formProvider()
 
-  val childName = ChildName("Foo", "Bar")
+  val childName = Name("Foo", "Bar")
   val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
 
   "ApplicantHasFullNIContributions Controller" - {

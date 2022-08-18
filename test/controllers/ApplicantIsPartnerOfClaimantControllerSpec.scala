@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantIsPartnerOfClaimantFormProvider
-import models.{ChildName, NormalMode, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -42,7 +42,7 @@ class ApplicantIsPartnerOfClaimantControllerSpec extends SpecBase with MockitoSu
 
   lazy val applicantIsPartnerOfClaimantRoute = routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode).url
 
-  val childName = ChildName("Foo", "Bar")
+  val childName = Name("Foo", "Bar")
   val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
 
   "ApplicantIsPartnerOfClaimant Controller" - {

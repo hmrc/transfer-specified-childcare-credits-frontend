@@ -14,19 +14,22 @@
  * limitations under the License.
  */
 
-package pages
+package models
 
-import models.Name
-import pages.behaviours.PageBehaviours
+import play.api.libs.json._
 
-class ChildNamePageSpec extends PageBehaviours {
+final case class Address(
+                          line1: String,
+                          line2: Option[String],
+                          townOrCity: String,
+                          county: Option[String],
+                          postcode: String
+                        ) {
 
-  "ChildNamePage" - {
+  def lines: List[String] =
+    List(Some(line1), line2, Some(townOrCity), county, Some(postcode)).flatten
+}
 
-    beRetrievable[Name](ChildNamePage)
-
-    beSettable[Name](ChildNamePage)
-
-    beRemovable[Name](ChildNamePage)
-  }
+object Address {
+  implicit val format = Json.format[Address]
 }

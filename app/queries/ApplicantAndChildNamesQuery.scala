@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package models
+package queries
 
-import play.api.libs.json._
+import models.ApplicantAndChildNames
+import play.api.libs.json.{JsPath, __}
 
-case class ChildName (firstName: String, lastName: String)
-
-object ChildName {
-  implicit val format = Json.format[ChildName]
+case object ApplicantAndChildNamesQuery extends Gettable[ApplicantAndChildNames] {
+  override def path: JsPath = __
 }

@@ -18,8 +18,8 @@ package models
 
 import play.api.libs.json._
 
-case class ApplicantName (firstName: String, lastName: String)
+final case class Name(firstName: String, lastName: String)
 
-object ApplicantName {
-  implicit val format = Json.format[ApplicantName]
+object Name {
+  implicit val format: Format[Name] = Json.format[Name]
 }

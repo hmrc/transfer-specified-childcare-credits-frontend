@@ -18,13 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.PeriodFormProvider
-import models.{Index, NormalMode, Period, UserAnswers}
+import models.{ApplicantAndChildNames, Index, Name, NormalMode, Period}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.TryValues
 import org.scalatestplus.mockito.MockitoSugar
-import pages.PeriodPage
+import pages.{ApplicantNamePage, ChildNamePage, PeriodPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -45,15 +45,22 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
 
   lazy val periodRoute = routes.PeriodController.onPageLoad(NormalMode, Index(0)).url
 
+  val childName = Name("Foo", "Bar")
+  val applicantName = Name("Bar", "Foo")
+  val names = ApplicantAndChildNames(applicantName, childName)
+  val minimalUserAnswers = emptyUserAnswers
+    .set(ChildNamePage, childName).success.value
+    .set(ApplicantNamePage, applicantName).success.value
+
   val validPeriod = Period(LocalDate.now.minusDays(10), LocalDate.now.minusDays(9))
-  val userAnswers = UserAnswers(userAnswersId)
+  val userAnswers = minimalUserAnswers
     .set(PeriodPage(Index(0)), validPeriod).success.value
 
   "Period Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, periodRoute)
@@ -61,7 +68,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, names, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -75,24 +82,22 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validPeriod), NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validPeriod), names, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
           )
           .build()
-
       val date = LocalDate.now(clock)
 
       running(application) {
@@ -116,7 +121,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
@@ -127,7 +132,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, names, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -144,9 +149,37 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
       }
     }
 
+    "must redirect to Journey Recovery for a GET if user answers does not contain minimal data" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, periodRoute)
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
     "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, periodRoute)
+            .withFormUrlEncodedBody(("startDate", "value 1"), ("endDate", "value 2"))
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if user answers does not contain minimal data" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
         val request =

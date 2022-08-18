@@ -41,20 +41,15 @@ trait ModelGenerators {
       } yield MainCarerName(firstName, lastName)
     }
 
-  implicit lazy val arbitraryApplicantAddress: Arbitrary[ApplicantAddress] =
+  implicit lazy val arbitraryAddress: Arbitrary[Address] =
     Arbitrary {
       for {
-        line1 <- arbitrary[String]
-        line2 <- arbitrary[String]
-      } yield ApplicantAddress(line1, line2)
-    }
-
-  implicit lazy val arbitraryApplicantName: Arbitrary[ApplicantName] =
-    Arbitrary {
-      for {
-        firstName <- arbitrary[String]
-        lastName <- arbitrary[String]
-      } yield ApplicantName(firstName, lastName)
+        line1      <- arbitrary[String]
+        line2      <- arbitrary[Option[String]]
+        townOrCity <- arbitrary[String]
+        county     <- arbitrary[Option[String]]
+        postcode   <- arbitrary[String]
+      } yield Address(line1, line2, townOrCity, county, postcode)
     }
 
   implicit lazy val arbitraryPeriod: Arbitrary[Period] =
@@ -65,12 +60,12 @@ trait ModelGenerators {
       } yield Period(startDate, ndDate)
     }
 
-  implicit lazy val arbitraryChildName: Arbitrary[ChildName] =
+  implicit lazy val arbitraryName: Arbitrary[Name] =
     Arbitrary {
       for {
         firstName <- arbitrary[String]
         lastName <- arbitrary[String]
-      } yield ChildName(firstName, lastName)
+      } yield Name(firstName, lastName)
     }
 
   implicit lazy val arbitraryApplicantHasFullNIContributions: Arbitrary[ApplicantHasFullNIContributions] =

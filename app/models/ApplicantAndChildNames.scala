@@ -16,10 +16,16 @@
 
 package models
 
+import pages.{ApplicantNamePage, ChildNamePage}
+import play.api.libs.functional.syntax._
 import play.api.libs.json._
 
-case class ApplicantAddress (line1: String, line2: String)
+final case class ApplicantAndChildNames(applicantName: Name, childName: Name)
 
-object ApplicantAddress {
-  implicit val format = Json.format[ApplicantAddress]
+object ApplicantAndChildNames {
+
+  implicit lazy val reads: Reads[ApplicantAndChildNames] = (
+    ApplicantNamePage.path.read[Name] ~
+    ChildNamePage.path.read[Name]
+  )(ApplicantAndChildNames(_, _))
 }

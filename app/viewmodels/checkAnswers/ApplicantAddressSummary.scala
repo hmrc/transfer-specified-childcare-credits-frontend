@@ -32,7 +32,10 @@ object ApplicantAddressSummary  {
     answers.get(ApplicantAddressPage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.line1).toString + "<br/>" + HtmlFormat.escape(answer.line2).toString
+        val value =
+          answer.lines
+            .map(HtmlFormat.escape(_).toString)
+            .mkString("<br/>")
 
         SummaryListRowViewModel(
           key     = "applicantAddress.checkYourAnswersLabel",
