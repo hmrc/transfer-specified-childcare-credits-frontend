@@ -217,6 +217,7 @@ applicantTelephoneNumber.title = What is the applicant’s telephone number?
 applicantTelephoneNumber.heading = What is {0}’s telephone number?
 applicantTelephoneNumber.checkYourAnswersLabel = What is the applicant’s telephone number
 applicantTelephoneNumber.error.required = Enter the applicant’s phone number
+applicantTelephoneNumber.error.invalid = Enter a valid phone number
 applicantTelephoneNumber.change.hidden = the applicant’s phone number
 
 applicantNino.title = applicantNino
