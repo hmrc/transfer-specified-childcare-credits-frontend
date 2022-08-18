@@ -213,12 +213,11 @@ applicantAddress.town.change.hidden = the town or city
 applicantAddress.county.change.hidden = the county
 applicantAddress.postcode.change.hidden = the postcode
 
-applicntTelephoneNumber.title = applicntTelephoneNumber
-applicntTelephoneNumber.heading = applicntTelephoneNumber
-applicntTelephoneNumber.checkYourAnswersLabel = applicntTelephoneNumber
-applicntTelephoneNumber.error.required = Enter applicntTelephoneNumber
-applicntTelephoneNumber.error.length = ApplicntTelephoneNumber must be 100 characters or less
-applicntTelephoneNumber.change.hidden = ApplicntTelephoneNumber
+applicantTelephoneNumber.title = What is the applicant’s telephone number?
+applicantTelephoneNumber.heading = What is {0}’s telephone number?
+applicantTelephoneNumber.checkYourAnswersLabel = What is the applicant’s telephone number
+applicantTelephoneNumber.error.required = Enter the applicant’s phone number
+applicantTelephoneNumber.change.hidden = the applicant’s phone number
 
 applicantNino.title = applicantNino
 applicantNino.heading = applicantNino
