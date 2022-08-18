@@ -18,17 +18,17 @@ package controllers
 
 import controllers.actions._
 import forms.PeriodFormProvider
-
-import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.{ChildNamePage, PeriodPage}
+import pages.PeriodPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import queries.ApplicantAndChildNamesQuery
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.PeriodView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class PeriodController @Inject()(
@@ -47,21 +47,21 @@ class PeriodController @Inject()(
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      getAnswer(ChildNamePage) { childName =>
+      getAnswer(ApplicantAndChildNamesQuery) { names =>
         val preparedForm = request.userAnswers.get(PeriodPage(index)) match {
           case None => form
           case Some(value) => form.fill(value)
         }
-        Ok(view(preparedForm, childName, mode, index))
+        Ok(view(preparedForm, names, mode, index))
       }
   }
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      getAnswerAsync(ChildNamePage) { childName =>
+      getAnswerAsync(ApplicantAndChildNamesQuery) { names =>
         form.bindFromRequest().fold(
           formWithErrors =>
-            Future.successful(BadRequest(view(formWithErrors, childName, mode, index))),
+            Future.successful(BadRequest(view(formWithErrors, names, mode, index))),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PeriodPage(index), value))

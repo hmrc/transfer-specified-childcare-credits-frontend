@@ -22,7 +22,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], childName: Name, mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], names: ApplicantAndChildNames, mode: Mode, index: Index)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("period.title"))) {
 
@@ -32,7 +32,7 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("period.heading", childName.firstName)</h1>
+        <h1 class="govuk-heading-xl">@messages("period.heading", names.applicantName.firstName, names.childName.firstName)</h1>
 
         <p class="govuk-body">@messages("period.hint")</p>
 

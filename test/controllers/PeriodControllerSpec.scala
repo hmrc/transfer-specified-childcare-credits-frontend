@@ -18,13 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.PeriodFormProvider
-import models.{Name, Index, NormalMode, Period, UserAnswers}
+import models.{ApplicantAndChildNames, Index, Name, NormalMode, Period}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.TryValues
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{ChildNamePage, PeriodPage}
+import pages.{ApplicantNamePage, ChildNamePage, PeriodPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -46,7 +46,11 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
   lazy val periodRoute = routes.PeriodController.onPageLoad(NormalMode, Index(0)).url
 
   val childName = Name("Foo", "Bar")
-  val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
+  val applicantName = Name("Bar", "Foo")
+  val names = ApplicantAndChildNames(applicantName, childName)
+  val minimalUserAnswers = emptyUserAnswers
+    .set(ChildNamePage, childName).success.value
+    .set(ApplicantNamePage, applicantName).success.value
 
   val validPeriod = Period(LocalDate.now.minusDays(10), LocalDate.now.minusDays(9))
   val userAnswers = minimalUserAnswers
@@ -64,7 +68,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, childName, NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, names, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -78,7 +82,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(validPeriod), childName, NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(validPeriod), names, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -128,7 +132,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, childName, NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, names, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -145,7 +149,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no child name is found" in {
+    "must redirect to Journey Recovery for a GET if user answers does not contain minimal data" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
@@ -173,7 +177,7 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
       }
     }
 
-    "must redirect to Journey Recovery for a POST if no child name is found" in {
+    "must redirect to Journey Recovery for a POST if user answers does not contain minimal data" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 

@@ -22,7 +22,7 @@ import org.scalatest.matchers.must.Matchers
 import org.scalatest.{OptionValues, TryValues}
 import pages.{ApplicantNamePage, ChildNamePage}
 
-class ApplicantAndChildNamesQuery extends AnyFreeSpec with Matchers with TryValues with OptionValues {
+class ApplicantAndChildNamesQuerySpec extends AnyFreeSpec with Matchers with TryValues with OptionValues {
 
   "must read out the applicant and child names from user answers" in {
 

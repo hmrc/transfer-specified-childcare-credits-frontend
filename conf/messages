@@ -139,7 +139,7 @@ childDateOfBirth.error.invalid = Enter a real date
 childDateOfBirth.change.hidden = child’s date of birth
 
 period.title = When did the applicant care for the child?
-period.heading = When did the applicant care for {0}?
+period.heading = When did {0} care for {1}?
 period.hint = If care is ongoing, enter today’s date as the end date
 period.startDate = Start date
 period.startDate.error.required.all = Enter the date on which the applicant started caring for the child
