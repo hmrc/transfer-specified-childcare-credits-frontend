@@ -20,12 +20,12 @@ import base.SpecBase
 import org.scalacheck.Arbitrary.arbitrary
 import forms.MainCarerNinoFormProvider
 import generators.ModelGenerators
-import models.{NormalMode, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.MainCarerNinoPage
+import pages.{MainCarerNamePage, MainCarerNinoPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -45,11 +45,14 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar with ModelG
 
   lazy val mainCarerNinoRoute = routes.MainCarerNinoController.onPageLoad(NormalMode).url
 
+  val mainCarerName = Name("Foo", "Bar")
+  val minimalUserAnswers = emptyUserAnswers.set(MainCarerNamePage, mainCarerName).success.value
+
   "MainCarerNino Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, mainCarerNinoRoute)
@@ -57,14 +60,14 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar with ModelG
         val view = application.injector.instanceOf[MainCarerNinoView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, mainCarerName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
       val nino = arbitrary[Nino].sample.value
-      val userAnswers = UserAnswers(userAnswersId).set(MainCarerNinoPage, nino).success.value
+      val userAnswers = minimalUserAnswers.set(MainCarerNinoPage, nino).success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
@@ -73,7 +76,7 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar with ModelG
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(nino), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(nino), mainCarerName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -83,7 +86,7 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar with ModelG
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -103,7 +106,7 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar with ModelG
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
@@ -114,7 +117,7 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar with ModelG
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, mainCarerName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -131,9 +134,37 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar with ModelG
       }
     }
 
+    "must redirect to Journey Recovery for a GET if no main carer name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, mainCarerNinoRoute)
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
     "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, mainCarerNinoRoute)
+            .withFormUrlEncodedBody(("value", "answer"))
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no main carer name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
         val request =

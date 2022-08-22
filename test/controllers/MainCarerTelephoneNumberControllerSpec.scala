@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.MainCarerTelephoneNumberFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.MainCarerTelephoneNumberPage
+import pages.{MainCarerNamePage, MainCarerTelephoneNumberPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -42,50 +42,47 @@ class MainCarerTelephoneNumberControllerSpec extends SpecBase with MockitoSugar 
 
   lazy val mainCarerTelephoneNumberRoute = routes.MainCarerTelephoneNumberController.onPageLoad(NormalMode).url
 
+  val mainCarerName = Name("Foo", "Bar")
+  val minimalUserAnswers = emptyUserAnswers.set(MainCarerNamePage, mainCarerName).success.value
+
   "MainCarerTelephoneNumber Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, mainCarerTelephoneNumberRoute)
-
         val result = route(application, request).value
-
         val view = application.injector.instanceOf[MainCarerTelephoneNumberView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, mainCarerName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = UserAnswers(userAnswersId).set(MainCarerTelephoneNumberPage, "answer").success.value
-
+      val userAnswers = minimalUserAnswers.set(MainCarerTelephoneNumberPage, "answer").success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, mainCarerTelephoneNumberRoute)
-
         val view = application.injector.instanceOf[MainCarerTelephoneNumberView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill("answer"), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill("answer"), mainCarerName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -95,8 +92,7 @@ class MainCarerTelephoneNumberControllerSpec extends SpecBase with MockitoSugar 
       running(application) {
         val request =
           FakeRequest(POST, mainCarerTelephoneNumberRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
-
+            .withFormUrlEncodedBody(("value", "07777777777"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -106,21 +102,18 @@ class MainCarerTelephoneNumberControllerSpec extends SpecBase with MockitoSugar 
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
           FakeRequest(POST, mainCarerTelephoneNumberRoute)
             .withFormUrlEncodedBody(("value", ""))
-
         val boundForm = form.bind(Map("value" -> ""))
-
         val view = application.injector.instanceOf[MainCarerTelephoneNumberView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, mainCarerName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -130,7 +123,19 @@ class MainCarerTelephoneNumberControllerSpec extends SpecBase with MockitoSugar 
 
       running(application) {
         val request = FakeRequest(GET, mainCarerTelephoneNumberRoute)
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if no main carer name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, mainCarerTelephoneNumberRoute)
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -146,7 +151,21 @@ class MainCarerTelephoneNumberControllerSpec extends SpecBase with MockitoSugar 
         val request =
           FakeRequest(POST, mainCarerTelephoneNumberRoute)
             .withFormUrlEncodedBody(("value", "answer"))
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no main carer name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, mainCarerTelephoneNumberRoute)
+            .withFormUrlEncodedBody(("value", "answer"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

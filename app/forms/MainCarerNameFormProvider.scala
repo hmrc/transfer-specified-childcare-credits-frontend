@@ -16,21 +16,21 @@
 
 package forms
 
-import javax.inject.Inject
-
 import forms.mappings.Mappings
+import models.Name
 import play.api.data.Form
 import play.api.data.Forms._
-import models.MainCarerName
+
+import javax.inject.Inject
 
 class MainCarerNameFormProvider @Inject() extends Mappings {
 
-   def apply(): Form[MainCarerName] = Form(
+   def apply(): Form[Name] = Form(
      mapping(
       "firstName" -> text("mainCarerName.error.firstName.required")
         .verifying(maxLength(100, "mainCarerName.error.firstName.length")),
       "lastName" -> text("mainCarerName.error.lastName.required")
         .verifying(maxLength(100, "mainCarerName.error.lastName.length"))
-    )(MainCarerName.apply)(MainCarerName.unapply)
+    )(Name.apply)(Name.unapply)
    )
  }

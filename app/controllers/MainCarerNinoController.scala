@@ -18,10 +18,11 @@ package controllers
 
 import controllers.actions._
 import forms.MainCarerNinoFormProvider
+
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.MainCarerNinoPage
+import pages.{MainCarerNamePage, MainCarerNinoPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -40,33 +41,33 @@ class MainCarerNinoController @Inject()(
                                         formProvider: MainCarerNinoFormProvider,
                                         val controllerComponents: MessagesControllerComponents,
                                         view: MainCarerNinoView
-                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                    )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(MainCarerNinoPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
+      getAnswer(MainCarerNamePage) { mainCarerName =>
+        val preparedForm = request.userAnswers.get(MainCarerNinoPage) match {
+          case None => form
+          case Some(value) => form.fill(value)
+        }
+        Ok(view(preparedForm, mainCarerName, mode))
       }
-
-      Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(MainCarerNinoPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(MainCarerNinoPage, mode, updatedAnswers))
-      )
+      getAnswerAsync(MainCarerNamePage) { mainCarerName =>
+        form.bindFromRequest().fold(
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, mainCarerName, mode))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(MainCarerNinoPage, value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(navigator.nextPage(MainCarerNinoPage, mode, updatedAnswers))
+        )
+      }
   }
 }

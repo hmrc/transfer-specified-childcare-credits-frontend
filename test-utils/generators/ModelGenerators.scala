@@ -25,22 +25,6 @@ import java.time.LocalDate
 
 trait ModelGenerators {
 
-  implicit lazy val arbitraryMainCarerAddress: Arbitrary[MainCarerAddress] =
-    Arbitrary {
-      for {
-        line1 <- arbitrary[String]
-        line2 <- arbitrary[String]
-      } yield MainCarerAddress(line1, line2)
-    }
-
-  implicit lazy val arbitraryMainCarerName: Arbitrary[MainCarerName] =
-    Arbitrary {
-      for {
-        firstName <- arbitrary[String]
-        lastName <- arbitrary[String]
-      } yield MainCarerName(firstName, lastName)
-    }
-
   implicit lazy val arbitraryAddress: Arbitrary[Address] =
     Arbitrary {
       for {

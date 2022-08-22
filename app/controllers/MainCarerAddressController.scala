@@ -18,16 +18,16 @@ package controllers
 
 import controllers.actions._
 import forms.MainCarerAddressFormProvider
-import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.MainCarerAddressPage
+import pages.{MainCarerAddressPage, MainCarerNamePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.MainCarerAddressView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class MainCarerAddressController @Inject()(
@@ -40,33 +40,33 @@ class MainCarerAddressController @Inject()(
                                       formProvider: MainCarerAddressFormProvider,
                                       val controllerComponents: MessagesControllerComponents,
                                       view: MainCarerAddressView
-                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(MainCarerAddressPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
+      getAnswer(MainCarerNamePage) { mainCarerName =>
+        val preparedForm = request.userAnswers.get(MainCarerAddressPage) match {
+          case None => form
+          case Some(value) => form.fill(value)
+        }
+        Ok(view(preparedForm, mainCarerName, mode))
       }
-
-      Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(MainCarerAddressPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(MainCarerAddressPage, mode, updatedAnswers))
-      )
+      getAnswerAsync(MainCarerNamePage) { mainCarerName =>
+        form.bindFromRequest().fold(
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, mainCarerName, mode))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(MainCarerAddressPage, value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(navigator.nextPage(MainCarerAddressPage, mode, updatedAnswers))
+        )
+      }
   }
 }
