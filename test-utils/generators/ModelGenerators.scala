@@ -33,14 +33,6 @@ trait ModelGenerators {
       } yield MainCarerAddress(line1, line2)
     }
 
-  implicit lazy val arbitraryMainCarerName: Arbitrary[MainCarerName] =
-    Arbitrary {
-      for {
-        firstName <- arbitrary[String]
-        lastName <- arbitrary[String]
-      } yield MainCarerName(firstName, lastName)
-    }
-
   implicit lazy val arbitraryAddress: Arbitrary[Address] =
     Arbitrary {
       for {

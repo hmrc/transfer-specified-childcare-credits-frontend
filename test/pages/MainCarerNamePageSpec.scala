@@ -16,17 +16,17 @@
 
 package pages
 
-import models.MainCarerName
+import models.Name
 import pages.behaviours.PageBehaviours
 
 class MainCarerNamePageSpec extends PageBehaviours {
 
   "MainCarerNamePage" - {
 
-    beRetrievable[MainCarerName](MainCarerNamePage)
+    beRetrievable[Name](MainCarerNamePage)
 
-    beSettable[MainCarerName](MainCarerNamePage)
+    beSettable[Name](MainCarerNamePage)
 
-    beRemovable[MainCarerName](MainCarerNamePage)
+    beRemovable[Name](MainCarerNamePage)
   }
 }

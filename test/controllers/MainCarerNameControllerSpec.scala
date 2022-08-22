@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.MainCarerNameFormProvider
-import models.{NormalMode, MainCarerName, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -83,7 +83,7 @@ class MainCarerNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(MainCarerName("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(Name("value 1", "value 2")), NormalMode)(request, messages(application)).toString
       }
     }
 
