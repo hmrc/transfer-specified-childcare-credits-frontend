@@ -271,12 +271,12 @@ mainCarerAddress.town.change.hidden = the town or city
 mainCarerAddress.county.change.hidden = the county
 mainCarerAddress.postcode.change.hidden = the postcode
 
-mainCarerTelephoneNumber.title = mainCarerTelephoneNumber
-mainCarerTelephoneNumber.heading = mainCarerTelephoneNumber
-mainCarerTelephoneNumber.checkYourAnswersLabel = mainCarerTelephoneNumber
-mainCarerTelephoneNumber.error.required = Enter mainCarerTelephoneNumber
-mainCarerTelephoneNumber.error.length = MainCarerTelephoneNumber must be 100 characters or less
-mainCarerTelephoneNumber.change.hidden = MainCarerTelephoneNumber
+mainCarerTelephoneNumber.title = What is the telephone number of the person who claims Child Benefit for the child?
+mainCarerTelephoneNumber.heading = What is {0}’s telephone number?
+mainCarerTelephoneNumber.checkYourAnswersLabel = The telephone number of the person who claims Child Benefit for the child
+mainCarerTelephoneNumber.error.required = Enter the telephone number of the person who claims Child Benefit for the child
+mainCarerTelephoneNumber.error.invalid = Enter a valid telephone number
+mainCarerTelephoneNumber.change.hidden = the telephone number of the person who claims Child Benefit for the child
 
 mainCarerNino.title = mainCarerNino
 mainCarerNino.heading = mainCarerNino
