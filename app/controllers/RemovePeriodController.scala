@@ -22,7 +22,7 @@ import forms.RemovePeriodFormProvider
 import javax.inject.Inject
 import models.{Index, Mode}
 import navigation.Navigator
-import pages.RemovePeriodPage
+import pages.{PeriodPage, RemovePeriodPage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -41,32 +41,36 @@ class RemovePeriodController @Inject()(
                                          formProvider: RemovePeriodFormProvider,
                                          val controllerComponents: MessagesControllerComponents,
                                          view: RemovePeriodView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
   val form = formProvider()
 
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(RemovePeriodPage(index)) match {
-        case None => form
-        case Some(value) => form.fill(value)
+      getAnswer(PeriodPage(index)) { period =>
+        Ok(view(form, period, mode, index))
       }
-
-      Ok(view(preparedForm, mode, index))
   }
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode, index))),
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(RemovePeriodPage(index), value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(RemovePeriodPage(index), mode, updatedAnswers))
-      )
+      getAnswerAsync(PeriodPage(index)) { period =>
+        form.bindFromRequest().fold(
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, period, mode, index))),
+          value =>
+            if (value) {
+              for {
+                updatedAnswers <- Future.fromTry(request.userAnswers.remove(PeriodPage(index)))
+                _               <- sessionRepository.set(updatedAnswers)
+                updatedAnswers2 <- Future.fromTry(updatedAnswers.set(RemovePeriodPage(index), true))
+              } yield Redirect(navigator.nextPage(RemovePeriodPage(index), mode, updatedAnswers2))
+            } else {
+              for {
+                updatedAnswers <- Future.fromTry(request.userAnswers.set(RemovePeriodPage(index), false))
+              } yield Redirect(navigator.nextPage(RemovePeriodPage(index), mode, updatedAnswers))
+            }
+        )
+      }
   }
 }

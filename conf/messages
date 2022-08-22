@@ -164,11 +164,9 @@ addPeriod.error.required = Select yes if the applicant cared for the child for a
 addPeriod.change.hidden = the period of care from {0}
 addPeriod.remove.hidden = the period of care from {0}
 
-removePeriod.title = removePeriod
-removePeriod.heading = removePeriod
-removePeriod.checkYourAnswersLabel = removePeriod
-removePeriod.error.required = Select yes if removePeriod
-removePeriod.change.hidden = RemovePeriod
+removePeriod.title = Are you sure you want to remove this period of care?
+removePeriod.heading = Are you sure you want to remove the period of care from {0} to {1}?
+removePeriod.error.required = Select yes if you want to remove this period of care
 
 applicantName.title = What is the applicant’s name?
 applicantName.heading = What is the applicant’s name?
