@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.MainCarerAddressFormProvider
-import models.{NormalMode, MainCarerAddress, UserAnswers}
+import models.{Address, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -43,15 +43,15 @@ class MainCarerAddressControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val mainCarerAddressRoute = routes.MainCarerAddressController.onPageLoad(NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      MainCarerAddressPage.toString -> Json.obj(
-        "line1" -> "value 1",
-        "line2" -> "value 2"
-      )
-    )
+  val address = Address(
+    line1 = "1 Test Street",
+    line2 = None,
+    townOrCity = "Test Town",
+    county = None,
+    postcode = "ZZ1 1ZZ"
   )
+
+  val userAnswers = emptyUserAnswers.set(MainCarerAddressPage, address).success.value
 
   "MainCarerAddress Controller" - {
 
@@ -83,7 +83,7 @@ class MainCarerAddressControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(MainCarerAddress("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(address), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -104,7 +104,11 @@ class MainCarerAddressControllerSpec extends SpecBase with MockitoSugar {
       running(application) {
         val request =
           FakeRequest(POST, mainCarerAddressRoute)
-            .withFormUrlEncodedBody(("line1", "value 1"), ("line2", "value 2"))
+            .withFormUrlEncodedBody(
+              "line1" -> "1 Test Street",
+              "town" -> "Test Town",
+              "postcode" -> "ZZ1 1ZZ"
+            )
 
         val result = route(application, request).value
 

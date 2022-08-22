@@ -16,10 +16,10 @@
 
 package pages
 
-import models.MainCarerAddress
+import models.Address
 import play.api.libs.json.JsPath
 
-case object MainCarerAddressPage extends QuestionPage[MainCarerAddress] {
+case object MainCarerAddressPage extends QuestionPage[Address] {
 
   override def path: JsPath = JsPath \ toString
 
