@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.MainCarerAddressFormProvider
-import models.{Address, NormalMode, UserAnswers}
+import models.{Address, Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.MainCarerAddressPage
+import pages.{MainCarerAddressPage, MainCarerNamePage}
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Call
@@ -51,23 +51,24 @@ class MainCarerAddressControllerSpec extends SpecBase with MockitoSugar {
     postcode = "ZZ1 1ZZ"
   )
 
-  val userAnswers = emptyUserAnswers.set(MainCarerAddressPage, address).success.value
+  val mainCarerName = Name("Foo", "Bar")
+  val minimalUserAnswers = emptyUserAnswers.set(MainCarerNamePage, mainCarerName).success.value
+
+  val userAnswers = minimalUserAnswers.set(MainCarerAddressPage, address).success.value
 
   "MainCarerAddress Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, mainCarerAddressRoute)
-
         val view = application.injector.instanceOf[MainCarerAddressView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, mainCarerName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -77,24 +78,21 @@ class MainCarerAddressControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, mainCarerAddressRoute)
-
         val view = application.injector.instanceOf[MainCarerAddressView]
-
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(address), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(address), mainCarerName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -109,7 +107,6 @@ class MainCarerAddressControllerSpec extends SpecBase with MockitoSugar {
               "town" -> "Test Town",
               "postcode" -> "ZZ1 1ZZ"
             )
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -119,21 +116,18 @@ class MainCarerAddressControllerSpec extends SpecBase with MockitoSugar {
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
           FakeRequest(POST, mainCarerAddressRoute)
             .withFormUrlEncodedBody(("value", "invalid value"))
-
         val boundForm = form.bind(Map("value" -> "invalid value"))
-
         val view = application.injector.instanceOf[MainCarerAddressView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, mainCarerName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -143,7 +137,19 @@ class MainCarerAddressControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, mainCarerAddressRoute)
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if no main carer name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, mainCarerAddressRoute)
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -159,7 +165,21 @@ class MainCarerAddressControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, mainCarerAddressRoute)
             .withFormUrlEncodedBody(("line1", "value 1"), ("line2", "value 2"))
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no main carer name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, mainCarerAddressRoute)
+            .withFormUrlEncodedBody(("line1", "value 1"), ("line2", "value 2"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

@@ -24,7 +24,7 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], mainCarerName: Name, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = title(form, messages("mainCarerAddress.title"))) {
 
@@ -34,22 +34,43 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("mainCarerAddress.heading")</h1>
+        <h1 class="govuk-heading-xl">@messages("mainCarerAddress.heading", mainCarerName.firstName)</h1>
 
         @govukInput(
-            InputViewModel(
-                field = form("line1"),
-                label = LabelViewModel(messages("mainCarerAddress.line1"))
-            )
-            .withWidth(Full)
+          InputViewModel(
+            field = form("line1"),
+            label = LabelViewModel(messages("mainCarerAddress.line1"))
+          )
+          .withWidth(Full)
         )
 
         @govukInput(
-            InputViewModel(
-                field = form("line2"),
-                label = LabelViewModel(messages("mainCarerAddress.line2"))
-            )
-            .withWidth(Full)
+          InputViewModel(
+            field = form("line2"),
+            label = LabelViewModel(messages("mainCarerAddress.line2"))
+          )
+          .withWidth(Full)
+        )
+
+        @govukInput(
+          InputViewModel(
+            field = form("town"),
+            label = LabelViewModel(messages("mainCarerAddress.town"))
+          ).withWidth(TwoThirds)
+        )
+
+        @govukInput(
+          InputViewModel(
+            field = form("county"),
+            label = LabelViewModel(messages("mainCarerAddress.county"))
+          ).withWidth(TwoThirds)
+        )
+
+        @govukInput(
+          InputViewModel(
+            field = form("postcode"),
+            label = LabelViewModel(messages("mainCarerAddress.postcode"))
+          ).withWidth(Fixed10)
         )
 
         @govukButton(
