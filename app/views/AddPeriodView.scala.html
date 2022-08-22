@@ -14,15 +14,27 @@
  * limitations under the License.
  *@
 
+@import uk.gov.hmrc.hmrcfrontend.views.viewmodels.addtoalist.{ListItem, Long}
+@import viewmodels.LegendSize
+
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
     govukRadios: GovukRadios,
-    govukButton: GovukButton
+    govukButton: GovukButton,
+    addToList: components.AddToList
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], names: ApplicantAndChildNames, items: Seq[ListItem], mode: Mode)(implicit request: Request[_], messages: Messages)
+
+@heading = @{
+  if(items.length < 2) {
+    messages("addPeriod.heading")
+  } else {
+    messages("addPeriod.heading.plural", items.length)
+  }
+}
 
 @layout(pageTitle = title(form, messages("addPeriod.title"))) {
 
@@ -32,10 +44,14 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
+        <h1 class="govuk-heading-xl">@heading</h1>
+
+        @addToList(items, Long, "addPeriod.change.hidden", "addPeriod.remove.hidden")
+
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("addPeriod.heading")).asPageHeading()
+                legend = LegendViewModel(messages("addPeriod.question", names.applicantName.firstName, names.childName.firstName)).withSize(LegendSize.Medium)
             )
         )
 

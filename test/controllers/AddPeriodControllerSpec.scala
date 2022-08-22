@@ -18,19 +18,22 @@ package controllers
 
 import base.SpecBase
 import forms.AddPeriodFormProvider
-import models.{NormalMode, UserAnswers}
+import models.{ApplicantAndChildNames, Index, Name, NormalMode, Period}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{never, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.AddPeriodPage
+import pages.{AddPeriodPage, ApplicantNamePage, ChildNamePage, PeriodPage}
+import play.api.i18n.Messages
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import repositories.SessionRepository
+import viewmodels.checkAnswers.AddPeriodSummary
 import views.html.AddPeriodView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class AddPeriodControllerSpec extends SpecBase with MockitoSugar {
@@ -42,50 +45,42 @@ class AddPeriodControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val addPeriodRoute = routes.AddPeriodController.onPageLoad(NormalMode).url
 
+  val childName = Name("Foo", "Bar")
+  val applicantName = Name("Bar", "Foo")
+  val names = ApplicantAndChildNames(applicantName, childName)
+
+  val period = Period(LocalDate.of(2000, 2, 1), LocalDate.of(2001, 3, 2))
+  val minimalUserAnswers = emptyUserAnswers
+    .set(ChildNamePage, childName).success.value
+    .set(ApplicantNamePage, applicantName).success.value
+    .set(PeriodPage(Index(0)), period).success.value
+
+  def expectedItems(implicit messages: Messages) =
+    AddPeriodSummary.rows(minimalUserAnswers, NormalMode)
+
   "AddPeriod Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, addPeriodRoute)
-
         val result = route(application, request).value
-
         val view = application.injector.instanceOf[AddPeriodView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
-      }
-    }
-
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(AddPeriodPage, true).success.value
-
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, addPeriodRoute)
-
-        val view = application.injector.instanceOf[AddPeriodView]
-
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, names, expectedItems(messages(application)), NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to the next page when valid data is submitted" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -96,31 +91,29 @@ class AddPeriodControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, addPeriodRoute)
             .withFormUrlEncodedBody(("value", "true"))
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual onwardRoute.url
+
+        verify(mockSessionRepository, never()).set(any())
       }
     }
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
           FakeRequest(POST, addPeriodRoute)
             .withFormUrlEncodedBody(("value", ""))
-
         val boundForm = form.bind(Map("value" -> ""))
-
         val view = application.injector.instanceOf[AddPeriodView]
-
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, names, expectedItems(messages(application)), NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -130,7 +123,19 @@ class AddPeriodControllerSpec extends SpecBase with MockitoSugar {
 
       running(application) {
         val request = FakeRequest(GET, addPeriodRoute)
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if no minimal data is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, addPeriodRoute)
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -146,7 +151,21 @@ class AddPeriodControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, addPeriodRoute)
             .withFormUrlEncodedBody(("value", "true"))
+        val result = route(application, request).value
 
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no minimal data is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, addPeriodRoute)
+            .withFormUrlEncodedBody(("value", "true"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

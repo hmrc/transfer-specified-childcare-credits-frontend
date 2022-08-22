@@ -21,7 +21,7 @@ import play.api.libs.json.JsPath
 
 final case class PeriodPage(index: Index) extends QuestionPage[Period] {
 
-  override def path: JsPath = JsPath \ "periods" \ index.position \ toString
+  override def path: JsPath = JsPath \ "periods" \ index.position
 
   override def toString: String = "period"
 }
