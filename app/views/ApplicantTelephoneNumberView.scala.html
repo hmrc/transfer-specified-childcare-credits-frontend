@@ -24,9 +24,9 @@
     govukButton: GovukButton
 )
 
-@(form: Form[_], mode: Mode)(implicit request: Request[_], messages: Messages)
+@(form: Form[_], applicantName: Name, mode: Mode)(implicit request: Request[_], messages: Messages)
 
-@layout(pageTitle = title(form, messages("applicntTelephoneNumber.title"))) {
+@layout(pageTitle = title(form, messages("applicantTelephoneNumber.title"))) {
 
     @formHelper(action = routes.ApplicantTelephoneNumberController.onSubmit(mode)) {
 
@@ -37,9 +37,10 @@
         @govukInput(
             InputViewModel(
                 field = form("value"),
-                label = LabelViewModel(messages("applicntTelephoneNumber.heading")).asPageHeading()
+                label = LabelViewModel(messages("applicantTelephoneNumber.heading", applicantName.firstName)).asPageHeading()
             )
-            .withWidth(Full)
+              .withWidth(Fixed20)
+              .withAutocomplete("tel")
         )
 
         @govukButton(
