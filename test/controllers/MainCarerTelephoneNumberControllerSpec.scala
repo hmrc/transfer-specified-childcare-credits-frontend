@@ -95,7 +95,7 @@ class MainCarerTelephoneNumberControllerSpec extends SpecBase with MockitoSugar 
       running(application) {
         val request =
           FakeRequest(POST, mainCarerTelephoneNumberRoute)
-            .withFormUrlEncodedBody(("value", "answer"))
+            .withFormUrlEncodedBody(("value", "07777777777"))
 
         val result = route(application, request).value
 
