@@ -278,9 +278,9 @@ mainCarerTelephoneNumber.error.required = Enter the telephone number of the pers
 mainCarerTelephoneNumber.error.invalid = Enter a valid telephone number
 mainCarerTelephoneNumber.change.hidden = the telephone number of the person who claims Child Benefit for the child
 
-mainCarerNino.title = mainCarerNino
-mainCarerNino.heading = mainCarerNino
-mainCarerNino.checkYourAnswersLabel = mainCarerNino
-mainCarerNino.error.required = Enter mainCarerNino
-mainCarerNino.error.length = MainCarerNino must be 100 characters or less
-mainCarerNino.change.hidden = MainCarerNino
+mainCarerNino.title = What is the National Insurance number of the person who claims Child Benefit for the child?
+mainCarerNino.heading = What is {0}’s National Insurance number?
+mainCarerNino.checkYourAnswersLabel = The National Insurance number of the person who claims Child Benefit for the child
+mainCarerNino.error.required = Enter the National Insurance number of the person who claims Child Benefit for the child
+mainCarerNino.error.invalid = Enter the National Insurance number of the person who claims Child Benefit for the child in the correct format
+mainCarerNino.change.hidden = the National Insurance number of the person who claims ChildBenefit for the child
