@@ -18,10 +18,11 @@ package controllers
 
 import controllers.actions._
 import forms.MainCarerDateOfBirthFormProvider
+
 import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.MainCarerDateOfBirthPage
+import pages.{MainCarerDateOfBirthPage, MainCarerNamePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import repositories.SessionRepository
@@ -40,33 +41,33 @@ class MainCarerDateOfBirthController @Inject()(
                                         formProvider: MainCarerDateOfBirthFormProvider,
                                         val controllerComponents: MessagesControllerComponents,
                                         view: MainCarerDateOfBirthView
-                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
   def form = formProvider()
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(MainCarerDateOfBirthPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
+      getAnswer(MainCarerNamePage) { mainCarerName =>
+        val preparedForm = request.userAnswers.get(MainCarerDateOfBirthPage) match {
+          case None => form
+          case Some(value) => form.fill(value)
+        }
+        Ok(view(preparedForm, mainCarerName, mode))
       }
-
-      Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(MainCarerDateOfBirthPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(MainCarerDateOfBirthPage, mode, updatedAnswers))
-      )
+      getAnswerAsync(MainCarerNamePage) { mainCarerName =>
+        form.bindFromRequest().fold(
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, mainCarerName, mode))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(MainCarerDateOfBirthPage, value))
+              _              <- sessionRepository.set(updatedAnswers)
+            } yield Redirect(navigator.nextPage(MainCarerDateOfBirthPage, mode, updatedAnswers))
+        )
+      }
   }
 }
