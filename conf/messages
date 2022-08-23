@@ -156,17 +156,17 @@ period.checkYourAnswersLabel = Period
 period.startDate.change.hidden = the date on which the applicant started caring for the child
 period.endDate.change.hidden = the date on which the applicant stopped caring for the child
 
-addPeriod.title = addPeriod
-addPeriod.heading = addPeriod
-addPeriod.checkYourAnswersLabel = addPeriod
-addPeriod.error.required = Select yes if addPeriod
-addPeriod.change.hidden = AddPeriod
+addPeriod.title = Did the applicant care for the child for any other periods of time?
+addPeriod.heading = You have added 1 period of care
+addPeriod.heading.plural = You have added {0} periods of care
+addPeriod.question = Did {0} care for {1} for any other periods of time?
+addPeriod.error.required = Select yes if the applicant cared for the child for any other periods of time
+addPeriod.change.hidden = the period of care from {0}
+addPeriod.remove.hidden = the period of care from {0}
 
-removePeriod.title = removePeriod
-removePeriod.heading = removePeriod
-removePeriod.checkYourAnswersLabel = removePeriod
-removePeriod.error.required = Select yes if removePeriod
-removePeriod.change.hidden = RemovePeriod
+removePeriod.title = Are you sure you want to remove this period of care?
+removePeriod.heading = Are you sure you want to remove the period of care from {0} to {1}?
+removePeriod.error.required = Select yes if you want to remove this period of care
 
 applicantName.title = What is the applicant’s name?
 applicantName.heading = What is the applicant’s name?
@@ -284,3 +284,5 @@ mainCarerNino.checkYourAnswersLabel = The National Insurance number of the perso
 mainCarerNino.error.required = Enter the National Insurance number of the person who claims Child Benefit for the child
 mainCarerNino.error.invalid = Enter the National Insurance number of the person who claims Child Benefit for the child in the correct format
 mainCarerNino.change.hidden = the National Insurance number of the person who claims ChildBenefit for the child
+
+checkYourAnswers.period.label = {0} to {1}

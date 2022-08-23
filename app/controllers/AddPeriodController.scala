@@ -18,16 +18,19 @@ package controllers
 
 import controllers.actions._
 import forms.AddPeriodFormProvider
-import javax.inject.Inject
-import models.Mode
+import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
 import pages.AddPeriodPage
-import play.api.i18n.{I18nSupport, MessagesApi}
+import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import queries.{ApplicantAndChildNamesQuery, PeriodsQuery}
 import repositories.SessionRepository
+import uk.gov.hmrc.hmrcfrontend.views.viewmodels.addtoalist.ListItem
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.checkAnswers.AddPeriodSummary
 import views.html.AddPeriodView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class AddPeriodController @Inject()(
@@ -40,33 +43,36 @@ class AddPeriodController @Inject()(
                                          formProvider: AddPeriodFormProvider,
                                          val controllerComponents: MessagesControllerComponents,
                                          view: AddPeriodView
-                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport {
+                                 )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
   val form = formProvider()
 
+  private def summaryList(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListItem] =
+    AddPeriodSummary.rows(answers, mode)
+
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(AddPeriodPage) match {
-        case None => form
-        case Some(value) => form.fill(value)
+      getAnswer(ApplicantAndChildNamesQuery) { names =>
+        val periods = request.userAnswers.get(PeriodsQuery).getOrElse(List.empty)
+        if (periods.isEmpty) {
+          Redirect(routes.PeriodController.onPageLoad(mode, Index(0)))
+        } else {
+          Ok(view(form, names, summaryList(request.userAnswers, mode), mode))
+        }
       }
-
-      Ok(view(preparedForm, mode))
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-
-      form.bindFromRequest().fold(
-        formWithErrors =>
-          Future.successful(BadRequest(view(formWithErrors, mode))),
-
-        value =>
-          for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(AddPeriodPage, value))
-            _              <- sessionRepository.set(updatedAnswers)
-          } yield Redirect(navigator.nextPage(AddPeriodPage, mode, updatedAnswers))
-      )
+      getAnswerAsync(ApplicantAndChildNamesQuery) { names =>
+        form.bindFromRequest().fold(
+          formWithErrors =>
+            Future.successful(BadRequest(view(formWithErrors, names, summaryList(request.userAnswers, mode), mode))),
+          value =>
+            for {
+              updatedAnswers <- Future.fromTry(request.userAnswers.set(AddPeriodPage, value))
+            } yield Redirect(navigator.nextPage(AddPeriodPage, mode, updatedAnswers))
+        )
+      }
   }
 }

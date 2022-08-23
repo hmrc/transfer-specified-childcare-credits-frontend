@@ -21,7 +21,7 @@ import play.api.libs.json.JsPath
 
 final case class RemovePeriodPage(index: Index) extends QuestionPage[Boolean] {
 
-  override def path: JsPath = JsPath \ "periods" \ index.position \ toString
+  override def path: JsPath = JsPath \ toString \ index.position
 
   override def toString: String = "removePeriod"
 }

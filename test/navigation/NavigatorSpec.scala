@@ -18,9 +18,9 @@ package navigation
 
 import base.SpecBase
 import controllers.routes
-import pages._
 import models._
 import org.scalacheck.Arbitrary.arbitrary
+import pages._
 
 import java.time.LocalDate
 
@@ -127,14 +127,31 @@ class NavigatorSpec extends SpecBase {
         }
       }
 
-      "must go from the remove period page to the add period page" - {
+      "must go from the remove period page" - {
 
-        "when the index is 0" in {
-          navigator.nextPage(RemovePeriodPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.AddPeriodController.onPageLoad(NormalMode)
+        "to the first period page when there are no periods added" - {
+
+          "when the index is 0" in {
+            navigator.nextPage(RemovePeriodPage(Index(0)), NormalMode, emptyUserAnswers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
+          }
+
+          "when the index is 1" in {
+            navigator.nextPage(RemovePeriodPage(Index(1)), NormalMode, emptyUserAnswers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
+          }
         }
 
-        "when the index is 1" in {
-          navigator.nextPage(RemovePeriodPage(Index(1)), NormalMode, emptyUserAnswers) mustBe routes.AddPeriodController.onPageLoad(NormalMode)
+        "to the add period page when there is at least one period added" - {
+
+          val answers = emptyUserAnswers
+            .set(PeriodPage(Index(0)), Period(LocalDate.of(2000, 2, 1), LocalDate.of(2001, 3, 2))).success.value
+
+          "when the index is 0" in {
+            navigator.nextPage(RemovePeriodPage(Index(0)), NormalMode, answers) mustBe routes.AddPeriodController.onPageLoad(NormalMode)
+          }
+
+          "when the index is 1" in {
+            navigator.nextPage(RemovePeriodPage(Index(1)), NormalMode, answers) mustBe routes.AddPeriodController.onPageLoad(NormalMode)
+          }
         }
       }
 

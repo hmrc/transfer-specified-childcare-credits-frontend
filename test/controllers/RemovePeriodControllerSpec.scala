@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.RemovePeriodFormProvider
-import models.{Index, NormalMode, UserAnswers}
+import models.{Index, NormalMode, Period, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mockito.when
+import org.mockito.Mockito.{never, times, verify, when}
 import org.scalatestplus.mockito.MockitoSugar
-import pages.RemovePeriodPage
+import pages.{PeriodPage, RemovePeriodPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -31,6 +31,7 @@ import play.api.test.Helpers._
 import repositories.SessionRepository
 import views.html.RemovePeriodView
 
+import java.time.LocalDate
 import scala.concurrent.Future
 
 class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
@@ -42,11 +43,14 @@ class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val removePeriodRoute = routes.RemovePeriodController.onPageLoad(NormalMode, Index(0)).url
 
+  val period = Period(LocalDate.of(2000, 2, 1), LocalDate.of(2001, 3, 2))
+  val minimalUserAnswers = emptyUserAnswers.set(PeriodPage(Index(0)), period).success.value
+
   "RemovePeriod Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, removePeriodRoute)
@@ -54,33 +58,17 @@ class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
         val view = application.injector.instanceOf[RemovePeriodView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, period, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
-    "must populate the view correctly on a GET when the question has previously been answered" in {
-
-      val userAnswers = UserAnswers(userAnswersId).set(RemovePeriodPage(Index(0)), true).success.value
-      val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
-
-      running(application) {
-        val request = FakeRequest(GET, removePeriodRoute)
-        val view = application.injector.instanceOf[RemovePeriodView]
-        val result = route(application, request).value
-
-        status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), NormalMode, Index(0))(request, messages(application)).toString
-      }
-    }
-
-    "must redirect to the next page when valid data is submitted" in {
+    "must remove the period at the given index when the user answers yes" in {
 
       val mockSessionRepository = mock[SessionRepository]
-
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -91,29 +79,61 @@ class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
         val request =
           FakeRequest(POST, removePeriodRoute)
             .withFormUrlEncodedBody(("value", "true"))
-
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
         redirectLocation(result).value mustEqual onwardRoute.url
+
+        val expectedAnswers = minimalUserAnswers
+          .remove(PeriodPage(Index(0))).success.value
+
+        verify(mockSessionRepository, times(1)).set(expectedAnswers)
+      }
+    }
+
+    "must not remove the period at the given index when the user answers no" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, removePeriodRoute)
+            .withFormUrlEncodedBody(("value", "false"))
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual onwardRoute.url
+
+        val expectedAnswers = minimalUserAnswers
+          .remove(PeriodPage(Index(0))).success.value
+
+        verify(mockSessionRepository, never()).set(any())
       }
     }
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
           FakeRequest(POST, removePeriodRoute)
             .withFormUrlEncodedBody(("value", ""))
-
         val boundForm = form.bind(Map("value" -> ""))
         val view = application.injector.instanceOf[RemovePeriodView]
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode, Index(0))(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, period, NormalMode, Index(0))(request, messages(application)).toString
       }
     }
 
@@ -130,9 +150,37 @@ class RemovePeriodControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    "must redirect to Journey Recovery for a GET if no period is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, removePeriodRoute)
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
     "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, removePeriodRoute)
+            .withFormUrlEncodedBody(("value", "true"))
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no period is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
         val request =

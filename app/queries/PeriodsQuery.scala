@@ -16,9 +16,10 @@
 
 package queries
 
-import play.api.libs.json.{JsObject, JsPath, __}
+import models.Period
+import play.api.libs.json.{JsPath, __}
 
-object PeriodsQuery extends Gettable[List[JsObject]] {
+object PeriodsQuery extends Gettable[List[Period]] {
 
   override def path: JsPath = __ \ "periods"
 }
