@@ -18,12 +18,12 @@ package controllers
 
 import controllers.actions._
 import forms.AddPeriodFormProvider
-import models.{Mode, UserAnswers}
+import models.{Index, Mode, UserAnswers}
 import navigation.Navigator
 import pages.AddPeriodPage
 import play.api.i18n.{I18nSupport, Messages, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import queries.ApplicantAndChildNamesQuery
+import queries.{ApplicantAndChildNamesQuery, PeriodsQuery}
 import repositories.SessionRepository
 import uk.gov.hmrc.hmrcfrontend.views.viewmodels.addtoalist.ListItem
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
@@ -53,7 +53,12 @@ class AddPeriodController @Inject()(
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       getAnswer(ApplicantAndChildNamesQuery) { names =>
-        Ok(view(form, names, summaryList(request.userAnswers, mode), mode))
+        val periods = request.userAnswers.get(PeriodsQuery).getOrElse(List.empty)
+        if (periods.isEmpty) {
+          Redirect(routes.PeriodController.onPageLoad(mode, Index(0)))
+        } else {
+          Ok(view(form, names, summaryList(request.userAnswers, mode), mode))
+        }
       }
   }
 

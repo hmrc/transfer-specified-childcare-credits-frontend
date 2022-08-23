@@ -143,6 +143,20 @@ class AddPeriodControllerSpec extends SpecBase with MockitoSugar {
       }
     }
 
+    "must redirect to the first Period page for a GET if there are no periods added" in {
+
+      val answers = minimalUserAnswers.remove(PeriodPage(Index(0))).success.value
+      val application = applicationBuilder(userAnswers = Some(answers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, addPeriodRoute)
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.PeriodController.onPageLoad(NormalMode, Index(0)).url
+      }
+    }
+
     "must redirect to Journey Recovery for a POST if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
