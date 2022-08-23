@@ -40,7 +40,7 @@ class Navigator @Inject()() {
     case ApplicantHasFullNIContributionsPage => _ => routes.PeriodController.onPageLoad(NormalMode, Index(0))
     case PeriodPage(_) => _ => routes.AddPeriodController.onPageLoad(NormalMode)
     case AddPeriodPage => addPeriodRoutes
-    case RemovePeriodPage(_) => _ => routes.AddPeriodController.onPageLoad(NormalMode)
+    case RemovePeriodPage(_) => removePeriodRoutes
     case ApplicantDateOfBirthPage => _ => routes.ApplicantAddressController.onPageLoad(NormalMode)
     case ApplicantAddressPage => _ => routes.ApplicantTelephoneNumberController.onPageLoad(NormalMode)
     case ApplicantTelephoneNumberPage => _ => routes.ApplicantNinoController.onPageLoad(NormalMode)
@@ -61,6 +61,15 @@ class Navigator @Inject()() {
       case false =>
         routes.ApplicantDateOfBirthController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def removePeriodRoutes(answers: UserAnswers): Call = {
+    val periods = answers.get(PeriodsQuery).getOrElse(List.empty)
+    if (periods.isEmpty) {
+      routes.PeriodController.onPageLoad(NormalMode, Index(0))
+    } else {
+      routes.AddPeriodController.onPageLoad(NormalMode)
+    }
+  }
 
   private val checkRouteMap: Page => UserAnswers => Call = {
     case _ => _ => routes.CheckYourAnswersController.onPageLoad
