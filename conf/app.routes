@@ -124,3 +124,5 @@ GET        /mainCarerNino                        controllers.MainCarerNinoContro
 POST       /mainCarerNino                        controllers.MainCarerNinoController.onSubmit(mode: Mode = NormalMode)
 GET        /changeMainCarerNino                  controllers.MainCarerNinoController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeMainCarerNino                  controllers.MainCarerNinoController.onSubmit(mode: Mode = CheckMode)
+
+GET        /kickOutIneligible                       controllers.KickOutIneligibleController.onPageLoad()

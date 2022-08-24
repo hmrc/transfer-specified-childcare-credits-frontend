@@ -50,28 +50,114 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(ApplicantNamePage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
       }
 
-      "must go from applicant relationship to child page to does applicant already receives child benefit for this child page" in {
-        navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
+      "must go from applicant relationship to child page" - {
+
+        "to the kick out ineligible page when the user answers great aunt or great uncle" in {
+          val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.GreatAuntOrGreatUncle).success.value
+          navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
+        }
+
+        "to does applicant already receives child benefit for this child page when the user answers anything else" in {
+          val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.Grandparent).success.value
+          navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, answers) mustBe routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the question hasn't been answered" in {
+          navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
 
-      "must go from applicant already receives child benefit for this child page to applicant is partner of claimant page" in {
-        navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
+      "must go from applicant already receives child benefit for this child page" - {
+
+        "to the kick out ineligible page when the user answers yes" in {
+          val answers = emptyUserAnswers.set(ApplicantClaimsChildBenefitForThisChildPage, true).success.value
+          navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
+        }
+
+        "to applicant is partner of claimant page when the user answers no" in {
+          val answers = emptyUserAnswers.set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
+          navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the question hasn't been answered" in {
+          navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
 
-      "must go from applicant is partner of claimant page to applicant is valid age page" in {
-        navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
+      "must go from applicant is partner of claimant page" - {
+
+        "to the kick out ineligible page when the user answers yes" in {
+          val answers = emptyUserAnswers.set(ApplicantIsPartnerOfClaimantPage, true).success.value
+          navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
+        }
+
+        "to applicant is valid age page when the user answers no" in {
+          val answers = emptyUserAnswers.set(ApplicantIsPartnerOfClaimantPage, false).success.value
+          navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, answers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the question hasn't been answered" in {
+          navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
 
-      "must go from applicant is valid age page to was applicant UK resident page" in {
-        navigator.nextPage(ApplicantIsValidAgePage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
+      "must go from applicant is valid age page" - {
+
+        "to the kick out ineligible page when the user answers no" in {
+          val answers = emptyUserAnswers.set(ApplicantIsValidAgePage, false).success.value
+          navigator.nextPage(ApplicantIsValidAgePage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
+        }
+
+        "to was applicant UK resident page when the user answers yes" in {
+          val answers = emptyUserAnswers.set(ApplicantIsValidAgePage, true).success.value
+          navigator.nextPage(ApplicantIsValidAgePage, NormalMode, answers) mustBe routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the question hasn't been answered" in {
+          navigator.nextPage(ApplicantIsValidAgePage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
 
-      "must go from applicant was UK resident page to does applicant have full NI contributions page" in {
-        navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
+      "must go from applicant was UK resident page" - {
+
+        "to does applicant have full NI contributions page when the user answers no" in {
+          val answers = emptyUserAnswers.set(ApplicantWasUkResidentPage, false).success.value
+          navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
+        }
+
+        "to does applicant have full NI contributions page when the user answers yes" in {
+          val answers = emptyUserAnswers.set(ApplicantWasUkResidentPage, true).success.value
+          navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, answers) mustBe routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
+        }
+
+        "to the journey recovery page when the question hasn't been answered" in {
+          navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
 
-      "must go from does applicant have full NI contributions page to the first period details page" in {
-        navigator.nextPage(ApplicantHasFullNIContributionsPage, NormalMode, emptyUserAnswers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
+      "must go from does applicant have full NI contributions page" - {
+
+        "to the kick out ineligible page when the user answers yes" in {
+          val answers = emptyUserAnswers.set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.Yes).success.value
+          navigator.nextPage(ApplicantHasFullNIContributionsPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
+        }
+
+        "to the first period details page" - {
+
+          "when the user answers no" in {
+            val answers = emptyUserAnswers.set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.No).success.value
+            navigator.nextPage(ApplicantHasFullNIContributionsPage, NormalMode, answers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
+          }
+
+          "when the user answers I don't know" in {
+            val answers = emptyUserAnswers.set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.DontKnow).success.value
+            navigator.nextPage(ApplicantHasFullNIContributionsPage, NormalMode, answers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
+          }
+        }
+
+        "to the journey recovery page when the question hasn't been answered" in {
+          navigator.nextPage(ApplicantHasFullNIContributionsPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
       }
 
       "must go from the period details page" - {

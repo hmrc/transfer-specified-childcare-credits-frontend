@@ -19,6 +19,7 @@ package navigation
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import controllers.routes
+import models.ApplicantRelationshipToChild.GreatAuntOrGreatUncle
 import pages._
 import models._
 import queries.PeriodsQuery
@@ -30,12 +31,12 @@ class Navigator @Inject()() {
     case ChildNamePage => _ => routes.ChildDateOfBirthController.onPageLoad(NormalMode)
     case ChildDateOfBirthPage => _ => routes.ApplicantNameController.onPageLoad(NormalMode)
     case ApplicantNamePage => _ => routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
-    case ApplicantRelationshipToChildPage => _ => routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
-    case ApplicantClaimsChildBenefitForThisChildPage => _ => routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
-    case ApplicantIsPartnerOfClaimantPage => _ => routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
-    case ApplicantIsValidAgePage => _ => routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
-    case ApplicantWasUkResidentPage => _ => routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
-    case ApplicantHasFullNIContributionsPage => _ => routes.PeriodController.onPageLoad(NormalMode, Index(0))
+    case ApplicantRelationshipToChildPage => applicantRelationshipToChildRoutes
+    case ApplicantClaimsChildBenefitForThisChildPage => applicantClaimsChildBenefitForThisChildRoutes
+    case ApplicantIsPartnerOfClaimantPage => applicantIsPartnerOfClaimantRoutes
+    case ApplicantIsValidAgePage => applicantIsValidAgeRoutes
+    case ApplicantWasUkResidentPage => applicantWasUkResidentRoutes
+    case ApplicantHasFullNIContributionsPage => applicantHasFullNIContributionsRoutes
     case PeriodPage(_) => _ => routes.AddPeriodController.onPageLoad(NormalMode)
     case AddPeriodPage => addPeriodRoutes
     case RemovePeriodPage(_) => removePeriodRoutes
@@ -50,6 +51,42 @@ class Navigator @Inject()() {
     case MainCarerNinoPage => _ => routes.CheckYourAnswersController.onPageLoad
     case _ => _ => routes.IndexController.onPageLoad
   }
+
+  private def applicantRelationshipToChildRoutes(answers: UserAnswers): Call =
+    answers.get(ApplicantRelationshipToChildPage).map {
+      case GreatAuntOrGreatUncle => routes.KickOutIneligibleController.onPageLoad()
+      case _                     => routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def applicantClaimsChildBenefitForThisChildRoutes(answers: UserAnswers): Call =
+    answers.get(ApplicantClaimsChildBenefitForThisChildPage).map {
+      case true  => routes.KickOutIneligibleController.onPageLoad()
+      case false => routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def applicantIsPartnerOfClaimantRoutes(answers: UserAnswers): Call =
+    answers.get(ApplicantIsPartnerOfClaimantPage).map {
+      case true  => routes.KickOutIneligibleController.onPageLoad()
+      case false => routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def applicantIsValidAgeRoutes(answers: UserAnswers): Call =
+    answers.get(ApplicantIsValidAgePage).map {
+      case true  => routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
+      case false => routes.KickOutIneligibleController.onPageLoad()
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def applicantWasUkResidentRoutes(answers: UserAnswers): Call =
+    answers.get(ApplicantWasUkResidentPage).map {
+      case true  => routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
+      case false => routes.KickOutIneligibleController.onPageLoad()
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def applicantHasFullNIContributionsRoutes(answers: UserAnswers): Call =
+    answers.get(ApplicantHasFullNIContributionsPage).map {
+      case ApplicantHasFullNIContributions.Yes => routes.KickOutIneligibleController.onPageLoad()
+      case _                                   => routes.PeriodController.onPageLoad(NormalMode, Index(0))
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def addPeriodRoutes(answers: UserAnswers): Call =
     answers.get(AddPeriodPage).map {
