@@ -58,12 +58,8 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
       }
 
-      "must go from applicant is partner of claimant page to applicant caring for child after cutoff page" in {
-        navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantChildcareAfterCutoffController.onPageLoad(NormalMode)
-      }
-
-      "must go from applicant caring for child after cutoff page to applicant is valid age page" in {
-        navigator.nextPage(ApplicantChildcareAfterCutoffPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
+      "must go from applicant is partner of claimant page to applicant is valid age page" in {
+        navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
       }
 
       "must go from applicant is valid age page to was applicant UK resident page" in {
