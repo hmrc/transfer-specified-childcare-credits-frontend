@@ -92,7 +92,7 @@ applicantIsValidAge.error.required = Select yes if the applicant was between 16 
 applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they began caring for the child
 
 applicantWasUkResident.title = Was the applicant a resident of the UK when they were caring for the child?
-applicantWasUkResident.heading = Was the applicant a resident of the UK when they were caring for {0}?
+applicantWasUkResident.heading = Was {0} a resident of the UK when they were caring for {1}?
 applicantWasUkResident.checkYourAnswersLabel = Was the applicant a resident of the UK when they were caring for the child?
 applicantWasUkResident.error.required = Select yes if the applicant was a resident of the UK when they were caring for the child
 applicantWasUkResident.change.hidden = whether the applicant was a resident of the UK when they were caring for the child
