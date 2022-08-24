@@ -17,6 +17,7 @@
 package models
 
 import play.api.i18n.Messages
+import play.api.libs.json.{JsString, Json, Reads, Writes, __}
 import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
 import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
@@ -26,56 +27,30 @@ sealed trait ApplicantRelationshipToChild
 object ApplicantRelationshipToChild extends Enumerable.Implicits {
 
   case object Grandparent extends WithName("grandparent") with ApplicantRelationshipToChild
-  case object NonResidentParent extends WithName("nonResidentParent") with ApplicantRelationshipToChild
   case object AuntOrUncle extends WithName("auntOrUncle") with ApplicantRelationshipToChild
   case object BrotherOrSister extends WithName("brotherOrSister") with ApplicantRelationshipToChild
-  case object Other extends WithName("other") with ApplicantRelationshipToChild
+  case object GreatAuntOrGreatUncle extends WithName("greatAuntOrGreatUncle") with ApplicantRelationshipToChild
+  case object NonResidentParent extends WithName("nonResidentParent") with ApplicantRelationshipToChild
+  final case class Other(value: String) extends ApplicantRelationshipToChild
 
-  val values: Seq[ApplicantRelationshipToChild] = Seq(
-    Grandparent, NonResidentParent, AuntOrUncle, BrotherOrSister, Other
-  )
+  implicit lazy val reads: Reads[ApplicantRelationshipToChild] =
+    (__ \ "type").read[String].flatMap {
+      case "grandparent"           => Reads.pure(Grandparent)
+      case "auntOrUncle"           => Reads.pure(AuntOrUncle)
+      case "brotherOrSister"       => Reads.pure(BrotherOrSister)
+      case "greatAuntOrGreatUncle" => Reads.pure(GreatAuntOrGreatUncle)
+      case "nonResidentParent"     => Reads.pure(NonResidentParent)
+      case "other"                 => (__ \ "value").read[String].map(Other)
+      case _                       => Reads.failed("error.invalid")
+    }
 
-  def options(implicit messages: Messages): Seq[RadioItem] = Seq(
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.grandparent")),
-      hint = Some(Hint(
-        content = Text(messages("applicantRelationshipToChild.grandparent.hint"))
-      )),
-      value = Some(Grandparent.toString),
-      id = Some(s"value_$Grandparent")
-    ),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.nonResidentParent")),
-      hint = Some(Hint(
-        content = Text(messages("applicantRelationshipToChild.nonResidentParent.hint"))
-      )),
-      value = Some(NonResidentParent.toString),
-      id = Some(s"value_$NonResidentParent")
-    ),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.auntOrUncle")),
-      hint = Some(Hint(
-        content = Text(messages("applicantRelationshipToChild.auntOrUncle.hint"))
-      )),
-      value = Some(AuntOrUncle.toString),
-      id = Some(s"value_$AuntOrUncle")
-    ),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.brotherOrSister")),
-      hint = Some(Hint(
-        content = Text(messages("applicantRelationshipToChild.brotherOrSister.hint"))
-      )),
-      value = Some(BrotherOrSister.toString),
-      id = Some(s"value_$BrotherOrSister")
-    ),
-    RadioItem(divider = Some(messages("site.or"))),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.other")),
-      value = Some(Other.toString),
-      id = Some(s"value_$Other")
-    )
-  )
-
-  implicit val enumerable: Enumerable[ApplicantRelationshipToChild] =
-    Enumerable(values.map(v => v.toString -> v): _*)
+  implicit lazy val writes: Writes[ApplicantRelationshipToChild] =
+    Writes {
+      case Grandparent           => Json.obj("type" -> "grandparent")
+      case AuntOrUncle           => Json.obj("type" -> "auntOrUncle")
+      case BrotherOrSister       => Json.obj("type" -> "brotherOrSister")
+      case GreatAuntOrGreatUncle => Json.obj("type" -> "greatAuntOrGreatUncle")
+      case NonResidentParent     => Json.obj("type" -> "nonResidentParent")
+      case Other(value)          => Json.obj("type" -> "other", "value" -> value)
+    }
 }
