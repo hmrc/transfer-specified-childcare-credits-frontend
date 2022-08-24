@@ -16,12 +16,31 @@
 
 @this(
         layout: templates.Layout,
+        govukPanel: GovukPanel,
         govukButton: GovukButton
 )
 
-@()(implicit request: Request[_], messages: Messages)
+@(applicantName: Name)(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("kickOutIneligible.title"))) {
 
-    <h1 class="govuk-heading-xl">@messages("kickOutIneligible.heading")</h1>
+  @govukPanel(Panel(
+    title = messages("kickOutIneligible.heading", applicantName.firstName)
+  ))
+
+  <p class="govuk-body">
+    @messages("kickOutIneligible.p1", applicantName.firstName)
+  </p>
+
+  <p class="govuk-body">
+    @messages("kickOutIneligible.p2.1")
+    <a href="https://www.gov.uk/government/publications/national-insurance-credits-for-adults-who-care-for-a-child-under-12-fact-sheet/specified-adult-childcare-credits-fact-sheet" class="govuk-link">@messages("kickOutIneligible.p2.a1")</a>
+    @messages("kickOutIneligible.p2.2")
+    <a href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/national-insurance-enquiries-for-employees-and-individuals" class="govuk-link">@messages("kickOutIneligible.p2.a2")</a>
+  </p>
+
+  <p class="govuk-body">
+    @messages("kickOutIneligible.p3")
+    <a href="@routes.IndexController.onPageLoad.url" class="govuk-link">@messages("kickOutIneligible.p3.a")</a>
+  </p>
 }

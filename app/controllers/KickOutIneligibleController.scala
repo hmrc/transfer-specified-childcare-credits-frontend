@@ -17,6 +17,8 @@
 package controllers
 
 import controllers.actions._
+import pages.ApplicantNamePage
+
 import javax.inject.Inject
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
@@ -30,10 +32,12 @@ class KickOutIneligibleController @Inject()(
                                        requireData: DataRequiredAction,
                                        val controllerComponents: MessagesControllerComponents,
                                        view: KickOutIneligibleView
-                                     ) extends FrontendBaseController with I18nSupport {
+                                     ) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
   def onPageLoad: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      Ok(view())
+      getAnswer(ApplicantNamePage) { applicantName =>
+        Ok(view(applicantName))
+      }
   }
 }

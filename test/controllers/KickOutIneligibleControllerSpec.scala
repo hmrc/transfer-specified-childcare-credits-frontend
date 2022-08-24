@@ -17,6 +17,8 @@
 package controllers
 
 import base.SpecBase
+import models.Name
+import pages.ApplicantNamePage
 import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import views.html.KickOutIneligibleView
@@ -25,9 +27,13 @@ class KickOutIneligibleControllerSpec extends SpecBase {
 
   "KickOutIneligible Controller" - {
 
+    val applicantName = Name("Foo", "Bar")
+    val minimalUserAnswers = emptyUserAnswers
+      .set(ApplicantNamePage, applicantName).success.value
+
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, routes.KickOutIneligibleController.onPageLoad().url)
@@ -37,7 +43,33 @@ class KickOutIneligibleControllerSpec extends SpecBase {
         val view = application.injector.instanceOf[KickOutIneligibleView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view()(request, messages(application)).toString
+        contentAsString(result) mustEqual view(applicantName)(request, messages(application)).toString
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if no existing data is found" in {
+
+      val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val request = FakeRequest(GET, routes.KickOutIneligibleController.onPageLoad().url)
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if no applicant name is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+
+      running(application) {
+        val request = FakeRequest(GET, routes.KickOutIneligibleController.onPageLoad().url)
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().url
       }
     }
   }
