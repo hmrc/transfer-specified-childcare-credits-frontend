@@ -85,11 +85,11 @@ applicantIsPartnerOfClaimant.checkYourAnswersLabel = Is the applicant the partne
 applicantIsPartnerOfClaimant.error.required = Select yes if the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 applicantIsPartnerOfClaimant.change.hidden = whether the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 
-applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they were caring for the child?
-applicantIsValidAge.heading = Was the applicant between 16 years old and State Pension age when they were caring for {0}?
-applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years old and State Pension age when they were caring for the child?
-applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they were caring for the child
-applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they were caring for the child
+applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they began caring for the child?
+applicantIsValidAge.heading = Was {0} between 16 years old and State Pension age when they began caring for {1}?
+applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years old and State Pension age when they began caring for the child?
+applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they began caring for the child
+applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they began caring for the child
 
 applicantWasUkResident.title = Was the applicant a resident of the UK when they were caring for the child?
 applicantWasUkResident.heading = Was the applicant a resident of the UK when they were caring for {0}?
