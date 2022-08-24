@@ -34,8 +34,7 @@ class Navigator @Inject()() {
     case ApplicantClaimsChildBenefitForThisChildPage => _ => routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
     case ApplicantIsPartnerOfClaimantPage => _ => routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
     case ApplicantIsValidAgePage => _ => routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
-    case ApplicantWasUkResidentPage => _ => routes.WasChildUnder12YearsOldController.onPageLoad(NormalMode)
-    case WasChildUnder12YearsOldPage => _ => routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
+    case ApplicantWasUkResidentPage => _ => routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
     case ApplicantHasFullNIContributionsPage => _ => routes.PeriodController.onPageLoad(NormalMode, Index(0))
     case PeriodPage(_) => _ => routes.AddPeriodController.onPageLoad(NormalMode)
     case AddPeriodPage => addPeriodRoutes

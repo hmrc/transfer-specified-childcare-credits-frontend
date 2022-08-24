@@ -70,9 +70,6 @@ trait PageGenerators {
   implicit lazy val arbitraryApplicantHasFullNIContributionsPage: Arbitrary[ApplicantHasFullNIContributionsPage.type] =
     Arbitrary(ApplicantHasFullNIContributionsPage)
 
-  implicit lazy val arbitraryWasChildUnder12YearsOldPage: Arbitrary[WasChildUnder12YearsOldPage.type] =
-    Arbitrary(WasChildUnder12YearsOldPage)
-
   implicit lazy val arbitraryApplicantWasUkResidentPage: Arbitrary[ApplicantWasUkResidentPage.type] =
     Arbitrary(ApplicantWasUkResidentPage)
 
