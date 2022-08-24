@@ -74,7 +74,7 @@ applicantRelationshipToChild.error.required = Select the applicant’s relations
 applicantRelationshipToChild.change.hidden = the applicant’s relationship to the child
 
 applicantClaimsChildBenefitForThisChild.title = Does the applicant already receive Child Benefit for the child?
-applicantClaimsChildBenefitForThisChild.heading = Does the applicant already receive Child Benefit for {0}?
+applicantClaimsChildBenefitForThisChild.heading = Does {0} already receive Child Benefit for {1}?
 applicantClaimsChildBenefitForThisChild.checkYourAnswersLabel = Does the applicant already receive Child Benefit for the child?
 applicantClaimsChildBenefitForThisChild.error.required = Select yes if the applicant already receives Child Benefit for the child
 applicantClaimsChildBenefitForThisChild.change.hidden = whether the applicant already receives Child Benefit for the child
