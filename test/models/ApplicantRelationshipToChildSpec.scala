@@ -16,48 +16,93 @@
 
 package models
 
-import org.scalacheck.Arbitrary.arbitrary
+import generators.ModelGenerators
+import models.ApplicantRelationshipToChild._
 import org.scalacheck.Gen
-import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import org.scalatest.OptionValues
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
-import org.scalatest.OptionValues
-import play.api.libs.json.{JsError, JsString, Json}
+import org.scalatestplus.scalacheck.ScalaCheckPropertyChecks
+import play.api.libs.json.{JsError, Json}
 
-class ApplicantRelationshipToChildSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues {
+class ApplicantRelationshipToChildSpec extends AnyFreeSpec with Matchers with ScalaCheckPropertyChecks with OptionValues with ModelGenerators {
 
   "ApplicantRelationshipToChild" - {
 
-    "must deserialise valid values" in {
+    "must deserialise valid values" - {
 
-      val gen = Gen.oneOf(ApplicantRelationshipToChild.values.toSeq)
+      "for Grandparent" in {
+        Json.obj("type" -> "grandparent").as[ApplicantRelationshipToChild] mustEqual Grandparent
+      }
 
-      forAll(gen) {
-        applicantRelationshipToChild =>
+      "for Aunt or Uncle" in {
+        Json.obj("type" -> "auntOrUncle").as[ApplicantRelationshipToChild] mustEqual AuntOrUncle
+      }
 
-          JsString(applicantRelationshipToChild.toString).validate[ApplicantRelationshipToChild].asOpt.value mustEqual applicantRelationshipToChild
+      "for Brother or Sister" in {
+        Json.obj("type" -> "brotherOrSister").as[ApplicantRelationshipToChild] mustEqual BrotherOrSister
+      }
+
+      "for Great aunt or great uncle" in {
+        Json.obj("type" -> "greatAuntOrGreatUncle").as[ApplicantRelationshipToChild] mustEqual GreatAuntOrGreatUncle
+      }
+
+      "for Non-Resident Parent" in {
+        Json.obj("type" -> "nonResidentParent").as[ApplicantRelationshipToChild] mustEqual NonResidentParent
+      }
+
+      "for Other" in {
+        forAll(Gen.alphaStr) { value =>
+          Json.obj(
+            "type" -> "other",
+            "value" -> value
+          ).as[ApplicantRelationshipToChild] mustEqual ApplicantRelationshipToChild.Other(value)
+        }
       }
     }
 
     "must fail to deserialise invalid values" in {
 
-      val gen = arbitrary[String] suchThat (!ApplicantRelationshipToChild.values.map(_.toString).contains(_))
+      val validTypes = List(
+        Grandparent.toString,
+        AuntOrUncle.toString,
+        BrotherOrSister.toString,
+        GreatAuntOrGreatUncle.toString,
+        NonResidentParent.toString,
+        "other"
+      )
+      val gen = Gen.alphaStr.suchThat(!validTypes.contains(_))
 
-      forAll(gen) {
-        invalidValue =>
-
-          JsString(invalidValue).validate[ApplicantRelationshipToChild] mustEqual JsError("error.invalid")
+      forAll(gen) { value =>
+        Json.obj("type" -> value).validate[ApplicantRelationshipToChild].isError mustBe true
       }
     }
 
-    "must serialise" in {
+    "must fail to deserialise other with no value" in {
+      Json.obj("type" -> "other").validate[ApplicantRelationshipToChild].isError mustBe true
+    }
 
-      val gen = Gen.oneOf(ApplicantRelationshipToChild.values.toSeq)
+    "must serialise basic values" in {
 
-      forAll(gen) {
-        applicantRelationshipToChild =>
+      val gen: Gen[ApplicantRelationshipToChild] = Gen.oneOf(
+        Grandparent,
+        AuntOrUncle,
+        BrotherOrSister,
+        GreatAuntOrGreatUncle,
+        NonResidentParent
+      )
 
-          Json.toJson(applicantRelationshipToChild) mustEqual JsString(applicantRelationshipToChild.toString)
+      forAll(gen) { model =>
+        Json.toJson(model) mustEqual Json.obj("type" -> model.toString)
+      }
+    }
+
+    "must serialise other values" in {
+
+      val gen = Gen.alphaStr.map(Other)
+
+      forAll(gen) { model =>
+        Json.toJson[ApplicantRelationshipToChild](model) mustEqual Json.obj("type" -> "other", "value" -> model.value)
       }
     }
   }

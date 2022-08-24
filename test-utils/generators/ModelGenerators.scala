@@ -57,10 +57,18 @@ trait ModelGenerators {
       Gen.oneOf(ApplicantHasFullNIContributions.values.toSeq)
     }
 
-  implicit lazy val arbitraryApplicantRelationshipToChild: Arbitrary[ApplicantRelationshipToChild] =
-    Arbitrary {
-      Gen.oneOf(ApplicantRelationshipToChild.values.toSeq)
-    }
+  implicit lazy val arbitraryApplicantRelationshipToChild: Arbitrary[ApplicantRelationshipToChild] = {
+    import ApplicantRelationshipToChild._
+    val otherGen: Gen[ApplicantRelationshipToChild] = Gen.alphaStr.map(Other)
+    val basicGen: Gen[ApplicantRelationshipToChild] = Gen.oneOf(
+      Grandparent,
+      AuntOrUncle,
+      BrotherOrSister,
+      GreatAuntOrGreatUncle,
+      NonResidentParent
+    )
+    Arbitrary(Gen.oneOf(basicGen, otherGen))
+  }
 
   implicit lazy val arbitraryNino: Arbitrary[Nino] = Arbitrary {
     for {
