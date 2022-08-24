@@ -74,47 +74,35 @@ applicantRelationshipToChild.error.required = Select the applicant’s relations
 applicantRelationshipToChild.change.hidden = the applicant’s relationship to the child
 
 applicantClaimsChildBenefitForThisChild.title = Does the applicant already receive Child Benefit for the child?
-applicantClaimsChildBenefitForThisChild.heading = Does the applicant already receive Child Benefit for {0}?
+applicantClaimsChildBenefitForThisChild.heading = Does {0} already receive Child Benefit for {1}?
 applicantClaimsChildBenefitForThisChild.checkYourAnswersLabel = Does the applicant already receive Child Benefit for the child?
 applicantClaimsChildBenefitForThisChild.error.required = Select yes if the applicant already receives Child Benefit for the child
 applicantClaimsChildBenefitForThisChild.change.hidden = whether the applicant already receives Child Benefit for the child
 
 applicantIsPartnerOfClaimant.title = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
-applicantIsPartnerOfClaimant.heading = Is the applicant the partner of, and living with, the person who receives Child Benefit for {0}?
+applicantIsPartnerOfClaimant.heading = Is {0} the partner of, and living with, the person who receives Child Benefit for {1}?
 applicantIsPartnerOfClaimant.checkYourAnswersLabel = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
 applicantIsPartnerOfClaimant.error.required = Select yes if the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 applicantIsPartnerOfClaimant.change.hidden = whether the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 
-applicantChildcareAfterCutoff.title = Was the applicant caring for the child after 6th April 2011?
-applicantChildcareAfterCutoff.heading = Was the applicant caring for {0} after 6th April 2011?
-applicantChildcareAfterCutoff.checkYourAnswersLabel = Was the applicant caring for the child after 6th April 2011?
-applicantChildcareAfterCutoff.error.required = Select yes if the applicant was caring for the child after 6th April 2011?
-applicantChildcareAfterCutoff.change.hidden = whether the applicant was caring for the child after 6th April 2011
-
-applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they were caring for the child?
-applicantIsValidAge.heading = Was the applicant between 16 years old and State Pension age when they were caring for {0}?
-applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years old and State Pension age when they were caring for the child?
-applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they were caring for the child
-applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they were caring for the child
+applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they began caring for the child?
+applicantIsValidAge.heading = Was {0} between 16 years old and State Pension age when they began caring for {1}?
+applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years old and State Pension age when they began caring for the child?
+applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they began caring for the child
+applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they began caring for the child
 
 applicantWasUkResident.title = Was the applicant a resident of the UK when they were caring for the child?
-applicantWasUkResident.heading = Was the applicant a resident of the UK when they were caring for {0}?
+applicantWasUkResident.heading = Was {0} a resident of the UK when they were caring for {1}?
 applicantWasUkResident.checkYourAnswersLabel = Was the applicant a resident of the UK when they were caring for the child?
 applicantWasUkResident.error.required = Select yes if the applicant was a resident of the UK when they were caring for the child
 applicantWasUkResident.change.hidden = whether the applicant was a resident of the UK when they were caring for the child
 
-wasChildUnder12YearsOld.title = Was the child under 12 years old when the applicant was caring for them?
-wasChildUnder12YearsOld.heading = Was {0} under 12 years old when the applicant was caring for them?
-wasChildUnder12YearsOld.checkYourAnswersLabel = Was the child under 12 years old when the applicant was caring for them?
-wasChildUnder12YearsOld.error.required = Select yes if the child was under 12 years old when the applicant was caring for them
-wasChildUnder12YearsOld.change.hidden = whether the child was under 12 years old when the applicant was caring for them
-
 applicantHasFullNIContributions.title = Does the applicant have full National Insurance contributions for when they were caring for the child?
-applicantHasFullNIContributions.heading = Does the applicant have full National Insurance contributions for when they were caring for {0}?
+applicantHasFullNIContributions.heading = Does {0} have full National Insurance contributions for when they were caring for {1}?
 applicantHasFullNIContributions.yes = Yes
 applicantHasFullNIContributions.no = No
 applicantHasFullNIContributions.dontKnow = I don’t know
-applicantHasFullNIContributions.dontKnow.hint = The applicant will only receive Specified Adult Childcare credits for the period(s) of care that align with any gaps in their contributions during a tax year.
+applicantHasFullNIContributions.dontKnow.hint = Specified Adult Childcare credits are only given when the person has gaps in National Insurance contributions during the time they cared for the child.
 applicantHasFullNIContributions.checkYourAnswersLabel = Does the applicant have full National Insurance contributions for when they were caring for the child?
 applicantHasFullNIContributions.error.required = Select whether the applicant has full National Insurance contributions for when they were caring for the child
 applicantHasFullNIContributions.change.hidden = whether the applicant has full National Insurance contributions for when they were caring for the child

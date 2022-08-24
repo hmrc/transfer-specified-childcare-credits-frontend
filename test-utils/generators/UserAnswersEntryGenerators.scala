@@ -136,14 +136,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
       } yield (page, value)
     }
 
-  implicit lazy val arbitraryWasChildUnder12YearsOldUserAnswersEntry: Arbitrary[(WasChildUnder12YearsOldPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[WasChildUnder12YearsOldPage.type]
-        value <- arbitrary[Boolean].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
   implicit lazy val arbitraryApplicantWasUkResidentUserAnswersEntry: Arbitrary[(ApplicantWasUkResidentPage.type, JsValue)] =
     Arbitrary {
       for {
@@ -156,14 +148,6 @@ trait UserAnswersEntryGenerators extends PageGenerators with ModelGenerators {
     Arbitrary {
       for {
         page  <- arbitrary[ApplicantIsValidAgePage.type]
-        value <- arbitrary[Boolean].map(Json.toJson(_))
-      } yield (page, value)
-    }
-
-  implicit lazy val arbitraryApplicantChildcareAfterCutoffUserAnswersEntry: Arbitrary[(ApplicantChildcareAfterCutoffPage.type, JsValue)] =
-    Arbitrary {
-      for {
-        page  <- arbitrary[ApplicantChildcareAfterCutoffPage.type]
         value <- arbitrary[Boolean].map(Json.toJson(_))
       } yield (page, value)
     }

@@ -18,17 +18,17 @@ package controllers
 
 import controllers.actions._
 import forms.ApplicantClaimsChildBenefitForThisChildFormProvider
-
-import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
-import pages.{ApplicantClaimsChildBenefitForThisChildPage, ChildNamePage}
+import pages.ApplicantClaimsChildBenefitForThisChildPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import queries.ApplicantAndChildNamesQuery
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ApplicantClaimsChildBenefitForThisChildView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ApplicantClaimsChildBenefitForThisChildController @Inject()(
@@ -47,23 +47,21 @@ class ApplicantClaimsChildBenefitForThisChildController @Inject()(
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      getAnswer(ChildNamePage) { childName =>
-
+      getAnswer(ApplicantAndChildNamesQuery) { names =>
         val preparedForm = request.userAnswers.get(ApplicantClaimsChildBenefitForThisChildPage) match {
           case None => form
           case Some(value) => form.fill(value)
         }
-
-        Ok(view(preparedForm, childName, mode))
+        Ok(view(preparedForm, names, mode))
       }
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      getAnswerAsync(ChildNamePage) { childName =>
+      getAnswerAsync(ApplicantAndChildNamesQuery) { names =>
         form.bindFromRequest().fold(
           formWithErrors =>
-            Future.successful(BadRequest(view(formWithErrors, childName, mode))),
+            Future.successful(BadRequest(view(formWithErrors, names, mode))),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantClaimsChildBenefitForThisChildPage, value))

@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantIsPartnerOfClaimantFormProvider
-import models.{Name, NormalMode, UserAnswers}
+import models.{ApplicantAndChildNames, Name, NormalMode}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{ApplicantIsPartnerOfClaimantPage, ChildNamePage}
+import pages.{ApplicantIsPartnerOfClaimantPage, ApplicantNamePage, ChildNamePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -43,7 +43,11 @@ class ApplicantIsPartnerOfClaimantControllerSpec extends SpecBase with MockitoSu
   lazy val applicantIsPartnerOfClaimantRoute = routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode).url
 
   val childName = Name("Foo", "Bar")
-  val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
+  val applicantName = Name("Bar", "Foo")
+  val names = ApplicantAndChildNames(applicantName, childName)
+  val minimalUserAnswers = emptyUserAnswers
+    .set(ChildNamePage, childName).success.value
+    .set(ApplicantNamePage, applicantName).success.value
 
   "ApplicantIsPartnerOfClaimant Controller" - {
 
@@ -57,7 +61,7 @@ class ApplicantIsPartnerOfClaimantControllerSpec extends SpecBase with MockitoSu
         val view = application.injector.instanceOf[ApplicantIsPartnerOfClaimantView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, childName, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, names, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -72,7 +76,7 @@ class ApplicantIsPartnerOfClaimantControllerSpec extends SpecBase with MockitoSu
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(true), childName, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(true), names, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -113,7 +117,7 @@ class ApplicantIsPartnerOfClaimantControllerSpec extends SpecBase with MockitoSu
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, childName, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, names, NormalMode)(request, messages(application)).toString
       }
     }
 

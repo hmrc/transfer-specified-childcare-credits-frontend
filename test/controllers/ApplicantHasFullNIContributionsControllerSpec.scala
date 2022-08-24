@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantHasFullNIContributionsFormProvider
-import models.{ApplicantHasFullNIContributions, Name, NormalMode, UserAnswers}
+import models.{ApplicantAndChildNames, ApplicantHasFullNIContributions, Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{ApplicantHasFullNIContributionsPage, ChildNamePage}
+import pages.{ApplicantHasFullNIContributionsPage, ApplicantNamePage, ChildNamePage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -43,7 +43,11 @@ class ApplicantHasFullNIContributionsControllerSpec extends SpecBase with Mockit
   val form = formProvider()
 
   val childName = Name("Foo", "Bar")
-  val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
+  val applicantName = Name("Bar", "Foo")
+  val names = ApplicantAndChildNames(applicantName, childName)
+  val minimalUserAnswers = emptyUserAnswers
+    .set(ChildNamePage, childName).success.value
+    .set(ApplicantNamePage, applicantName).success.value
 
   "ApplicantHasFullNIContributions Controller" - {
 
@@ -57,7 +61,7 @@ class ApplicantHasFullNIContributionsControllerSpec extends SpecBase with Mockit
         val view = application.injector.instanceOf[ApplicantHasFullNIContributionsView]
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, childName, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, names, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -72,7 +76,7 @@ class ApplicantHasFullNIContributionsControllerSpec extends SpecBase with Mockit
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ApplicantHasFullNIContributions.values.head), childName, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(ApplicantHasFullNIContributions.values.head), names, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -113,7 +117,7 @@ class ApplicantHasFullNIContributionsControllerSpec extends SpecBase with Mockit
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, childName, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, names, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -130,7 +134,7 @@ class ApplicantHasFullNIContributionsControllerSpec extends SpecBase with Mockit
       }
     }
 
-    "must redirect to Journey Recovery for a GET if no child name is found" in {
+    "must redirect to Journey Recovery for a GET if no minimal data is found" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
@@ -158,7 +162,7 @@ class ApplicantHasFullNIContributionsControllerSpec extends SpecBase with Mockit
       }
     }
 
-    "redirect to Journey Recovery for a POST if no child name is found" in {
+    "redirect to Journey Recovery for a POST if no minimal data is found" in {
 
       val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 

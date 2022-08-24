@@ -58,24 +58,16 @@ class NavigatorSpec extends SpecBase {
         navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
       }
 
-      "must go from applicant is partner of claimant page to applicant caring for child after cutoff page" in {
-        navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantChildcareAfterCutoffController.onPageLoad(NormalMode)
-      }
-
-      "must go from applicant caring for child after cutoff page to applicant is valid age page" in {
-        navigator.nextPage(ApplicantChildcareAfterCutoffPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
+      "must go from applicant is partner of claimant page to applicant is valid age page" in {
+        navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
       }
 
       "must go from applicant is valid age page to was applicant UK resident page" in {
         navigator.nextPage(ApplicantIsValidAgePage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
       }
 
-      "must go from applicant was UK resident page to was child under 12 years old page" in {
-        navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, emptyUserAnswers) mustBe routes.WasChildUnder12YearsOldController.onPageLoad(NormalMode)
-      }
-
-      "must go from was child under 12 years old page to does applicant have full NI contributions page" in {
-        navigator.nextPage(WasChildUnder12YearsOldPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
+      "must go from applicant was UK resident page to does applicant have full NI contributions page" in {
+        navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
       }
 
       "must go from does applicant have full NI contributions page to the first period details page" in {
