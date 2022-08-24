@@ -25,6 +25,7 @@ import navigation.Navigator
 import pages.{ApplicantIsPartnerOfClaimantPage, ChildNamePage}
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
+import queries.ApplicantAndChildNamesQuery
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ApplicantIsPartnerOfClaimantView
@@ -47,23 +48,21 @@ class ApplicantIsPartnerOfClaimantController @Inject()(
 
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      getAnswer(ChildNamePage) { childName =>
-
+      getAnswer(ApplicantAndChildNamesQuery) { names =>
         val preparedForm = request.userAnswers.get(ApplicantIsPartnerOfClaimantPage) match {
           case None => form
           case Some(value) => form.fill(value)
         }
-
-        Ok(view(preparedForm, childName, mode))
+        Ok(view(preparedForm, names, mode))
       }
   }
 
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      getAnswerAsync(ChildNamePage) { childName =>
+      getAnswerAsync(ApplicantAndChildNamesQuery) { names =>
         form.bindFromRequest().fold(
           formWithErrors =>
-            Future.successful(BadRequest(view(formWithErrors, childName, mode))),
+            Future.successful(BadRequest(view(formWithErrors, names, mode))),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantIsPartnerOfClaimantPage, value))
