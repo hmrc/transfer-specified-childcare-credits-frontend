@@ -18,9 +18,11 @@ package controllers
 
 import com.google.inject.Inject
 import controllers.actions.{DataRequiredAction, DataRetrievalAction, IdentifierAction}
+import models.CheckMode
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
+import viewmodels.checkAnswers._
 import viewmodels.govuk.summarylist._
 import views.html.CheckYourAnswersView
 
@@ -35,11 +37,32 @@ class CheckYourAnswersController @Inject()(
 
   def onPageLoad(): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
+      
+      val answers = request.userAnswers
 
-      val list = SummaryListViewModel(
-        rows = Seq.empty
-      )
+      val childDetails = SummaryListViewModel(Seq(
+        ChildNameSummary.row(answers),
+        ChildDateOfBirthSummary.row(answers)
+      ).flatten)
 
-      Ok(view(list))
+      val applicantDetails = SummaryListViewModel(Seq(
+        ApplicantNameSummary.row(answers),
+        ApplicantDateOfBirthSummary.row(answers),
+        ApplicantAddressSummary.row(answers),
+        ApplicantTelephoneNumberSummary.row(answers),
+        ApplicantNinoSummary.row(answers)
+      ).flatten)
+
+      val periods = AddPeriodSummary.rows(answers, CheckMode)
+
+      val mainCarerDetails = SummaryListViewModel(Seq(
+        MainCarerNameSummary.row(answers),
+        MainCarerDateOfBirthSummary.row(answers),
+        MainCarerAddressSummary.row(answers),
+        MainCarerTelephoneNumberSummary.row(answers),
+        MainCarerNinoSummary.row(answers)
+      ).flatten)
+
+      Ok(view(childDetails, applicantDetails, periods, mainCarerDetails))
   }
 }
