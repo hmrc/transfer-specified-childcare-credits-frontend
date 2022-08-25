@@ -34,7 +34,11 @@
             @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        <h1 class="govuk-heading-xl">@messages("childName.heading")</h1>
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-5">@messages("childName.heading")</h1>
+
+        <div id="event-name-hint" class="govuk-hint govuk-!-margin-bottom-5">
+            @messages("childName.hint")
+        </div>
 
         @govukInput(
             InputViewModel(

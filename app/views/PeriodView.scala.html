@@ -34,7 +34,10 @@
 
         <h1 class="govuk-heading-xl">@messages("period.heading", names.applicantName.firstName, names.childName.firstName)</h1>
 
-        <p class="govuk-body">@messages("period.hint")</p>
+        <p class="govuk-body">@messages("period.line1")</p>
+
+        <p class="govuk-hint govuk-!-margin-bottom-1">@messages("period.hint")</p>
+        <p class="govuk-hint govuk-!-margin-top-1">@messages("period.hint2")</p>
 
         @govukDateInput(
           DateViewModel(

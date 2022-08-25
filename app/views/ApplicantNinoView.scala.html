@@ -40,6 +40,7 @@
                 label = LabelViewModel(messages("applicantNino.heading", applicantName.firstName)).asPageHeading()
             )
             .withWidth(Full)
+            .withHint(HintViewModel(HtmlContent(messages("applicantNino.hint"))))
         )
 
         @govukButton(
