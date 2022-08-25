@@ -62,13 +62,10 @@ class RemovePeriodController @Inject()(
             if (value) {
               for {
                 updatedAnswers <- Future.fromTry(request.userAnswers.remove(PeriodPage(index)))
-                _               <- sessionRepository.set(updatedAnswers)
-                updatedAnswers2 <- Future.fromTry(updatedAnswers.set(RemovePeriodPage(index), true))
-              } yield Redirect(navigator.nextPage(RemovePeriodPage(index), mode, updatedAnswers2))
-            } else {
-              for {
-                updatedAnswers <- Future.fromTry(request.userAnswers.set(RemovePeriodPage(index), false))
+                _              <- sessionRepository.set(updatedAnswers)
               } yield Redirect(navigator.nextPage(RemovePeriodPage(index), mode, updatedAnswers))
+            } else {
+              Future.successful(Redirect(navigator.nextPage(RemovePeriodPage(index), mode, request.userAnswers)))
             }
         )
       }
