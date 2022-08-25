@@ -32,11 +32,11 @@ object ApplicantTelephoneNumberSummary  {
       answer =>
 
         SummaryListRowViewModel(
-          key     = "applicntTelephoneNumber.checkYourAnswersLabel",
+          key     = "applicantTelephoneNumber.checkYourAnswersLabel",
           value   = ValueViewModel(HtmlFormat.escape(answer).toString),
           actions = Seq(
             ActionItemViewModel("site.change", routes.ApplicantTelephoneNumberController.onPageLoad(CheckMode).url)
-              .withVisuallyHiddenText(messages("applicntTelephoneNumber.change.hidden"))
+              .withVisuallyHiddenText(messages("applicantTelephoneNumber.change.hidden"))
           )
         )
     }
