@@ -20,8 +20,7 @@ import controllers.routes
 import models.{CheckMode, UserAnswers}
 import pages.ApplicantNamePage
 import play.api.i18n.Messages
-import play.twirl.api.HtmlFormat
-import uk.gov.hmrc.govukfrontend.views.viewmodels.content.HtmlContent
+import uk.gov.hmrc.govukfrontend.views.Aliases.Text
 import uk.gov.hmrc.govukfrontend.views.viewmodels.summarylist.SummaryListRow
 import viewmodels.govuk.summarylist._
 import viewmodels.implicits._
@@ -32,11 +31,11 @@ object ApplicantNameSummary  {
     answers.get(ApplicantNamePage).map {
       answer =>
 
-      val value = HtmlFormat.escape(answer.firstName).toString + "<br/>" + HtmlFormat.escape(answer.lastName).toString
+      val value = Text(s"${answer.firstName} ${answer.lastName}")
 
         SummaryListRowViewModel(
           key     = "applicantName.checkYourAnswersLabel",
-          value   = ValueViewModel(HtmlContent(value)),
+          value   = ValueViewModel(value),
           actions = Seq(
             ActionItemViewModel("site.change", routes.ApplicantNameController.onPageLoad(CheckMode).url)
               .withVisuallyHiddenText(messages("applicantName.change.hidden"))
