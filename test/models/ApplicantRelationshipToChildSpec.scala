@@ -51,6 +51,10 @@ class ApplicantRelationshipToChildSpec extends AnyFreeSpec with Matchers with Sc
         Json.obj("type" -> "nonResidentParent").as[ApplicantRelationshipToChild] mustEqual NonResidentParent
       }
 
+      "for Resident Partner" in {
+        Json.obj("type" -> "residentPartner").as[ApplicantRelationshipToChild] mustEqual ResidentPartner
+      }
+
       "for Other" in {
         forAll(Gen.alphaStr) { value =>
           Json.obj(

@@ -90,6 +90,7 @@ applicantRelationshipToChild.brotherOrSister = Brother or sister
 applicantRelationshipToChild.brotherOrSister.hint = The child’s biological, half, step or adopted brother or sister
 applicantRelationshipToChild.greatAuntOrGreatUncle = Great aunt or great uncle
 applicantRelationshipToChild.nonResidentParent = Mother or father who does not live with the child
+applicantRelationshipToChild.residentPartner = Spouse, civil partner or partner living with the person who gets Child Benefit for this child
 applicantRelationshipToChild.other = Other
 applicantRelationshipToChild.other.detail.label = Enter how {0} is related to {1}
 applicantRelationshipToChild.other.detail.label.fallback = Enter how the applicant is related to the child

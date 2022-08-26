@@ -37,7 +37,8 @@ class ApplicantRelationshipToChildFormProvider @Inject() extends Mappings {
 
   private val validTypes = List(
     "grandparent", "auntOrUncle", "brotherOrSister",
-    "greatAuntOrGreatUncle", "nonResidentParent", "other"
+    "greatAuntOrGreatUncle", "nonResidentParent",
+    "residentPartner", "other"
   )
 
   private def isOther(data: Map[String, String]): Boolean =
@@ -50,6 +51,7 @@ class ApplicantRelationshipToChildFormProvider @Inject() extends Mappings {
       case "brotherOrSister"       => BrotherOrSister
       case "greatAuntOrGreatUncle" => GreatAuntOrGreatUncle
       case "nonResidentParent"     => NonResidentParent
+      case "residentPartner"       => ResidentPartner
       case "other"                 => Other(detail.get)
     }
 
@@ -60,6 +62,7 @@ class ApplicantRelationshipToChildFormProvider @Inject() extends Mappings {
       case BrotherOrSister       => Some(("brotherOrSister", None))
       case GreatAuntOrGreatUncle => Some(("greatAuntOrGreatUncle", None))
       case NonResidentParent     => Some(("nonResidentParent", None))
+      case ResidentPartner       => Some(("residentPartner", None))
       case Other(value)          => Some(("other", Some(value)))
     }
 }

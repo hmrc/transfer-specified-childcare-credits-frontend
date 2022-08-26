@@ -19,7 +19,7 @@ package navigation
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import controllers.routes
-import models.ApplicantRelationshipToChild.GreatAuntOrGreatUncle
+import models.ApplicantRelationshipToChild.{GreatAuntOrGreatUncle, ResidentPartner}
 import pages._
 import models._
 import queries.PeriodsQuery
@@ -53,8 +53,8 @@ class Navigator @Inject()() {
 
   private def applicantRelationshipToChildRoutes(answers: UserAnswers): Call =
     answers.get(ApplicantRelationshipToChildPage).map {
-      case GreatAuntOrGreatUncle => routes.KickOutIneligibleController.onPageLoad()
-      case _                     => routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
+      case GreatAuntOrGreatUncle | ResidentPartner => routes.KickOutIneligibleController.onPageLoad()
+      case _ => routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def applicantClaimsChildBenefitForThisChildRoutes(answers: UserAnswers): Call =

@@ -65,7 +65,8 @@ trait ModelGenerators {
       AuntOrUncle,
       BrotherOrSister,
       GreatAuntOrGreatUncle,
-      NonResidentParent
+      NonResidentParent,
+      ResidentPartner
     )
     Arbitrary(Gen.oneOf(basicGen, otherGen))
   }
