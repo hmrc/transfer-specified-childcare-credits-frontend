@@ -19,7 +19,7 @@ package navigation
 import javax.inject.{Inject, Singleton}
 import play.api.mvc.Call
 import controllers.routes
-import models.ApplicantRelationshipToChild.GreatAuntOrGreatUncle
+import models.ApplicantRelationshipToChild.{GreatAuntOrGreatUncle, ResidentPartner}
 import pages._
 import models._
 import queries.PeriodsQuery
@@ -33,7 +33,6 @@ class Navigator @Inject()() {
     case ApplicantNamePage => _ => routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
     case ApplicantRelationshipToChildPage => applicantRelationshipToChildRoutes
     case ApplicantClaimsChildBenefitForThisChildPage => applicantClaimsChildBenefitForThisChildRoutes
-    case ApplicantIsPartnerOfClaimantPage => applicantIsPartnerOfClaimantRoutes
     case ApplicantIsValidAgePage => applicantIsValidAgeRoutes
     case ApplicantWasUkResidentPage => applicantWasUkResidentRoutes
     case ApplicantHasFullNIContributionsPage => applicantHasFullNIContributionsRoutes
@@ -54,18 +53,12 @@ class Navigator @Inject()() {
 
   private def applicantRelationshipToChildRoutes(answers: UserAnswers): Call =
     answers.get(ApplicantRelationshipToChildPage).map {
-      case GreatAuntOrGreatUncle => routes.KickOutIneligibleController.onPageLoad()
-      case _                     => routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
+      case GreatAuntOrGreatUncle | ResidentPartner => routes.KickOutIneligibleController.onPageLoad()
+      case _ => routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def applicantClaimsChildBenefitForThisChildRoutes(answers: UserAnswers): Call =
     answers.get(ApplicantClaimsChildBenefitForThisChildPage).map {
-      case true  => routes.KickOutIneligibleController.onPageLoad()
-      case false => routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
-
-  private def applicantIsPartnerOfClaimantRoutes(answers: UserAnswers): Call =
-    answers.get(ApplicantIsPartnerOfClaimantPage).map {
       case true  => routes.KickOutIneligibleController.onPageLoad()
       case false => routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())

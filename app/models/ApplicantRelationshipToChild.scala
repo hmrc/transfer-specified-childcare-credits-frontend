@@ -16,11 +16,7 @@
 
 package models
 
-import play.api.i18n.Messages
-import play.api.libs.json.{JsString, Json, Reads, Writes, __}
-import uk.gov.hmrc.govukfrontend.views.Aliases.Text
-import uk.gov.hmrc.govukfrontend.views.viewmodels.hint.Hint
-import uk.gov.hmrc.govukfrontend.views.viewmodels.radios.RadioItem
+import play.api.libs.json.{Json, Reads, Writes, __}
 
 sealed trait ApplicantRelationshipToChild
 
@@ -31,6 +27,7 @@ object ApplicantRelationshipToChild extends Enumerable.Implicits {
   case object BrotherOrSister extends WithName("brotherOrSister") with ApplicantRelationshipToChild
   case object GreatAuntOrGreatUncle extends WithName("greatAuntOrGreatUncle") with ApplicantRelationshipToChild
   case object NonResidentParent extends WithName("nonResidentParent") with ApplicantRelationshipToChild
+  case object ResidentPartner extends WithName("residentPartner") with ApplicantRelationshipToChild
   final case class Other(value: String) extends ApplicantRelationshipToChild
 
   implicit lazy val reads: Reads[ApplicantRelationshipToChild] =
@@ -40,6 +37,7 @@ object ApplicantRelationshipToChild extends Enumerable.Implicits {
       case "brotherOrSister"       => Reads.pure(BrotherOrSister)
       case "greatAuntOrGreatUncle" => Reads.pure(GreatAuntOrGreatUncle)
       case "nonResidentParent"     => Reads.pure(NonResidentParent)
+      case "residentPartner"       => Reads.pure(ResidentPartner)
       case "other"                 => (__ \ "value").read[String].map(Other)
       case _                       => Reads.failed("error.invalid")
     }
@@ -51,6 +49,7 @@ object ApplicantRelationshipToChild extends Enumerable.Implicits {
       case BrotherOrSister       => Json.obj("type" -> "brotherOrSister")
       case GreatAuntOrGreatUncle => Json.obj("type" -> "greatAuntOrGreatUncle")
       case NonResidentParent     => Json.obj("type" -> "nonResidentParent")
+      case ResidentPartner       => Json.obj("type" -> "residentPartner")
       case Other(value)          => Json.obj("type" -> "other", "value" -> value)
     }
 }

@@ -19,12 +19,15 @@ package navigation
 import base.SpecBase
 import controllers.routes
 import models._
+import ApplicantRelationshipToChild._
 import org.scalacheck.Arbitrary.arbitrary
+import org.scalacheck.Gen
+import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 import pages._
 
 import java.time.LocalDate
 
-class NavigatorSpec extends SpecBase {
+class NavigatorSpec extends SpecBase with ScalaCheckDrivenPropertyChecks {
 
   val navigator = new Navigator
 
@@ -53,13 +56,25 @@ class NavigatorSpec extends SpecBase {
       "must go from applicant relationship to child page" - {
 
         "to the kick out ineligible page when the user answers great aunt or great uncle" in {
-          val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.GreatAuntOrGreatUncle).success.value
+          val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, GreatAuntOrGreatUncle).success.value
+          navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
+        }
+
+        "to the kick out ineligible page when the user answers resident partner" in {
+          val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, ResidentPartner).success.value
           navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
         }
 
         "to does applicant already receives child benefit for this child page when the user answers anything else" in {
-          val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.Grandparent).success.value
-          navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, answers) mustBe routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
+
+          val values = Gen.oneOf(
+            Grandparent, AuntOrUncle, BrotherOrSister, NonResidentParent, Other("value")
+          )
+
+          forAll (values) { value =>
+            val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, value).success.value
+            navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, answers) mustBe routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
+          }
         }
 
         "to the journey recovery page when the question hasn't been answered" in {
@@ -74,30 +89,13 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
         }
 
-        "to applicant is partner of claimant page when the user answers no" in {
+        "to applicant is valid age page when the user answers no" in {
           val answers = emptyUserAnswers.set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
-          navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
+          navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery page when the question hasn't been answered" in {
           navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
-        }
-      }
-
-      "must go from applicant is partner of claimant page" - {
-
-        "to the kick out ineligible page when the user answers yes" in {
-          val answers = emptyUserAnswers.set(ApplicantIsPartnerOfClaimantPage, true).success.value
-          navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
-        }
-
-        "to applicant is valid age page when the user answers no" in {
-          val answers = emptyUserAnswers.set(ApplicantIsPartnerOfClaimantPage, false).success.value
-          navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, answers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
-        }
-
-        "to the journey recovery page when the question hasn't been answered" in {
-          navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
 

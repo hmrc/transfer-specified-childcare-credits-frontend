@@ -65,6 +65,11 @@
       id = Some(s"value_$NonResidentParent")
     ),
     RadioItem(
+      content = Text(messages("applicantRelationshipToChild.residentPartner")),
+      value = Some(ResidentPartner.toString),
+      id = Some(s"value_$ResidentPartner")
+    ),
+    RadioItem(
       content = Text(messages("applicantRelationshipToChild.other")),
       value = Some("other"),
       id = Some(s"value_$Other"),

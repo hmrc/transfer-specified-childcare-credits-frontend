@@ -40,6 +40,7 @@ class ApplicantRelationshipToChildFormProviderSpec extends OptionFieldBehaviours
       BrotherOrSister.toString,
       GreatAuntOrGreatUncle.toString,
       NonResidentParent.toString,
+      ResidentPartner.toString,
       "other"
     )
 
