@@ -35,7 +35,7 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("applicantIsPartnerOfClaimant.heading", names.applicantName.firstName, names.childName.firstName)).asPageHeading()
+                legend = LegendViewModel(messageWithNameFallback("applicantIsPartnerOfClaimant.heading", names)).asPageHeading()
             )
         )
 

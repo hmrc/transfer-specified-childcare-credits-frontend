@@ -28,7 +28,7 @@
 @(form: Form[_], names: ApplicantAndChildNames, mode: Mode)(implicit request: Request[_], messages: Messages)
 
 @detailInput = @{
-  govukInput(InputViewModel(form("detail"), LabelViewModel(messages("applicantRelationshipToChild.other.detail.label", names.applicantName.firstName, names.childName.firstName))))
+  govukInput(InputViewModel(form("detail"), LabelViewModel(messageWithNameFallback("applicantRelationshipToChild.other.detail.label", names))))
 }
 
 @items = @{
@@ -84,7 +84,7 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("applicantRelationshipToChild.heading", names.applicantName.firstName, names.childName.firstName)).asPageHeading(),
+                legend = LegendViewModel(messageWithNameFallback("applicantRelationshipToChild.heading", names)).asPageHeading(),
                 items  = items
             )
         )
