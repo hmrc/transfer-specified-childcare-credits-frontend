@@ -82,6 +82,7 @@ unauthorised.heading = You can’t access this service with this account
 
 applicantRelationshipToChild.title = What is the applicant’s relationship to the child?
 applicantRelationshipToChild.heading = How is {0} related to {1}?
+applicantRelationshipToChild.heading.fallback = How is the applicant related to the child?
 applicantRelationshipToChild.grandparent = Grandparent
 applicantRelationshipToChild.auntOrUncle = Aunt or uncle
 applicantRelationshipToChild.auntOrUncle.hint = The parent’s biological, half, step or adopted brother or sister
@@ -91,6 +92,7 @@ applicantRelationshipToChild.greatAuntOrGreatUncle = Great aunt or great uncle
 applicantRelationshipToChild.nonResidentParent = Mother or father who does not live with the child
 applicantRelationshipToChild.other = Other
 applicantRelationshipToChild.other.detail.label = Enter how {0} is related to {1}
+applicantRelationshipToChild.other.detail.label.fallback = Enter how the applicant is related to the child
 applicantRelationshipToChild.other.detail.error.required = Enter how the applicant is related to the child
 applicantRelationshipToChild.checkYourAnswersLabel = The applicant’s relationship to the child
 applicantRelationshipToChild.error.required = Select the applicant’s relationship to the child
@@ -98,18 +100,21 @@ applicantRelationshipToChild.change.hidden = the applicant’s relationship to t
 
 applicantClaimsChildBenefitForThisChild.title = Does the applicant already receive Child Benefit for the child?
 applicantClaimsChildBenefitForThisChild.heading = Does {0} already receive Child Benefit for {1}?
+applicantClaimsChildBenefitForThisChild.heading.fallback = Does the applicant already receive Child Benefit for the child?
 applicantClaimsChildBenefitForThisChild.checkYourAnswersLabel = Does the applicant already receive Child Benefit for the child?
 applicantClaimsChildBenefitForThisChild.error.required = Select yes if the applicant already receives Child Benefit for the child
 applicantClaimsChildBenefitForThisChild.change.hidden = whether the applicant already receives Child Benefit for the child
 
 applicantIsPartnerOfClaimant.title = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
 applicantIsPartnerOfClaimant.heading = Is {0} the partner of, and living with, the person who receives Child Benefit for {1}?
+applicantIsPartnerOfClaimant.heading.fallback = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
 applicantIsPartnerOfClaimant.checkYourAnswersLabel = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
 applicantIsPartnerOfClaimant.error.required = Select yes if the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 applicantIsPartnerOfClaimant.change.hidden = whether the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 
 applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they began caring for the child?
 applicantIsValidAge.heading = Was {0} between 16 years old and State Pension age when they began caring for {1}?
+applicantIsValidAge.heading.fallback = Was the applicant between 16 years old and State Pension age when they began caring for the child?
 applicantIsValidAge.hint = State Pension age is the earliest age a person can receive their State Pension
 applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years old and State Pension age when they began caring for the child?
 applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they began caring for the child
@@ -117,12 +122,14 @@ applicantIsValidAge.change.hidden = whether the applicant was between 16 years o
 
 applicantWasUkResident.title = Was the applicant a resident of the UK when they were caring for the child?
 applicantWasUkResident.heading = Was {0} a resident of the UK when they were caring for {1}?
+applicantWasUkResident.heading.fallback = Was the applicant a resident of the UK when they were caring for the child?
 applicantWasUkResident.checkYourAnswersLabel = Was the applicant a resident of the UK when they were caring for the child?
 applicantWasUkResident.error.required = Select yes if the applicant was a resident of the UK when they were caring for the child
 applicantWasUkResident.change.hidden = whether the applicant was a resident of the UK when they were caring for the child
 
 applicantHasFullNIContributions.title = Does the applicant have full National Insurance contributions for when they were caring for the child?
 applicantHasFullNIContributions.heading = Did {0} have full National Insurance contributions when caring for {1}?
+applicantHasFullNIContributions.heading.fallback = Did the applicant have full National Insurance contributions when caring for the child?
 applicantHasFullNIContributions.yes = Yes
 applicantHasFullNIContributions.no = No
 applicantHasFullNIContributions.dontKnow = I don’t know
@@ -154,6 +161,7 @@ childDateOfBirth.change.hidden = child’s date of birth
 
 period.title = When did the applicant care for the child?
 period.heading = When did {0} care for {1}?
+period.heading.fallback = When did the applicant care for the child?
 period.line1 = A period of care is when the child was looked after for at least one day a week. You can add multiple periods of care.
 period.hint = If care is ongoing, enter today’s date as the end date.
 period.hint2 = If care began before 6 April 2011, enter 6 April 2011 as the start date..
@@ -176,6 +184,7 @@ addPeriod.title = Did the applicant care for the child for any other periods of 
 addPeriod.heading = You have added 1 period of care
 addPeriod.heading.plural = You have added {0} periods of care
 addPeriod.question = Did {0} care for {1} for another period of care?
+addPeriod.question.fallback = Did the applicant care for the child for another period of care?
 addPeriod.error.required = Select yes if the applicant cared for the child for any other periods of time
 addPeriod.change.hidden = the period of care from {0}
 addPeriod.remove.hidden = the period of care from {0}

@@ -35,7 +35,7 @@
         @govukRadios(
             RadiosViewModel(
                 field  = form("value"),
-                legend = LegendViewModel(messages("applicantHasFullNIContributions.heading", names.applicantName.firstName, names.childName.firstName)).asPageHeading(),
+                legend = LegendViewModel(messageWithNameFallback("applicantHasFullNIContributions.heading", names)).asPageHeading(),
                 items  = ApplicantHasFullNIContributions.options
             )
         )

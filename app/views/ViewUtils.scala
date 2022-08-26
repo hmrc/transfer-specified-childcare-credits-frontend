@@ -16,6 +16,7 @@
 
 package views
 
+import models.ApplicantAndChildNames
 import play.api.data.Form
 import play.api.i18n.Messages
 
@@ -42,4 +43,11 @@ object ViewUtils {
 
   def date(d: LocalDate): String =
     d.format(DateTimeFormatter.ofPattern("d MMMM yyyy"))
+
+  def messageWithNameFallback(key: String, names: ApplicantAndChildNames)(implicit messages: Messages): String =
+    if (names.childName.firstName == names.applicantName.firstName) {
+      Messages(s"$key.fallback")
+    } else {
+      Messages(key, names.applicantName.firstName, names.childName.firstName)
+    }
 }

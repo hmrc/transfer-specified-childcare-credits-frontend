@@ -51,7 +51,7 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messages("addPeriod.question", names.applicantName.firstName, names.childName.firstName)).withSize(LegendSize.Medium)
+                legend = LegendViewModel(messageWithNameFallback("addPeriod.question", names)).withSize(LegendSize.Medium)
             )
         )
 
