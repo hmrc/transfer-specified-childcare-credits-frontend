@@ -74,30 +74,13 @@ class NavigatorSpec extends SpecBase {
           navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
         }
 
-        "to applicant is partner of claimant page when the user answers no" in {
+        "to applicant is valid age page when the user answers no" in {
           val answers = emptyUserAnswers.set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
-          navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
+          navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery page when the question hasn't been answered" in {
           navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
-        }
-      }
-
-      "must go from applicant is partner of claimant page" - {
-
-        "to the kick out ineligible page when the user answers yes" in {
-          val answers = emptyUserAnswers.set(ApplicantIsPartnerOfClaimantPage, true).success.value
-          navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
-        }
-
-        "to applicant is valid age page when the user answers no" in {
-          val answers = emptyUserAnswers.set(ApplicantIsPartnerOfClaimantPage, false).success.value
-          navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, answers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
-        }
-
-        "to the journey recovery page when the question hasn't been answered" in {
-          navigator.nextPage(ApplicantIsPartnerOfClaimantPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
 

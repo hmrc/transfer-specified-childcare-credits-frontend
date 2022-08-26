@@ -33,7 +33,6 @@ class Navigator @Inject()() {
     case ApplicantNamePage => _ => routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
     case ApplicantRelationshipToChildPage => applicantRelationshipToChildRoutes
     case ApplicantClaimsChildBenefitForThisChildPage => applicantClaimsChildBenefitForThisChildRoutes
-    case ApplicantIsPartnerOfClaimantPage => applicantIsPartnerOfClaimantRoutes
     case ApplicantIsValidAgePage => applicantIsValidAgeRoutes
     case ApplicantWasUkResidentPage => applicantWasUkResidentRoutes
     case ApplicantHasFullNIContributionsPage => applicantHasFullNIContributionsRoutes
@@ -60,12 +59,6 @@ class Navigator @Inject()() {
 
   private def applicantClaimsChildBenefitForThisChildRoutes(answers: UserAnswers): Call =
     answers.get(ApplicantClaimsChildBenefitForThisChildPage).map {
-      case true  => routes.KickOutIneligibleController.onPageLoad()
-      case false => routes.ApplicantIsPartnerOfClaimantController.onPageLoad(NormalMode)
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
-
-  private def applicantIsPartnerOfClaimantRoutes(answers: UserAnswers): Call =
-    answers.get(ApplicantIsPartnerOfClaimantPage).map {
       case true  => routes.KickOutIneligibleController.onPageLoad()
       case false => routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
