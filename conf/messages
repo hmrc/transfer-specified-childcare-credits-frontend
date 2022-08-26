@@ -110,6 +110,7 @@ applicantIsPartnerOfClaimant.change.hidden = whether the applicant is the partne
 
 applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they began caring for the child?
 applicantIsValidAge.heading = Was {0} between 16 years old and State Pension age when they began caring for {1}?
+applicantIsValidAge.hint = State Pension age is the earliest age a person can receive their State Pension
 applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years old and State Pension age when they began caring for the child?
 applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they began caring for the child
 applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they began caring for the child
@@ -245,7 +246,6 @@ applicantNino.change.hidden = the applicant’s National Insurance number
 
 mainCarerName.title = What is the name of the person who claims Child Benefit for the child?
 mainCarerName.heading = Who claims Child Benefit for {0}?
-mainCarerName.hint = This is the parent or main carer of the child
 mainCarerName.firstName = First name
 mainCarerName.lastName = Last name
 mainCarerName.checkYourAnswersLabel = Name
@@ -319,7 +319,7 @@ checkYourAnswers.applicantDetails = Applicant details
 checkYourAnswers.periodsOfCare = Period of care
 checkYourAnswers.periodsOfCare.plural = Periods of care
 checkYourAnswers.addPeriod = Add another period of care
-checkYourAnswers.mainCarerDetails = Main carer details
+checkYourAnswers.mainCarerDetails = Person who claims Child Benefit details
 checkYourAnswers.beforeYouContinue = Before you continue
 checkYourAnswers.confirmation = By continuing this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
 checkYourAnswers.acceptAndContinue = Accept and continue
