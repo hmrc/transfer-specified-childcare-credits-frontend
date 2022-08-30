@@ -37,7 +37,6 @@ import scala.concurrent.Future
 class ChildDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
 
   val formProvider = new ChildDateOfBirthFormProvider(Clock.fixed(Instant.now, ZoneId.systemDefault))
-  private def form = formProvider()
 
   def onwardRoute = Call("GET", "/foo")
 
@@ -46,9 +45,11 @@ class ChildDateOfBirthControllerSpec extends SpecBase with MockitoSugar {
   lazy val childDateOfBirthRoute = routes.ChildDateOfBirthController.onPageLoad(NormalMode).url
 
   val childName = Name("Foo", "Bar")
+  private def form = formProvider(childName)
 
   override val emptyUserAnswers = UserAnswers(userAnswersId)
   val minimumUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
+
 
   def getRequest: FakeRequest[AnyContentAsEmpty.type] =
     FakeRequest(GET, childDateOfBirthRoute)

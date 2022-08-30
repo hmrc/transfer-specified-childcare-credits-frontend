@@ -154,10 +154,12 @@ childDateOfBirth.title = What is the child’s date of birth?
 childDateOfBirth.heading = What is {0}’s date of birth?
 childDateOfBirth.hint = For example, 15 11 2007
 childDateOfBirth.checkYourAnswersLabel = Date of birth
-childDateOfBirth.error.required.all = Enter the child’s date of birth
+childDateOfBirth.error.required.all = Enter {0}’s date of birth
 childDateOfBirth.error.required.two = The date of birth must include {0} and {1}
 childDateOfBirth.error.required = The date of birth must include {0}
 childDateOfBirth.error.invalid = Enter a real date
+childDateOfBirth.error.max = The date must be before today
+childDateOfBirth.error.min = You can only claim for Specified Adult Childcare credits if the child was born after {0}
 childDateOfBirth.change.hidden = child’s date of birth
 
 period.title = When did the applicant care for the child?
