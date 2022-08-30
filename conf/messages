@@ -214,10 +214,11 @@ applicantDateOfBirth.title = What is the applicant’s date of birth?
 applicantDateOfBirth.heading = What is {0}’s date of birth?
 applicantDateOfBirth.hint = For example, 15 11 2007
 applicantDateOfBirth.checkYourAnswersLabel = Date of birth
-applicantDateOfBirth.error.required.all = Enter the applicant’s date of birth
+applicantDateOfBirth.error.required.all = Enter {0}’s date of birth
 applicantDateOfBirth.error.required.two = The date must include {0} and {1}
 applicantDateOfBirth.error.required = The date must include {0}
 applicantDateOfBirth.error.invalid = Enter a real date
+applicantDateOfBirth.error.max = {0} must be at least 16 years old to claim Specified Adult Childcare credits
 applicantDateOfBirth.change.hidden = the applicant’s date of birth
 
 applicantAddress.title = What is the applicant’s address?
