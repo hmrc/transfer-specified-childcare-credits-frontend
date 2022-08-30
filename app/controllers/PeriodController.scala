@@ -18,12 +18,12 @@ package controllers
 
 import controllers.actions._
 import forms.PeriodFormProvider
-import models.{Index, Mode}
+import models.{ApplicantAndChildNames, Index, Mode}
 import navigation.Navigator
 import pages.PeriodPage
 import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.mvc.{Action, AnyContent, MessagesControllerComponents}
-import queries.ApplicantAndChildNamesQuery
+import queries.ApplicantAndChildQuery
 import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.PeriodView
@@ -43,25 +43,25 @@ class PeriodController @Inject()(
                                       view: PeriodView
                                      )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
-  def form = formProvider()
-
   def onPageLoad(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      getAnswer(ApplicantAndChildNamesQuery) { names =>
+      getAnswer(ApplicantAndChildQuery) { people =>
+        val form = formProvider(people)
         val preparedForm = request.userAnswers.get(PeriodPage(index)) match {
           case None => form
           case Some(value) => form.fill(value)
         }
-        Ok(view(preparedForm, names, mode, index))
+        Ok(view(preparedForm, ApplicantAndChildNames(people.applicantName, people.child.name), mode, index))
       }
   }
 
   def onSubmit(mode: Mode, index: Index): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
-      getAnswerAsync(ApplicantAndChildNamesQuery) { names =>
+      getAnswerAsync(ApplicantAndChildQuery) { people =>
+        val form = formProvider(people)
         form.bindFromRequest().fold(
           formWithErrors =>
-            Future.successful(BadRequest(view(formWithErrors, names, mode, index))),
+            Future.successful(BadRequest(view(formWithErrors, ApplicantAndChildNames(people.applicantName, people.child.name), mode, index))),
           value =>
             for {
               updatedAnswers <- Future.fromTry(request.userAnswers.set(PeriodPage(index), value))

@@ -17,7 +17,7 @@
 package forms
 
 import forms.mappings.Mappings
-import models.Period
+import models.{ApplicantAndChild, Period}
 import play.api.data.Form
 import play.api.data.Forms._
 
@@ -26,21 +26,29 @@ import javax.inject.Inject
 
 class PeriodFormProvider @Inject()(clock: Clock) extends Mappings {
 
+  private val min: LocalDate = LocalDate.of(2011, 4, 6)
   private def max: LocalDate = LocalDate.now(clock)
 
-  def apply(): Form[Period] = Form(
+  def apply(people: ApplicantAndChild): Form[Period] = Form(
     mapping(
       "startDate" -> localDate(
         invalidKey = "period.startDate.error.invalid",
         allRequiredKey = "period.startDate.error.required.all",
         twoRequiredKey = "period.startDate.error.required.two",
-        requiredKey = "period.startDate.error.required"
-      ).verifying(maxDate(max, "period.startDate.error.max")),
+        requiredKey = "period.startDate.error.required",
+        args = Seq(people.applicantName.firstName, people.child.name.firstName)
+      )
+        .verifying(firstError(
+          maxDate(max, "period.startDate.error.max"),
+          maxDate(people.child.dateOfBirth.plusYears(12), "period.startDate.error.childOver12", people.child.name.firstName)
+        ))
+        .verifying(minDate(min, "period.startDate.error.min")),
       "endDate" -> localDate(
         invalidKey = "period.endDate.error.invalid",
         allRequiredKey = "period.endDate.error.required.all",
         twoRequiredKey = "period.endDate.error.required.two",
-        requiredKey = "period.endDate.error.required"
+        requiredKey = "period.endDate.error.required",
+        args = Seq(people.applicantName.firstName, people.child.name.firstName)
       ).verifying(maxDate(max, "period.endDate.error.max"))
     )(Period.apply)(Period.unapply)
   )

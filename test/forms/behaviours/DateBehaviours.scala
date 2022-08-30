@@ -44,11 +44,14 @@ class DateBehaviours extends FieldBehaviours {
     }
   }
 
-  def dateFieldWithMax(form: Form[_], key: String, max: LocalDate, formError: FormError): Unit = {
+  def dateFieldWithMax(form: Form[_], key: String, max: LocalDate, formError: FormError): Unit =
+    dateFieldWithMax(form, key, max, max.plusYears(10), formError)
+
+  def dateFieldWithMax(form: Form[_], key: String, max: LocalDate, maxBound: LocalDate, formError: FormError): Unit = {
 
     s"fail to bind a date greater than ${max.format(DateTimeFormatter.ISO_LOCAL_DATE)}" in {
 
-      val generator = datesBetween(max.plusDays(1), max.plusYears(10))
+      val generator = datesBetween(max.plusDays(1), maxBound)
 
       forAll(generator -> "invalid dates") {
         date =>

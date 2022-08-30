@@ -18,13 +18,13 @@ package controllers
 
 import base.SpecBase
 import forms.PeriodFormProvider
-import models.{ApplicantAndChildNames, Index, Name, NormalMode, Period}
+import models.{ApplicantAndChild, ApplicantAndChildNames, Child, Index, Name, NormalMode, Period}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatest.TryValues
 import org.scalatestplus.mockito.MockitoSugar
-import pages.{ApplicantNamePage, ChildNamePage, PeriodPage}
+import pages.{ApplicantNamePage, ChildDateOfBirthPage, ChildNamePage, PeriodPage}
 import play.api.inject.bind
 import play.api.mvc.Call
 import play.api.test.FakeRequest
@@ -40,17 +40,20 @@ class PeriodControllerSpec extends SpecBase with MockitoSugar with TryValues {
   def onwardRoute = Call("GET", "/foo")
 
   val clock = Clock.fixed(Instant.now, ZoneOffset.UTC)
-  val formProvider = new PeriodFormProvider(clock)
-  val form = formProvider()
 
   lazy val periodRoute = routes.PeriodController.onPageLoad(NormalMode, Index(0)).url
 
   val childName = Name("Foo", "Bar")
+  val childDob = LocalDate.now.minusYears(1)
   val applicantName = Name("Bar", "Foo")
   val names = ApplicantAndChildNames(applicantName, childName)
   val minimalUserAnswers = emptyUserAnswers
     .set(ChildNamePage, childName).success.value
+    .set(ChildDateOfBirthPage, childDob).success.value
     .set(ApplicantNamePage, applicantName).success.value
+
+  val formProvider = new PeriodFormProvider(clock)
+  val form = formProvider(ApplicantAndChild(applicantName, Child(childName, childDob)))
 
   val validPeriod = Period(LocalDate.now.minusDays(10), LocalDate.now.minusDays(9))
   val userAnswers = minimalUserAnswers
