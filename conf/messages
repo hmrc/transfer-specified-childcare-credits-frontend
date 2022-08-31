@@ -106,13 +106,6 @@ applicantClaimsChildBenefitForThisChild.checkYourAnswersLabel = Does the applica
 applicantClaimsChildBenefitForThisChild.error.required = Select yes if {0} already receives Child Benefit for {1}
 applicantClaimsChildBenefitForThisChild.change.hidden = whether the applicant already receives Child Benefit for the child
 
-applicantIsPartnerOfClaimant.title = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
-applicantIsPartnerOfClaimant.heading = Is {0} the partner of, and living with, the person who receives Child Benefit for {1}?
-applicantIsPartnerOfClaimant.heading.fallback = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
-applicantIsPartnerOfClaimant.checkYourAnswersLabel = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
-applicantIsPartnerOfClaimant.error.required = Select yes if the applicant is the partner of, and living with, the person who receives Child Benefit for the child
-applicantIsPartnerOfClaimant.change.hidden = whether the applicant is the partner of, and living with, the person who receives Child Benefit for the child
-
 applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they began caring for the child?
 applicantIsValidAge.heading = Was {0} between 16 years old and State Pension age when they began caring for {1}?
 applicantIsValidAge.heading.fallback = Was the applicant between 16 years old and State Pension age when they began caring for the child?
