@@ -41,11 +41,11 @@ class ApplicantNinoControllerSpec extends SpecBase with MockitoSugar with ModelG
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ApplicantNinoFormProvider()
-  val form = formProvider()
 
   lazy val applicantNinoRoute = routes.ApplicantNinoController.onPageLoad(NormalMode).url
 
   val applicantName = Name("Foo", "Bar")
+  val form = formProvider(applicantName)
   val minimalUserAnswers = emptyUserAnswers.set(ApplicantNamePage, applicantName).success.value
 
   "ApplicantNino Controller" - {

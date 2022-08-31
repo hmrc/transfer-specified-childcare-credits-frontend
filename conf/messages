@@ -249,8 +249,8 @@ applicantNino.title = What is the applicant’s National Insurance number?
 applicantNino.heading = What is {0}’s National Insurance number?
 applicantNino.hint = It’s on their National Insurance card, benefit letter, payslip or P60. For example, QQ123456C
 applicantNino.checkYourAnswersLabel = National Insurance number
-applicantNino.error.required = Enter the applicant’s National Insurance number
-applicantNino.error.invalid = Enter the applicant’s National Insurance number in the correct format
+applicantNino.error.required = Enter {0}’s National Insurance number
+applicantNino.error.invalid = Enter {0}’s National Insurance number in the correct format
 applicantNino.change.hidden = the applicant’s National Insurance number
 
 mainCarerName.title = What is the name of the person who claims Child Benefit for the child?
