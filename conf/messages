@@ -103,7 +103,7 @@ applicantClaimsChildBenefitForThisChild.title = Does the applicant already recei
 applicantClaimsChildBenefitForThisChild.heading = Does {0} already receive Child Benefit for {1}?
 applicantClaimsChildBenefitForThisChild.heading.fallback = Does the applicant already receive Child Benefit for the child?
 applicantClaimsChildBenefitForThisChild.checkYourAnswersLabel = Does the applicant already receive Child Benefit for the child?
-applicantClaimsChildBenefitForThisChild.error.required = Select yes if the applicant already receives Child Benefit for the child
+applicantClaimsChildBenefitForThisChild.error.required = Select yes if {0} already receives Child Benefit for {1}
 applicantClaimsChildBenefitForThisChild.change.hidden = whether the applicant already receives Child Benefit for the child
 
 applicantIsPartnerOfClaimant.title = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
