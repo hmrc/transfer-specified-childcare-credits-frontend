@@ -43,11 +43,10 @@ class ApplicantWasUkResidentController @Inject()(
                                          view: ApplicantWasUkResidentView
                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
-  val form = formProvider()
-
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       getAnswer(ApplicantAndChildNamesQuery) { names =>
+        val form = formProvider(names)
         val preparedForm = request.userAnswers.get(ApplicantWasUkResidentPage) match {
           case None => form
           case Some(value) => form.fill(value)
@@ -59,7 +58,7 @@ class ApplicantWasUkResidentController @Inject()(
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       getAnswerAsync(ApplicantAndChildNamesQuery) { names =>
-        form.bindFromRequest().fold(
+        formProvider(names).bindFromRequest().fold(
           formWithErrors =>
             Future.successful(BadRequest(view(formWithErrors, names, mode))),
           value =>

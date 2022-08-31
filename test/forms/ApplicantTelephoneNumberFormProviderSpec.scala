@@ -17,6 +17,7 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import models.Name
 import org.scalacheck.Gen
 import play.api.data.FormError
 
@@ -25,7 +26,8 @@ class ApplicantTelephoneNumberFormProviderSpec extends StringFieldBehaviours {
   val requiredKey = "applicantTelephoneNumber.error.required"
   val invalidKey = "applicantTelephoneNumber.error.invalid"
 
-  val form = new ApplicantTelephoneNumberFormProvider()()
+  val applicantName = Name("Foo", "Bar")
+  val form = new ApplicantTelephoneNumberFormProvider()(applicantName)
 
   ".value" - {
 
@@ -40,7 +42,7 @@ class ApplicantTelephoneNumberFormProviderSpec extends StringFieldBehaviours {
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(applicantName.firstName))
     )
 
     "fail to bind an invalid phone number" in {

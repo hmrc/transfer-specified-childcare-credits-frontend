@@ -17,12 +17,15 @@
 package forms
 
 import forms.behaviours.OptionFieldBehaviours
-import models.ApplicantHasFullNIContributions
+import models.{ApplicantAndChildNames, ApplicantHasFullNIContributions, Name}
 import play.api.data.FormError
 
 class ApplicantHasFullNIContributionsFormProviderSpec extends OptionFieldBehaviours {
 
-  val form = new ApplicantHasFullNIContributionsFormProvider()()
+  val childName = Name("Foo", "Bar")
+  val applicantName = Name("Bar", "Foo")
+  val names = ApplicantAndChildNames(applicantName, childName)
+  val form = new ApplicantHasFullNIContributionsFormProvider()(names)
 
   ".value" - {
 
@@ -33,13 +36,13 @@ class ApplicantHasFullNIContributionsFormProviderSpec extends OptionFieldBehavio
       form,
       fieldName,
       validValues  = ApplicantHasFullNIContributions.values,
-      invalidError = FormError(fieldName, "error.invalid")
+      invalidError = FormError(fieldName, "error.invalid", Seq(applicantName.firstName, childName.firstName))
     )
 
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(applicantName.firstName, childName.firstName))
     )
   }
 }

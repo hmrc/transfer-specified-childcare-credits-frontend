@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.MainCarerTelephoneNumberFormProvider
-import models.{Name, NormalMode, UserAnswers}
+import models.{Name, NormalMode}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -38,11 +38,11 @@ class MainCarerTelephoneNumberControllerSpec extends SpecBase with MockitoSugar 
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new MainCarerTelephoneNumberFormProvider()
-  val form = formProvider()
 
   lazy val mainCarerTelephoneNumberRoute = routes.MainCarerTelephoneNumberController.onPageLoad(NormalMode).url
 
   val mainCarerName = Name("Foo", "Bar")
+  val form = formProvider(mainCarerName)
   val minimalUserAnswers = emptyUserAnswers.set(MainCarerNamePage, mainCarerName).success.value
 
   "MainCarerTelephoneNumber Controller" - {

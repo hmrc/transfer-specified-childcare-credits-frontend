@@ -18,17 +18,28 @@ package forms
 
 import javax.inject.Inject
 import forms.mappings.Mappings
+import models.Name
 import play.api.data.Form
+import play.api.data.validation.{Constraint, Invalid, Valid, ValidationError}
 import uk.gov.hmrc.domain.Nino
 
 import scala.util.Try
 
 class ApplicantNinoFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Nino] =
+  def apply(applicantName: Name): Form[Nino] =
     Form(
-      "value" -> text("applicantNino.error.required")
-        .verifying("applicantNino.error.invalid", nonEmptyString => Try(Nino(nonEmptyString.replaceAll("\\s", "").toUpperCase)).isSuccess)
+      "value" -> text("applicantNino.error.required", args = Seq(applicantName.firstName))
+        .verifying(validNinoConstraint(applicantName))
         .transform[Nino](nonEmptyString => Nino(nonEmptyString.replaceAll("\\s", "").toUpperCase), _.toString)
     )
+
+  private def validNinoConstraint(applicantName: Name): Constraint[String] =
+    Constraint { nino =>
+      if (Try(Nino(nino.replaceAll("\\s", "").toUpperCase)).isSuccess) {
+        Valid
+      } else {
+        Invalid(ValidationError("applicantNino.error.invalid", applicantName.firstName))
+      }
+    }
 }

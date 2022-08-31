@@ -43,11 +43,10 @@ class MainCarerNinoController @Inject()(
                                         view: MainCarerNinoView
                                     )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
-  val form = formProvider()
-
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       getAnswer(MainCarerNamePage) { mainCarerName =>
+        val form = formProvider(mainCarerName)
         val preparedForm = request.userAnswers.get(MainCarerNinoPage) match {
           case None => form
           case Some(value) => form.fill(value)
@@ -59,7 +58,7 @@ class MainCarerNinoController @Inject()(
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       getAnswerAsync(MainCarerNamePage) { mainCarerName =>
-        form.bindFromRequest().fold(
+        formProvider(mainCarerName).bindFromRequest().fold(
           formWithErrors =>
             Future.successful(BadRequest(view(formWithErrors, mainCarerName, mode))),
           value =>

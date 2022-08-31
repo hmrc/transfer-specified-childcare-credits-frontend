@@ -40,11 +40,11 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
   lazy val applicantRelationshipToChildRoute = routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode).url
 
   val formProvider = new ApplicantRelationshipToChildFormProvider()
-  val form = formProvider()
 
   val applicantName = Name("Bar", "Foo")
   val childName = Name("Foo", "Bar")
   val names = ApplicantAndChildNames(applicantName, childName)
+  val form = formProvider(names)
   val minimalUserAnswers = emptyUserAnswers
     .set(ChildNamePage, childName).success.value
     .set(ApplicantNamePage, applicantName).success.value

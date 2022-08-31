@@ -19,6 +19,7 @@ package forms
 import forms.behaviours.OptionFieldBehaviours
 import generators.Generators
 import models.ApplicantRelationshipToChild._
+import models.{ApplicantAndChildNames, Name}
 import org.scalacheck.{Gen, Shrink}
 import play.api.data.FormError
 
@@ -26,7 +27,10 @@ class ApplicantRelationshipToChildFormProviderSpec extends OptionFieldBehaviours
 
   implicit val noShrink: Shrink[Any] = Shrink.shrinkAny
 
-  val form = new ApplicantRelationshipToChildFormProvider()()
+  val applicantName = Name("Foo", "Bar")
+  val childName = Name("Bar", "Foo")
+  val names = ApplicantAndChildNames(applicantName, childName)
+  val form = new ApplicantRelationshipToChildFormProvider()(names)
 
   ".value" - {
 
@@ -58,7 +62,7 @@ class ApplicantRelationshipToChildFormProviderSpec extends OptionFieldBehaviours
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(applicantName.firstName, childName.firstName))
     )
 
     "must not bind invalid values" in {
@@ -96,7 +100,7 @@ class ApplicantRelationshipToChildFormProviderSpec extends OptionFieldBehaviours
       )
 
       val result = form.bind(data)
-      result.errors must contain(FormError("detail", "applicantRelationshipToChild.other.detail.error.required"))
+      result.errors must contain(FormError("detail", "applicantRelationshipToChild.other.detail.error.required", Seq(applicantName.firstName, childName.firstName)))
     }
 
     "must not bind if value if `other` but an empty value is provided" in {
@@ -107,7 +111,7 @@ class ApplicantRelationshipToChildFormProviderSpec extends OptionFieldBehaviours
       )
 
       val result = form.bind(data)
-      result.errors must contain(FormError("detail", "applicantRelationshipToChild.other.detail.error.required"))
+      result.errors must contain(FormError("detail", "applicantRelationshipToChild.other.detail.error.required", Seq(applicantName.firstName, childName.firstName)))
     }
 
     "must not bind if the string is present but value is not `other`" in {

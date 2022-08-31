@@ -38,13 +38,13 @@ class ApplicantClaimsChildBenefitForThisChildControllerSpec extends SpecBase wit
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ApplicantClaimsChildBenefitForThisChildFormProvider()
-  val form = formProvider()
 
   lazy val applicantClaimsChildBenefitForThisChildRoute = routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode).url
 
   val childName = Name("Foo", "Bar")
   val applicantName = Name("Bar", "Foo")
   val names = ApplicantAndChildNames(applicantName, childName)
+  val form = formProvider(names)
   val minimalUserAnswers = emptyUserAnswers
     .set(ChildNamePage, childName).success.value
     .set(ApplicantNamePage, applicantName).success.value

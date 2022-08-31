@@ -94,38 +94,31 @@ applicantRelationshipToChild.residentPartner = Spouse, civil partner or partner 
 applicantRelationshipToChild.other = Other
 applicantRelationshipToChild.other.detail.label = Enter how {0} is related to {1}
 applicantRelationshipToChild.other.detail.label.fallback = Enter how the applicant is related to the child
-applicantRelationshipToChild.other.detail.error.required = Enter how the applicant is related to the child
+applicantRelationshipToChild.other.detail.error.required = Enter how {0} is related to {1}
 applicantRelationshipToChild.checkYourAnswersLabel = The applicant’s relationship to the child
-applicantRelationshipToChild.error.required = Select the applicant’s relationship to the child
+applicantRelationshipToChild.error.required = Select {0}’s relationship to {1}
 applicantRelationshipToChild.change.hidden = the applicant’s relationship to the child
 
 applicantClaimsChildBenefitForThisChild.title = Does the applicant already receive Child Benefit for the child?
 applicantClaimsChildBenefitForThisChild.heading = Does {0} already receive Child Benefit for {1}?
 applicantClaimsChildBenefitForThisChild.heading.fallback = Does the applicant already receive Child Benefit for the child?
 applicantClaimsChildBenefitForThisChild.checkYourAnswersLabel = Does the applicant already receive Child Benefit for the child?
-applicantClaimsChildBenefitForThisChild.error.required = Select yes if the applicant already receives Child Benefit for the child
+applicantClaimsChildBenefitForThisChild.error.required = Select yes if {0} already receives Child Benefit for {1}
 applicantClaimsChildBenefitForThisChild.change.hidden = whether the applicant already receives Child Benefit for the child
-
-applicantIsPartnerOfClaimant.title = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
-applicantIsPartnerOfClaimant.heading = Is {0} the partner of, and living with, the person who receives Child Benefit for {1}?
-applicantIsPartnerOfClaimant.heading.fallback = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
-applicantIsPartnerOfClaimant.checkYourAnswersLabel = Is the applicant the partner of, and living with, the person who receives Child Benefit for the child?
-applicantIsPartnerOfClaimant.error.required = Select yes if the applicant is the partner of, and living with, the person who receives Child Benefit for the child
-applicantIsPartnerOfClaimant.change.hidden = whether the applicant is the partner of, and living with, the person who receives Child Benefit for the child
 
 applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they began caring for the child?
 applicantIsValidAge.heading = Was {0} between 16 years old and State Pension age when they began caring for {1}?
-applicantIsValidAge.heading.fallback = Was the applicant between 16 years old and State Pension age when they began caring for the child?
+applicantIsValidAge.heading.fallback = Was {0} between 16 years old and State Pension age when they began caring for {1}?
 applicantIsValidAge.hint = State Pension age is the earliest age a person can receive their State Pension
 applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years old and State Pension age when they began caring for the child?
-applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they began caring for the child
+applicantIsValidAge.error.required = Select yes {0} was between 16 years old and State Pension age when they began caring for {1}
 applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they began caring for the child
 
 applicantWasUkResident.title = Was the applicant a resident of the UK when they were caring for the child?
 applicantWasUkResident.heading = Was {0} a resident of the UK when they were caring for {1}?
 applicantWasUkResident.heading.fallback = Was the applicant a resident of the UK when they were caring for the child?
 applicantWasUkResident.checkYourAnswersLabel = Was the applicant a resident of the UK when they were caring for the child?
-applicantWasUkResident.error.required = Select yes if the applicant was a resident of the UK when they were caring for the child
+applicantWasUkResident.error.required = Select yes if {0} was a resident of the UK when they were caring for {1}
 applicantWasUkResident.change.hidden = whether the applicant was a resident of the UK when they were caring for the child
 
 applicantHasFullNIContributions.title = Does the applicant have full National Insurance contributions for when they were caring for the child?
@@ -136,7 +129,7 @@ applicantHasFullNIContributions.no = No
 applicantHasFullNIContributions.dontKnow = I don’t know
 applicantHasFullNIContributions.dontKnow.hint = Specified Adult Childcare credits are only given when the person has gaps in National Insurance contributions during the time they cared for the child.
 applicantHasFullNIContributions.checkYourAnswersLabel = Does the applicant have full National Insurance contributions for when they were caring for the child?
-applicantHasFullNIContributions.error.required = Select whether the applicant has full National Insurance contributions for when they were caring for the child
+applicantHasFullNIContributions.error.required = Select whether {0} has full National Insurance contributions for when they were caring for {1}
 applicantHasFullNIContributions.change.hidden = whether the applicant has full National Insurance contributions for when they were caring for the child
 
 childName.title = What is the child’s name
@@ -191,7 +184,7 @@ addPeriod.heading = You have added 1 period of care
 addPeriod.heading.plural = You have added {0} periods of care
 addPeriod.question = Did {0} care for {1} for another period of care?
 addPeriod.question.fallback = Did the applicant care for the child for another period of care?
-addPeriod.error.required = Select yes if the applicant cared for the child for any other periods of time
+addPeriod.error.required = Select yes if {0} cared for {1} for any other periods of time
 addPeriod.change.hidden = the period of care from {0}
 addPeriod.remove.hidden = the period of care from {0}
 
@@ -248,7 +241,7 @@ applicantAddress.postcode.change.hidden = the postcode
 applicantTelephoneNumber.title = What is the applicant’s telephone number?
 applicantTelephoneNumber.heading = What is {0}’s telephone number?
 applicantTelephoneNumber.checkYourAnswersLabel = Telephone number
-applicantTelephoneNumber.error.required = Enter the applicant’s phone number
+applicantTelephoneNumber.error.required = Enter {0}’s phone number
 applicantTelephoneNumber.error.invalid = Enter a valid phone number
 applicantTelephoneNumber.change.hidden = the applicant’s phone number
 
@@ -256,8 +249,8 @@ applicantNino.title = What is the applicant’s National Insurance number?
 applicantNino.heading = What is {0}’s National Insurance number?
 applicantNino.hint = It’s on their National Insurance card, benefit letter, payslip or P60. For example, QQ123456C
 applicantNino.checkYourAnswersLabel = National Insurance number
-applicantNino.error.required = Enter the applicant’s National Insurance number
-applicantNino.error.invalid = Enter the applicant’s National Insurance number in the correct format
+applicantNino.error.required = Enter {0}’s National Insurance number
+applicantNino.error.invalid = Enter {0}’s National Insurance number in the correct format
 applicantNino.change.hidden = the applicant’s National Insurance number
 
 mainCarerName.title = What is the name of the person who claims Child Benefit for the child?
@@ -265,8 +258,8 @@ mainCarerName.heading = Who claims Child Benefit for {0}?
 mainCarerName.firstName = First name
 mainCarerName.lastName = Last name
 mainCarerName.checkYourAnswersLabel = Name
-mainCarerName.error.firstName.required = Enter the first name of the person who claims Child Benefit for the child
-mainCarerName.error.lastName.required = Enter the last name of the person who claims Child Benefit for the child
+mainCarerName.error.firstName.required = Enter the first name of the person who claims Child Benefit for {0}
+mainCarerName.error.lastName.required = Enter the last name of the person who claims Child Benefit for {0}
 mainCarerName.error.firstName.length = First name must be 100 characters or less
 mainCarerName.error.lastName.length = Last name must be 100 characters or less
 mainCarerName.firstName.change.hidden = the first name of the person who claims Child Benefit for the child
@@ -308,17 +301,16 @@ mainCarerAddress.postcode.change.hidden = the postcode
 mainCarerTelephoneNumber.title = What is the telephone number of the person who claims Child Benefit for the child?
 mainCarerTelephoneNumber.heading = What is {0}’s telephone number?
 mainCarerTelephoneNumber.checkYourAnswersLabel = Telephone number
-mainCarerTelephoneNumber.error.required = Enter the telephone number of the person who claims Child Benefit for the child
+mainCarerTelephoneNumber.error.required = Enter {0}’s telephone number
 mainCarerTelephoneNumber.error.invalid = Enter a valid telephone number
 mainCarerTelephoneNumber.change.hidden = the telephone number of the person who claims Child Benefit for the child
 
 mainCarerNino.title = What is the National Insurance number of the person who claims Child Benefit for the child?
 mainCarerNino.heading = What is {0}’s National Insurance number?
-
 mainCarerNino.hint = It’s on their National Insurance card, benefit letter, payslip or P60. For example, QQ123456C
 mainCarerNino.checkYourAnswersLabel = National Insurance number
-mainCarerNino.error.required = Enter the National Insurance number of the person who claims Child Benefit for the child
-mainCarerNino.error.invalid = Enter the National Insurance number of the person who claims Child Benefit for the child in the correct format
+mainCarerNino.error.required = Enter {0}’s National Insurance number
+mainCarerNino.error.invalid = Enter {0}’s National Insurance number in the correct format
 mainCarerNino.change.hidden = the National Insurance number of the person who claims ChildBenefit for the child
 
 kickOutIneligible.title = The applicant is not eligible for Specified Adult Childcare credits
