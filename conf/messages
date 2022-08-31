@@ -94,9 +94,9 @@ applicantRelationshipToChild.residentPartner = Spouse, civil partner or partner 
 applicantRelationshipToChild.other = Other
 applicantRelationshipToChild.other.detail.label = Enter how {0} is related to {1}
 applicantRelationshipToChild.other.detail.label.fallback = Enter how the applicant is related to the child
-applicantRelationshipToChild.other.detail.error.required = Enter how the applicant is related to the child
+applicantRelationshipToChild.other.detail.error.required = Enter how {0} is related to {1}
 applicantRelationshipToChild.checkYourAnswersLabel = The applicant’s relationship to the child
-applicantRelationshipToChild.error.required = Select the applicant’s relationship to the child
+applicantRelationshipToChild.error.required = Select {0}’s relationship to {1}
 applicantRelationshipToChild.change.hidden = the applicant’s relationship to the child
 
 applicantClaimsChildBenefitForThisChild.title = Does the applicant already receive Child Benefit for the child?

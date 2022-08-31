@@ -16,22 +16,23 @@
 
 package forms
 
-import javax.inject.Inject
 import forms.mappings.Mappings
+import models.ApplicantRelationshipToChild._
+import models.{ApplicantAndChildNames, ApplicantRelationshipToChild}
 import play.api.data.Form
 import play.api.data.Forms.mapping
-import models.ApplicantRelationshipToChild
-import models.ApplicantRelationshipToChild._
 import uk.gov.voa.play.form.ConditionalMappings.mandatoryIf
+
+import javax.inject.Inject
 
 class ApplicantRelationshipToChildFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[ApplicantRelationshipToChild] =
+  def apply(names: ApplicantAndChildNames): Form[ApplicantRelationshipToChild] =
     Form(
       mapping(
-        "value" -> text("applicantRelationshipToChild.error.required")
+        "value" -> text("applicantRelationshipToChild.error.required", args = Seq(names.applicantName.firstName, names.childName.firstName))
           .verifying("applicantRelationshipToChild.error.invalid", validTypes.contains(_)),
-        "detail" -> mandatoryIf(isOther, text("applicantRelationshipToChild.other.detail.error.required"))
+        "detail" -> mandatoryIf(isOther, text("applicantRelationshipToChild.other.detail.error.required", args = Seq(names.applicantName.firstName, names.childName.firstName)))
       )(toModel)(fromModel)
     )
 
