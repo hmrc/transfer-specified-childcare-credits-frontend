@@ -108,10 +108,10 @@ applicantClaimsChildBenefitForThisChild.change.hidden = whether the applicant al
 
 applicantIsValidAge.title = Was the applicant between 16 years old and State Pension age when they began caring for the child?
 applicantIsValidAge.heading = Was {0} between 16 years old and State Pension age when they began caring for {1}?
-applicantIsValidAge.heading.fallback = Was the applicant between 16 years old and State Pension age when they began caring for the child?
+applicantIsValidAge.heading.fallback = Was {0} between 16 years old and State Pension age when they began caring for {1}?
 applicantIsValidAge.hint = State Pension age is the earliest age a person can receive their State Pension
 applicantIsValidAge.checkYourAnswersLabel = Was the applicant between 16 years old and State Pension age when they began caring for the child?
-applicantIsValidAge.error.required = Select yes if the applicant was between 16 years old and State Pension age when they began caring for the child
+applicantIsValidAge.error.required = Select yes {0} was between 16 years old and State Pension age when they began caring for {1}
 applicantIsValidAge.change.hidden = whether the applicant was between 16 years old and State Pension age when they began caring for the child
 
 applicantWasUkResident.title = Was the applicant a resident of the UK when they were caring for the child?
