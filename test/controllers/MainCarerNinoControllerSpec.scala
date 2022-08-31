@@ -41,11 +41,11 @@ class MainCarerNinoControllerSpec extends SpecBase with MockitoSugar with ModelG
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new MainCarerNinoFormProvider()
-  val form = formProvider()
 
   lazy val mainCarerNinoRoute = routes.MainCarerNinoController.onPageLoad(NormalMode).url
 
   val mainCarerName = Name("Foo", "Bar")
+  val form = formProvider(mainCarerName)
   val minimalUserAnswers = emptyUserAnswers.set(MainCarerNamePage, mainCarerName).success.value
 
   "MainCarerNino Controller" - {

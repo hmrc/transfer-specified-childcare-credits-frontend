@@ -17,6 +17,7 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import models.Name
 import org.scalacheck.Gen
 import play.api.data.FormError
 
@@ -25,7 +26,8 @@ class MainCarerNinoFormProviderSpec extends StringFieldBehaviours {
   val requiredKey = "mainCarerNino.error.required"
   val invalidKey = "mainCarerNino.error.invalid"
 
-  val form = new MainCarerNinoFormProvider()()
+  val mainCarerName = Name("Foo", "Bar")
+  val form = new MainCarerNinoFormProvider()(mainCarerName)
 
   ".value" - {
 
@@ -53,12 +55,12 @@ class MainCarerNinoFormProviderSpec extends StringFieldBehaviours {
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(mainCarerName.firstName))
     )
 
     "must not bind values in the wrong format" in {
       val result = form.bind(Map(fieldName -> "GB123456A")).apply(fieldName)
-      result.errors.head mustBe FormError(fieldName, "mainCarerNino.error.invalid")
+      result.errors.head mustBe FormError(fieldName, "mainCarerNino.error.invalid", Seq(mainCarerName.firstName))
     }
   }
 }
