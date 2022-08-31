@@ -17,14 +17,14 @@
 package forms
 
 import javax.inject.Inject
-
 import forms.mappings.Mappings
+import models.ApplicantAndChildNames
 import play.api.data.Form
 
 class ApplicantWasUkResidentFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[Boolean] =
+  def apply(names: ApplicantAndChildNames): Form[Boolean] =
     Form(
-      "value" -> boolean("applicantWasUkResident.error.required")
+      "value" -> boolean("applicantWasUkResident.error.required", args = Seq(names.applicantName.firstName, names.childName.firstName))
     )
 }

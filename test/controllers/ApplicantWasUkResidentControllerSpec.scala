@@ -38,13 +38,13 @@ class ApplicantWasUkResidentControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ApplicantWasUkResidentFormProvider()
-  val form = formProvider()
 
   lazy val applicantWasUkResidentRoute = routes.ApplicantWasUkResidentController.onPageLoad(NormalMode).url
 
   val childName = Name("Foo", "Bar")
   val applicantName = Name("Bar", "Foo")
   val names = ApplicantAndChildNames(applicantName, childName)
+  val form = formProvider(names)
   val minimalUserAnswers = emptyUserAnswers
     .set(ChildNamePage, childName).success.value
     .set(ApplicantNamePage, applicantName).success.value

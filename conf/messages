@@ -118,7 +118,7 @@ applicantWasUkResident.title = Was the applicant a resident of the UK when they 
 applicantWasUkResident.heading = Was {0} a resident of the UK when they were caring for {1}?
 applicantWasUkResident.heading.fallback = Was the applicant a resident of the UK when they were caring for the child?
 applicantWasUkResident.checkYourAnswersLabel = Was the applicant a resident of the UK when they were caring for the child?
-applicantWasUkResident.error.required = Select yes if the applicant was a resident of the UK when they were caring for the child
+applicantWasUkResident.error.required = Select yes if {0} was a resident of the UK when they were caring for {1}
 applicantWasUkResident.change.hidden = whether the applicant was a resident of the UK when they were caring for the child
 
 applicantHasFullNIContributions.title = Does the applicant have full National Insurance contributions for when they were caring for the child?
