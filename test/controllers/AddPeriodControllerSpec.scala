@@ -41,13 +41,13 @@ class AddPeriodControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new AddPeriodFormProvider()
-  val form = formProvider()
 
   lazy val addPeriodRoute = routes.AddPeriodController.onPageLoad(NormalMode).url
 
   val childName = Name("Foo", "Bar")
   val applicantName = Name("Bar", "Foo")
   val names = ApplicantAndChildNames(applicantName, childName)
+  val form = formProvider(names)
 
   val period = Period(LocalDate.of(2000, 2, 1), LocalDate.of(2001, 3, 2))
   val minimalUserAnswers = emptyUserAnswers

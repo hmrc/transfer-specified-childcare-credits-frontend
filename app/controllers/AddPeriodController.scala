@@ -45,8 +45,6 @@ class AddPeriodController @Inject()(
                                          view: AddPeriodView
                                  )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
-  val form = formProvider()
-
   private def summaryList(answers: UserAnswers, mode: Mode)(implicit messages: Messages): Seq[ListItem] =
     AddPeriodSummary.rows(answers, mode)
 
@@ -57,7 +55,7 @@ class AddPeriodController @Inject()(
         if (periods.isEmpty) {
           Redirect(routes.PeriodController.onPageLoad(mode, Index(0)))
         } else {
-          Ok(view(form, names, summaryList(request.userAnswers, mode), mode))
+          Ok(view(formProvider(names), names, summaryList(request.userAnswers, mode), mode))
         }
       }
   }
@@ -65,7 +63,7 @@ class AddPeriodController @Inject()(
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       getAnswerAsync(ApplicantAndChildNamesQuery) { names =>
-        form.bindFromRequest().fold(
+        formProvider(names).bindFromRequest().fold(
           formWithErrors =>
             Future.successful(BadRequest(view(formWithErrors, names, summaryList(request.userAnswers, mode), mode))),
           value =>

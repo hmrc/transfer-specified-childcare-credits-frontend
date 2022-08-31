@@ -184,7 +184,7 @@ addPeriod.heading = You have added 1 period of care
 addPeriod.heading.plural = You have added {0} periods of care
 addPeriod.question = Did {0} care for {1} for another period of care?
 addPeriod.question.fallback = Did the applicant care for the child for another period of care?
-addPeriod.error.required = Select yes if the applicant cared for the child for any other periods of time
+addPeriod.error.required = Select yes if {0} cared for {1} for any other periods of time
 addPeriod.change.hidden = the period of care from {0}
 addPeriod.remove.hidden = the period of care from {0}
 
