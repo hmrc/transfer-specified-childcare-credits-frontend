@@ -16,23 +16,27 @@
 
 package forms
 
-import java.time.{LocalDate, ZoneOffset}
-
+import java.time.{Clock, Instant, LocalDate, ZoneOffset}
 import forms.behaviours.DateBehaviours
+import models.Name
+import play.api.data.FormError
 
 class MainCarerDateOfBirthFormProviderSpec extends DateBehaviours {
 
-  val form = new MainCarerDateOfBirthFormProvider()()
+  val clock = Clock.fixed(Instant.now, ZoneOffset.UTC)
+  val max = LocalDate.now(clock)
+  val mainCarerName = Name("Foo", "Bar")
+  val form = new MainCarerDateOfBirthFormProvider(clock)(mainCarerName)
 
   ".value" - {
 
     val validData = datesBetween(
       min = LocalDate.of(2000, 1, 1),
-      max = LocalDate.now(ZoneOffset.UTC)
+      max = max
     )
 
     behave like dateField(form, "value", validData)
-
-    behave like mandatoryDateField(form, "value", "mainCarerDateOfBirth.error.required.all")
+    behave like mandatoryDateField(form, "value", "mainCarerDateOfBirth.error.required.all", Seq(mainCarerName.firstName))
+    behave like dateFieldWithMax(form, "value", max, FormError("value", "mainCarerDateOfBirth.error.max"))
   }
 }
