@@ -301,7 +301,7 @@ mainCarerAddress.postcode.change.hidden = the postcode
 mainCarerTelephoneNumber.title = What is the telephone number of the person who claims Child Benefit for the child?
 mainCarerTelephoneNumber.heading = What is {0}’s telephone number?
 mainCarerTelephoneNumber.checkYourAnswersLabel = Telephone number
-mainCarerTelephoneNumber.error.required = Enter the telephone number of the person who claims Child Benefit for the child
+mainCarerTelephoneNumber.error.required = Enter {0}’s telephone number
 mainCarerTelephoneNumber.error.invalid = Enter a valid telephone number
 mainCarerTelephoneNumber.change.hidden = the telephone number of the person who claims Child Benefit for the child
 

@@ -20,6 +20,7 @@ import com.google.i18n.phonenumbers.PhoneNumberUtil
 
 import javax.inject.Inject
 import forms.mappings.Mappings
+import models.Name
 import play.api.data.Form
 
 import scala.util.Try
@@ -28,9 +29,9 @@ class MainCarerTelephoneNumberFormProvider @Inject() extends Mappings {
 
   private val util = PhoneNumberUtil.getInstance
 
-  def apply(): Form[String] =
+  def apply(mainCarerName: Name): Form[String] =
     Form(
-      "value" -> text("mainCarerTelephoneNumber.error.required")
+      "value" -> text("mainCarerTelephoneNumber.error.required", args = Seq(mainCarerName.firstName))
         .verifying("mainCarerTelephoneNumber.error.invalid", isValid(_))
     )
 
