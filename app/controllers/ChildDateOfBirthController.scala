@@ -18,8 +18,6 @@ package controllers
 
 import controllers.actions._
 import forms.ChildDateOfBirthFormProvider
-
-import javax.inject.Inject
 import models.Mode
 import navigation.Navigator
 import pages.{ChildDateOfBirthPage, ChildNamePage}
@@ -29,6 +27,7 @@ import repositories.SessionRepository
 import uk.gov.hmrc.play.bootstrap.frontend.controller.FrontendBaseController
 import views.html.ChildDateOfBirthView
 
+import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
 
 class ChildDateOfBirthController @Inject()(
@@ -43,17 +42,14 @@ class ChildDateOfBirthController @Inject()(
                                         view: ChildDateOfBirthView
                                       )(implicit ec: ExecutionContext) extends FrontendBaseController with I18nSupport with AnswerExtractor {
 
-  def form = formProvider()
-
   def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
       getAnswer(ChildNamePage) { childName =>
-
+        val form = formProvider(childName)
         val preparedForm = request.userAnswers.get(ChildDateOfBirthPage) match {
           case None => form
           case Some(value) => form.fill(value)
         }
-
         Ok(view(preparedForm, childName, mode))
       }
   }
@@ -61,7 +57,7 @@ class ChildDateOfBirthController @Inject()(
   def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
     implicit request =>
       getAnswerAsync(ChildNamePage) { childName =>
-        form.bindFromRequest().fold(
+        formProvider(childName).bindFromRequest().fold(
           formWithErrors =>
             Future.successful(BadRequest(view(formWithErrors, childName, mode))),
           value =>

@@ -16,35 +16,45 @@
 
 package forms
 
-import java.time.{Clock, Instant, LocalDate, ZoneId, ZoneOffset}
 import forms.behaviours.DateBehaviours
+import models.Name
 import play.api.data.FormError
 
 import java.time.format.DateTimeFormatter
+import java.time.{Clock, Instant, LocalDate, ZoneId}
 
 class ChildDateOfBirthFormProviderSpec extends DateBehaviours {
 
   ".value" - {
 
+    val childName = Name("Foo", "Bar")
     val clock = Clock.fixed(Instant.now, ZoneId.systemDefault)
-    val form = new ChildDateOfBirthFormProvider(clock)()
+    val form = new ChildDateOfBirthFormProvider(clock)(childName)
     val dateFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy")
+    val minDate = LocalDate.of(1999, 4, 6)
     val maxDate = LocalDate.now(clock)
 
     val validData = datesBetween(
-      min = LocalDate.of(2000, 1, 1),
-      max = LocalDate.now(ZoneOffset.UTC)
+      min = minDate,
+      max = maxDate
     )
 
     behave like dateField(form, "value", validData)
 
-    behave like mandatoryDateField(form, "value", "childDateOfBirth.error.required.all")
+    behave like mandatoryDateField(form, "value", "childDateOfBirth.error.required.all", Seq(childName.firstName))
 
     behave like dateFieldWithMax(
       form,
       "value",
       maxDate,
-      FormError("value", "childDateOfBirth.error.max", Array(maxDate.format(dateFormatter)))
+      FormError("value", "childDateOfBirth.error.max", Seq(maxDate.format(dateFormatter)))
+    )
+
+    behave like dateFieldWithMin(
+      form,
+      "value",
+      minDate,
+      FormError("value", "childDateOfBirth.error.min", Seq(minDate.format(dateFormatter)))
     )
   }
 }

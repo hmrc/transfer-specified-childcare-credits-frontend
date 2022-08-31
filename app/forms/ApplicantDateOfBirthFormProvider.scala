@@ -16,21 +16,25 @@
 
 package forms
 
-import java.time.LocalDate
-
+import java.time.{Clock, LocalDate}
 import forms.mappings.Mappings
+import models.Name
+
 import javax.inject.Inject
 import play.api.data.Form
 
-class ApplicantDateOfBirthFormProvider @Inject() extends Mappings {
+class ApplicantDateOfBirthFormProvider @Inject()(clock: Clock) extends Mappings {
 
-  def apply(): Form[LocalDate] =
+  def max: LocalDate = LocalDate.now(clock).minusYears(16)
+
+  def apply(applicantName: Name): Form[LocalDate] =
     Form(
       "value" -> localDate(
         invalidKey     = "applicantDateOfBirth.error.invalid",
         allRequiredKey = "applicantDateOfBirth.error.required.all",
         twoRequiredKey = "applicantDateOfBirth.error.required.two",
-        requiredKey    = "applicantDateOfBirth.error.required"
-      )
+        requiredKey    = "applicantDateOfBirth.error.required",
+        args           = Seq(applicantName.firstName)
+      ).verifying(maxDate(max, "applicantDateOfBirth.error.max", applicantName.firstName))
     )
 }
