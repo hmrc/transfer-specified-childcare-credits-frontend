@@ -17,15 +17,14 @@
 package forms
 
 import javax.inject.Inject
-
 import forms.mappings.Mappings
 import play.api.data.Form
-import models.ApplicantHasFullNIContributions
+import models.{ApplicantAndChildNames, ApplicantHasFullNIContributions}
 
 class ApplicantHasFullNIContributionsFormProvider @Inject() extends Mappings {
 
-  def apply(): Form[ApplicantHasFullNIContributions] =
+  def apply(names: ApplicantAndChildNames): Form[ApplicantHasFullNIContributions] =
     Form(
-      "value" -> enumerable[ApplicantHasFullNIContributions]("applicantHasFullNIContributions.error.required")
+      "value" -> enumerable[ApplicantHasFullNIContributions]("applicantHasFullNIContributions.error.required", args = Seq(names.applicantName.firstName, names.childName.firstName))
     )
 }

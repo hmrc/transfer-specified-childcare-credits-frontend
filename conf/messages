@@ -129,7 +129,7 @@ applicantHasFullNIContributions.no = No
 applicantHasFullNIContributions.dontKnow = I don’t know
 applicantHasFullNIContributions.dontKnow.hint = Specified Adult Childcare credits are only given when the person has gaps in National Insurance contributions during the time they cared for the child.
 applicantHasFullNIContributions.checkYourAnswersLabel = Does the applicant have full National Insurance contributions for when they were caring for the child?
-applicantHasFullNIContributions.error.required = Select whether the applicant has full National Insurance contributions for when they were caring for the child
+applicantHasFullNIContributions.error.required = Select whether {0} has full National Insurance contributions for when they were caring for {1}
 applicantHasFullNIContributions.change.hidden = whether the applicant has full National Insurance contributions for when they were caring for the child
 
 childName.title = What is the child’s name

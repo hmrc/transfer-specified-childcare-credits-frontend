@@ -40,11 +40,11 @@ class ApplicantHasFullNIContributionsControllerSpec extends SpecBase with Mockit
   lazy val applicantHasFullNIContributionsRoute = routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode).url
 
   val formProvider = new ApplicantHasFullNIContributionsFormProvider()
-  val form = formProvider()
 
   val childName = Name("Foo", "Bar")
   val applicantName = Name("Bar", "Foo")
   val names = ApplicantAndChildNames(applicantName, childName)
+  val form = formProvider(names)
   val minimalUserAnswers = emptyUserAnswers
     .set(ChildNamePage, childName).success.value
     .set(ApplicantNamePage, applicantName).success.value
