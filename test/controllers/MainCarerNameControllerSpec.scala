@@ -38,11 +38,11 @@ class MainCarerNameControllerSpec extends SpecBase with MockitoSugar {
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new MainCarerNameFormProvider()
-  val form = formProvider()
 
   lazy val mainCarerNameRoute = routes.MainCarerNameController.onPageLoad(NormalMode).url
 
   val childName = Name("Foo", "Bar")
+  val form = formProvider(childName)
   val mainCarerName = Name("Bar", "Foo")
   val minimalUserAnswers = emptyUserAnswers.set(ChildNamePage, childName).success.value
   val userAnswers = minimalUserAnswers.set(MainCarerNamePage, mainCarerName).success.value

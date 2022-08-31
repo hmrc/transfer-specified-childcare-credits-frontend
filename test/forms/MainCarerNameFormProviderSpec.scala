@@ -17,11 +17,13 @@
 package forms
 
 import forms.behaviours.StringFieldBehaviours
+import models.Name
 import play.api.data.FormError
 
 class MainCarerNameFormProviderSpec extends StringFieldBehaviours {
 
-  val form = new MainCarerNameFormProvider()()
+  val childName = Name("Foo", "Bar")
+  val form = new MainCarerNameFormProvider()(childName)
 
   ".firstName" - {
 
@@ -46,7 +48,7 @@ class MainCarerNameFormProviderSpec extends StringFieldBehaviours {
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(childName.firstName))
     )
   }
 
@@ -73,7 +75,7 @@ class MainCarerNameFormProviderSpec extends StringFieldBehaviours {
     behave like mandatoryField(
       form,
       fieldName,
-      requiredError = FormError(fieldName, requiredKey)
+      requiredError = FormError(fieldName, requiredKey, Seq(childName.firstName))
     )
   }
 }
