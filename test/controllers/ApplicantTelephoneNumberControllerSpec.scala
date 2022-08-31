@@ -38,11 +38,11 @@ class ApplicantTelephoneNumberControllerSpec extends SpecBase with MockitoSugar 
   def onwardRoute = Call("GET", "/foo")
 
   val formProvider = new ApplicantTelephoneNumberFormProvider()
-  val form = formProvider()
 
   lazy val ApplicantTelephoneNumberRoute = routes.ApplicantTelephoneNumberController.onPageLoad(NormalMode).url
 
   val applicantName = Name("Foo", "Bar")
+  val form = formProvider(applicantName)
   val minimalUserAnswers = emptyUserAnswers.set(ApplicantNamePage, applicantName).success.value
 
   "ApplicantTelephoneNumber Controller" - {
