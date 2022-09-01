@@ -333,3 +333,16 @@ checkYourAnswers.beforeYouContinue = Before you continue
 checkYourAnswers.confirmation = By continuing this application you are confirming that, to the best of your knowledge, the details you are providing are correct.
 checkYourAnswers.acceptAndContinue = Accept and continue
 checkYourAnswers.period.label = {0} to {1}
+
+nextSteps.title = Your Specified Adult Childcare credit application form is ready to be posted
+nextSteps.heading = Your Specified Adult Childcare credit application form is ready to be posted
+nextSteps.heading2 = What you need to do
+nextSteps.list.1 = download, save and print this form
+nextSteps.list.2 = get the applicant to sign and date their application
+nextSteps.list.3 = get the parent or main carer to sign and date their declaration
+nextSteps.list.4 = post the form to PT Operations
+nextSteps.ptOps.address = PT Operations address:
+nextSteps.ptOps.address.line1 = PT Operations North East England
+nextSteps.ptOps.address.line2 = HM Revenue and Customs
+nextSteps.ptOps.address.line3 = BX9 1AN
+nextSteps.downloadForm = Download form
