@@ -121,3 +121,5 @@ GET        /changeMainCarerNino                  controllers.MainCarerNinoContro
 POST       /changeMainCarerNino                  controllers.MainCarerNinoController.onSubmit(mode: Mode = CheckMode)
 
 GET        /kickOutIneligible                       controllers.KickOutIneligibleController.onPageLoad()
+
+GET        /nextSteps                       controllers.NextStepsController.onPageLoad()
