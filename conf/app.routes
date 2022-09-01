@@ -123,3 +123,5 @@ POST       /changeMainCarerNino                  controllers.MainCarerNinoContro
 GET        /kickOutIneligible                       controllers.KickOutIneligibleController.onPageLoad()
 
 GET        /nextSteps                       controllers.NextStepsController.onPageLoad()
+
+GET        /print                       controllers.PrintController.onDownload
