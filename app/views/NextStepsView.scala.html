@@ -16,12 +16,31 @@
 
 @this(
         layout: templates.Layout,
-        govukButton: GovukButton
+        govukButton: GovukButton,
+        govukPanel: GovukPanel
 )
 
 @()(implicit request: Request[_], messages: Messages)
 
 @layout(pageTitle = titleNoForm(messages("nextSteps.title"))) {
 
-    <h1 class="govuk-heading-xl">@messages("nextSteps.heading")</h1>
+  @govukPanel(Panel(title = messages("nextSteps.heading")))
+
+  <h2 class="govuk-heading-m govuk-!-margin-top-7">@messages("nextSteps.heading2")</h2>
+
+  <ul class="govuk-list govuk-list--bullet">
+    <li>@messages("nextSteps.list.1")</li>
+    <li>@messages("nextSteps.list.2")</li>
+    <li>@messages("nextSteps.list.3")</li>
+    <li>@messages("nextSteps.list.4")</li>
+  </ul>
+
+  <p class="govuk-body">@messages("nextSteps.ptOps.address")</p>
+  <p class="govuk-body">
+    @messages("nextSteps.ptOps.address.line1")<br/>
+    @messages("nextSteps.ptOps.address.line2")<br/>
+    @messages("nextSteps.ptOps.address.line3")<br/>
+  </p>
+
+  <a href="#" class="govuk-button" role="button" data-module="govuk-button">@messages("nextSteps.downloadForm")</a>
 }
