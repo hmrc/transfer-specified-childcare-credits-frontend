@@ -16,8 +16,10 @@
 
 package controllers
 
+import audit.AuditService
 import com.dmanchester.playfop.sapi.PlayFop
 import controllers.actions._
+import models.JourneyModel
 import org.apache.fop.apps.FOUserAgent
 import org.apache.xmlgraphics.util.MimeConstants
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -34,7 +36,8 @@ class PrintController @Inject()(
                                  requireData: DataRequiredAction,
                                  val controllerComponents: MessagesControllerComponents,
                                  fop: PlayFop,
-                                 template: PrintTemplate
+                                 template: PrintTemplate,
+                                 auditService: AuditService
                                ) extends FrontendBaseController with I18nSupport {
 
   private val userAgentBlock: FOUserAgent => Unit = { foUserAgent: FOUserAgent =>
@@ -49,7 +52,10 @@ class PrintController @Inject()(
 
   def onDownload: Action[AnyContent] = (identify andThen getData andThen requireData) {
     implicit request =>
-      val pdf = fop.processTwirlXml(template.render(implicitly), MimeConstants.MIME_PDF, foUserAgentBlock = userAgentBlock)
-      Ok(pdf).as("application/octet-stream").withHeaders(CONTENT_DISPOSITION -> "attachment; filename=apply-for-specified-adult-childcare-credits.pdf")
+      JourneyModel.from(request.userAnswers).map { model =>
+        val pdf = fop.processTwirlXml(template.render(implicitly), MimeConstants.MIME_PDF, foUserAgentBlock = userAgentBlock)
+        auditService.auditDownload(model)
+        Ok(pdf).as("application/octet-stream").withHeaders(CONTENT_DISPOSITION -> "attachment; filename=apply-for-specified-adult-childcare-credits.pdf")
+      }.getOrElse(Redirect(routes.JourneyRecoveryController.onPageLoad()))
   }
 }
