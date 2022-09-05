@@ -43,14 +43,4 @@ class AuthController @Inject()(
             Redirect(routes.SignedOutController.onPageLoad)
       }
   }
-
-  def signOutNoSurvey(): Action[AnyContent] = identify.async {
-    implicit request =>
-      sessionRepository
-        .clear(request.userId)
-        .map {
-          _ =>
-          Redirect(routes.SignedOutController.onPageLoad)
-        }
-  }
 }
