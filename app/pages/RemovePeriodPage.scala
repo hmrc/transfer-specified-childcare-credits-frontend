@@ -16,12 +16,15 @@
 
 package pages
 
-import models.Index
+import models.{Index, Mode}
 import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
 final case class RemovePeriodPage(index: Index) extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString \ index.position
 
   override def toString: String = "removePeriod"
+
+  override def route(mode: Mode): Call = controllers.routes.RemovePeriodController.onPageLoad(mode, index)
 }

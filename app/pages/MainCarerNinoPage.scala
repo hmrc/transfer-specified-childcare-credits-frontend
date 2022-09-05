@@ -16,7 +16,9 @@
 
 package pages
 
+import models.Mode
 import play.api.libs.json.JsPath
+import play.api.mvc.Call
 import uk.gov.hmrc.domain.Nino
 
 case object MainCarerNinoPage extends QuestionPage[Nino] {
@@ -24,4 +26,6 @@ case object MainCarerNinoPage extends QuestionPage[Nino] {
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "mainCarerNino"
+
+  override def route(mode: Mode): Call = controllers.routes.MainCarerNinoController.onPageLoad(mode)
 }

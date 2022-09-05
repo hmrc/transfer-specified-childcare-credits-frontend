@@ -16,12 +16,15 @@
 
 package pages
 
-import models.ApplicantHasFullNIContributions
+import models.{ApplicantHasFullNIContributions, Mode}
 import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
 case object ApplicantHasFullNIContributionsPage extends QuestionPage[ApplicantHasFullNIContributions] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "applicantHasFullNIContributions"
+
+  override def route(mode: Mode): Call = controllers.routes.ApplicantHasFullNIContributionsController.onPageLoad(mode)
 }

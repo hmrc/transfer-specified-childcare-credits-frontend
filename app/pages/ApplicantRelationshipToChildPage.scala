@@ -16,12 +16,15 @@
 
 package pages
 
-import models.ApplicantRelationshipToChild
+import models.{ApplicantRelationshipToChild, Mode}
 import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
 case object ApplicantRelationshipToChildPage extends QuestionPage[ApplicantRelationshipToChild] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "applicantRelationshipToChild"
+
+  override def route(mode: Mode): Call = controllers.routes.ApplicantRelationshipToChildController.onPageLoad(mode)
 }

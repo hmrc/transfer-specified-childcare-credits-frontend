@@ -16,12 +16,15 @@
 
 package pages
 
-import models.{Index, Period}
+import models.{Index, Mode, Period}
 import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
 final case class PeriodPage(index: Index) extends QuestionPage[Period] {
 
   override def path: JsPath = JsPath \ "periods" \ index.position
 
   override def toString: String = "period"
+
+  override def route(mode: Mode): Call = controllers.routes.PeriodController.onPageLoad(mode, index)
 }
