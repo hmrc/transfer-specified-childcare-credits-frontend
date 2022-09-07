@@ -35,7 +35,7 @@
         @govukRadios(
             RadiosViewModel.yesNo(
                 field = form("value"),
-                legend = LegendViewModel(messageWithNameFallback("applicantIsValidAge.heading", names)).asPageHeading()
+                legend = LegendViewModel(messageWithNameFallback("applicantIsValidAge.heading", names)).withCssClass("govuk-!-margin-bottom-5").asPageHeading()
             ).withHint(Hint(content = messages("applicantIsValidAge.hint")))
         )
 
