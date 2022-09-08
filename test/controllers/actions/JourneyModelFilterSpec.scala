@@ -19,7 +19,7 @@ package controllers.actions
 import base.SpecBase
 import generators.Generators
 import models.requests.DataRequest
-import models.{Address, ApplicantHasFullNIContributions, ApplicantRelationshipToChild, CheckMode, Index, Name, Period}
+import models.{Address, ApplicantRelationshipToChild, CheckMode, Index, Name, Period}
 import org.scalacheck.Arbitrary.arbitrary
 import org.scalatest.concurrent.ScalaFutures
 import pages._
@@ -69,7 +69,6 @@ class JourneyModelFilterSpec extends SpecBase with ScalaFutures with Generators 
         .set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
         .set(ApplicantIsValidAgePage, true).success.value
         .set(ApplicantWasUkResidentPage, true).success.value
-        .set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.No).success.value
         .set(PeriodPage(Index(0)), period).success.value
         .set(ApplicantDateOfBirthPage, applicantDob).success.value
         .set(ApplicantAddressPage, applicantAddress).success.value

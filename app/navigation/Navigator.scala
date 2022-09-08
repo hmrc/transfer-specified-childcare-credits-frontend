@@ -35,7 +35,6 @@ class Navigator @Inject()() {
     case ApplicantClaimsChildBenefitForThisChildPage => applicantClaimsChildBenefitForThisChildRoutes
     case ApplicantIsValidAgePage => applicantIsValidAgeRoutes
     case ApplicantWasUkResidentPage => applicantWasUkResidentRoutes
-    case ApplicantHasFullNIContributionsPage => applicantHasFullNIContributionsRoutes
     case PeriodPage(_) => _ => routes.AddPeriodController.onPageLoad(NormalMode)
     case AddPeriodPage => addPeriodRoutes
     case RemovePeriodPage(_) => removePeriodRoutes
@@ -71,14 +70,8 @@ class Navigator @Inject()() {
 
   private def applicantWasUkResidentRoutes(answers: UserAnswers): Call =
     answers.get(ApplicantWasUkResidentPage).map {
-      case true  => routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
+      case true  => routes.PeriodController.onPageLoad(NormalMode, Index(0))
       case false => routes.KickOutIneligibleController.onPageLoad()
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
-
-  private def applicantHasFullNIContributionsRoutes(answers: UserAnswers): Call =
-    answers.get(ApplicantHasFullNIContributionsPage).map {
-      case ApplicantHasFullNIContributions.Yes => routes.KickOutIneligibleController.onPageLoad()
-      case _                                   => routes.PeriodController.onPageLoad(NormalMode, Index(0))
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def addPeriodRoutes(answers: UserAnswers): Call =

@@ -20,7 +20,7 @@ import audit.AuditService
 import base.SpecBase
 import com.dmanchester.playfop.sapi.PlayFop
 import generators.Generators
-import models.{Address, ApplicantHasFullNIContributions, ApplicantRelationshipToChild, Index, JourneyModel, Name, Period}
+import models.{Address, ApplicantRelationshipToChild, Index, JourneyModel, Name, Period}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchersSugar.eqTo
 import org.mockito.Mockito.{never, times, verify, when}
@@ -65,7 +65,6 @@ class PrintControllerSpec extends SpecBase with MockitoSugar with Generators wit
       .set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
       .set(ApplicantIsValidAgePage, true).success.value
       .set(ApplicantWasUkResidentPage, true).success.value
-      .set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.No).success.value
       .set(PeriodPage(Index(0)), period).success.value
       .set(ApplicantDateOfBirthPage, applicantDob).success.value
       .set(ApplicantAddressPage, applicantAddress).success.value

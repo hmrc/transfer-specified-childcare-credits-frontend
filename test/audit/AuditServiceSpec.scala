@@ -19,11 +19,11 @@ package audit
 import cats.data.NonEmptyList
 import generators.Generators
 import models.JourneyModel.{Applicant, MainCarer}
-import org.scalacheck.Arbitrary.arbitrary
-import models.{Address, ApplicantHasFullNIContributions, ApplicantRelationshipToChild, Child, JourneyModel, Name, Period}
+import models.{Address, ApplicantRelationshipToChild, Child, JourneyModel, Name, Period}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchersSugar.eqTo
 import org.mockito.Mockito.{times, verify}
+import org.scalacheck.Arbitrary.arbitrary
 import org.scalatest.OptionValues
 import org.scalatest.freespec.AnyFreeSpec
 import org.scalatest.matchers.must.Matchers
@@ -33,8 +33,8 @@ import uk.gov.hmrc.domain.Nino
 import uk.gov.hmrc.http.HeaderCarrier
 import uk.gov.hmrc.play.audit.http.connector.AuditConnector
 
-import scala.concurrent.ExecutionContext.Implicits.global
 import java.time.LocalDate
+import scala.concurrent.ExecutionContext.Implicits.global
 
 class AuditServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with Generators with OptionValues {
 
@@ -74,7 +74,6 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with 
           name = applicantName,
           dateOfBirth = applicantDob,
           relationshipToChild = ApplicantRelationshipToChild.Grandparent,
-          fullNiContributions = ApplicantHasFullNIContributions.No,
           address = applicantAddress,
           telephoneNumber = applicantPhone,
           nino = applicantNino
@@ -100,7 +99,6 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with 
           lastName = applicantName.lastName,
           dateOfBirth = applicantDob,
           relationshipToChild = "grandparent",
-          fullNiContributions = ApplicantHasFullNIContributions.No,
           address = DownloadAuditEvent.Address(
             line1 = applicantAddress.line1,
             line2 = applicantAddress.line2,
@@ -145,7 +143,6 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with 
           name = applicantName,
           dateOfBirth = applicantDob,
           relationshipToChild = ApplicantRelationshipToChild.Other("foobar"),
-          fullNiContributions = ApplicantHasFullNIContributions.No,
           address = applicantAddress,
           telephoneNumber = applicantPhone,
           nino = applicantNino
@@ -171,7 +168,6 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with 
           lastName = applicantName.lastName,
           dateOfBirth = applicantDob,
           relationshipToChild = "foobar",
-          fullNiContributions = ApplicantHasFullNIContributions.No,
           address = DownloadAuditEvent.Address(
             line1 = applicantAddress.line1,
             line2 = applicantAddress.line2,

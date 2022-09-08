@@ -57,7 +57,6 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with OptionValues with 
       .set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
       .set(ApplicantIsValidAgePage, true).success.value
       .set(ApplicantWasUkResidentPage, true).success.value
-      .set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.No).success.value
       .set(PeriodPage(Index(0)), period).success.value
       .set(ApplicantDateOfBirthPage, applicantDob).success.value
       .set(ApplicantAddressPage, applicantAddress).success.value
@@ -80,7 +79,6 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with OptionValues with 
           name = applicantName,
           dateOfBirth = applicantDob,
           relationshipToChild = ApplicantRelationshipToChild.Grandparent,
-          fullNiContributions = ApplicantHasFullNIContributions.No,
           address = applicantAddress,
           telephoneNumber = applicantPhone,
           nino = applicantNino

@@ -52,11 +52,6 @@ trait ModelGenerators {
       } yield Name(firstName, lastName)
     }
 
-  implicit lazy val arbitraryApplicantHasFullNIContributions: Arbitrary[ApplicantHasFullNIContributions] =
-    Arbitrary {
-      Gen.oneOf(ApplicantHasFullNIContributions.values.toSeq)
-    }
-
   implicit lazy val arbitraryApplicantRelationshipToChild: Arbitrary[ApplicantRelationshipToChild] = {
     import ApplicantRelationshipToChild._
     val otherGen: Gen[ApplicantRelationshipToChild] = Gen.alphaStr.map(Other)

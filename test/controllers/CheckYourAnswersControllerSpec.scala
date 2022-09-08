@@ -18,8 +18,8 @@ package controllers
 
 import base.SpecBase
 import generators.Generators
+import models.{Address, ApplicantRelationshipToChild, CheckMode, Index, Name, Period}
 import org.scalacheck.Arbitrary.arbitrary
-import models.{Address, ApplicantHasFullNIContributions, ApplicantRelationshipToChild, CheckMode, Index, Name, Period}
 import pages._
 import play.api.i18n.Messages
 import play.api.test.FakeRequest
@@ -60,7 +60,6 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency wi
       .set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
       .set(ApplicantIsValidAgePage, true).success.value
       .set(ApplicantWasUkResidentPage, true).success.value
-      .set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.No).success.value
       .set(PeriodPage(Index(0)), period).success.value
       .set(ApplicantDateOfBirthPage, applicantDob).success.value
       .set(ApplicantAddressPage, applicantAddress).success.value
