@@ -16,29 +16,29 @@
 
 package navigation
 
-import javax.inject.{Inject, Singleton}
-import play.api.mvc.Call
 import controllers.routes
-import models.ApplicantRelationshipToChild.{GreatAuntOrGreatUncle, ResidentPartner}
-import pages._
 import models._
+import pages._
+import play.api.mvc.Call
 import queries.PeriodsQuery
+
+import javax.inject.{Inject, Singleton}
 
 @Singleton
 class Navigator @Inject()() {
 
   private val normalRoutes: Page => UserAnswers => Call = {
+    case ApplicantNamePage => _ => routes.ApplicantDateOfBirthController.onPageLoad(NormalMode)
+    case ApplicantDateOfBirthPage => _ => routes.ChildNameController.onPageLoad(NormalMode)
     case ChildNamePage => _ => routes.ChildDateOfBirthController.onPageLoad(NormalMode)
-    case ChildDateOfBirthPage => _ => routes.ApplicantNameController.onPageLoad(NormalMode)
-    case ApplicantNamePage => _ => routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
-    case ApplicantRelationshipToChildPage => applicantRelationshipToChildRoutes
+    case ChildDateOfBirthPage => _ => routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
     case ApplicantClaimsChildBenefitForThisChildPage => applicantClaimsChildBenefitForThisChildRoutes
-    case ApplicantIsValidAgePage => applicantIsValidAgeRoutes
     case ApplicantWasUkResidentPage => applicantWasUkResidentRoutes
+    case ApplicantIsValidAgePage => applicantIsValidAgeRoutes
     case PeriodPage(_) => _ => routes.AddPeriodController.onPageLoad(NormalMode)
     case AddPeriodPage => addPeriodRoutes
     case RemovePeriodPage(_) => removePeriodRoutes
-    case ApplicantDateOfBirthPage => _ => routes.ApplicantAddressController.onPageLoad(NormalMode)
+    case ApplicantRelationshipToChildPage => _ => routes.ApplicantAddressController.onPageLoad(NormalMode)
     case ApplicantAddressPage => _ => routes.ApplicantTelephoneNumberController.onPageLoad(NormalMode)
     case ApplicantTelephoneNumberPage => _ => routes.ApplicantNinoController.onPageLoad(NormalMode)
     case ApplicantNinoPage => _ => routes.MainCarerNameController.onPageLoad(NormalMode)
@@ -50,26 +50,20 @@ class Navigator @Inject()() {
     case _ => _ => routes.IndexController.onPageLoad
   }
 
-  private def applicantRelationshipToChildRoutes(answers: UserAnswers): Call =
-    answers.get(ApplicantRelationshipToChildPage).map {
-      case GreatAuntOrGreatUncle | ResidentPartner => routes.KickOutIneligibleController.onPageLoad()
-      case _ => routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
-
   private def applicantClaimsChildBenefitForThisChildRoutes(answers: UserAnswers): Call =
     answers.get(ApplicantClaimsChildBenefitForThisChildPage).map {
       case true  => routes.KickOutIneligibleController.onPageLoad()
-      case false => routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
-    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
-
-  private def applicantIsValidAgeRoutes(answers: UserAnswers): Call =
-    answers.get(ApplicantIsValidAgePage).map {
-      case true  => routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
-      case false => routes.KickOutIneligibleController.onPageLoad()
+      case false => routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def applicantWasUkResidentRoutes(answers: UserAnswers): Call =
     answers.get(ApplicantWasUkResidentPage).map {
+      case true  => routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
+      case false => routes.KickOutIneligibleController.onPageLoad()
+    }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
+
+  private def applicantIsValidAgeRoutes(answers: UserAnswers): Call =
+    answers.get(ApplicantIsValidAgePage).map {
       case true  => routes.PeriodController.onPageLoad(NormalMode, Index(0))
       case false => routes.KickOutIneligibleController.onPageLoad()
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
@@ -80,7 +74,7 @@ class Navigator @Inject()() {
         val index = answers.get(PeriodsQuery).getOrElse(Nil).length
         routes.PeriodController.onPageLoad(NormalMode, Index(index))
       case false =>
-        routes.ApplicantDateOfBirthController.onPageLoad(NormalMode)
+        routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
     }.getOrElse(routes.JourneyRecoveryController.onPageLoad())
 
   private def removePeriodRoutes(answers: UserAnswers): Call = {
