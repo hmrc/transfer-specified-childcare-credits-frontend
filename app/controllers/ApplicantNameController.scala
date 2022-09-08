@@ -18,8 +18,9 @@ package controllers
 
 import controllers.actions._
 import forms.ApplicantNameFormProvider
+
 import javax.inject.Inject
-import models.Mode
+import models.{Mode, UserAnswers}
 import navigation.Navigator
 import pages.ApplicantNamePage
 import play.api.i18n.{I18nSupport, MessagesApi}
@@ -44,27 +45,25 @@ class ApplicantNameController @Inject()(
 
   val form = formProvider()
 
-  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData) {
+  def onPageLoad(mode: Mode): Action[AnyContent] = (identify andThen getData) {
     implicit request =>
-
-      val preparedForm = request.userAnswers.get(ApplicantNamePage) match {
+      val answers = request.userAnswers.getOrElse(UserAnswers(request.userId))
+      val preparedForm = answers.get(ApplicantNamePage) match {
         case None => form
         case Some(value) => form.fill(value)
       }
-
       Ok(view(preparedForm, mode))
   }
 
-  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData andThen requireData).async {
+  def onSubmit(mode: Mode): Action[AnyContent] = (identify andThen getData).async {
     implicit request =>
-
+      val answers = request.userAnswers.getOrElse(UserAnswers(request.userId))
       form.bindFromRequest().fold(
         formWithErrors =>
           Future.successful(BadRequest(view(formWithErrors, mode))),
-
         value =>
           for {
-            updatedAnswers <- Future.fromTry(request.userAnswers.set(ApplicantNamePage, value))
+            updatedAnswers <- Future.fromTry(answers.set(ApplicantNamePage, value))
             _              <- sessionRepository.set(updatedAnswers)
           } yield Redirect(navigator.nextPage(ApplicantNamePage, mode, updatedAnswers))
       )
