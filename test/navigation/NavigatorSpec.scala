@@ -19,9 +19,7 @@ package navigation
 import base.SpecBase
 import controllers.routes
 import models._
-import ApplicantRelationshipToChild._
 import org.scalacheck.Arbitrary.arbitrary
-import org.scalacheck.Gen
 import org.scalatestplus.scalacheck.ScalaCheckDrivenPropertyChecks
 import pages._
 
@@ -36,50 +34,24 @@ class NavigatorSpec extends SpecBase with ScalaCheckDrivenPropertyChecks {
     "in Normal mode" - {
 
       "must go from a page that doesn't exist in the route map to Index" in {
-
         case object UnknownPage extends Page
         navigator.nextPage(UnknownPage, NormalMode, emptyUserAnswers) mustBe routes.IndexController.onPageLoad
+      }
+
+      "must go from applicant name page to applicant date of birth page" in {
+        navigator.nextPage(ApplicantNamePage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantDateOfBirthController.onPageLoad(NormalMode)
+      }
+
+      "must go from applicant date of birth page to child name page" in {
+        navigator.nextPage(ApplicantDateOfBirthPage, NormalMode, emptyUserAnswers) mustBe routes.ChildNameController.onPageLoad(NormalMode)
       }
 
       "must go from child name page to child date of birth page" in {
         navigator.nextPage(ChildNamePage, NormalMode, emptyUserAnswers) mustBe routes.ChildDateOfBirthController.onPageLoad(NormalMode)
       }
 
-      "must go from child date of birth page to applicant name page" in {
-        navigator.nextPage(ChildDateOfBirthPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantNameController.onPageLoad(NormalMode)
-      }
-
-      "must go from applicant name page to applicant relationship to child page" in {
-        navigator.nextPage(ApplicantNamePage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
-      }
-
-      "must go from applicant relationship to child page" - {
-
-        "to the kick out ineligible page when the user answers great aunt or great uncle" in {
-          val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, GreatAuntOrGreatUncle).success.value
-          navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
-        }
-
-        "to the kick out ineligible page when the user answers resident partner" in {
-          val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, ResidentPartner).success.value
-          navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
-        }
-
-        "to does applicant already receives child benefit for this child page when the user answers anything else" in {
-
-          val values = Gen.oneOf(
-            Grandparent, AuntOrUncle, BrotherOrSister, NonResidentParent, Other("value")
-          )
-
-          forAll (values) { value =>
-            val answers = emptyUserAnswers.set(ApplicantRelationshipToChildPage, value).success.value
-            navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, answers) mustBe routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
-          }
-        }
-
-        "to the journey recovery page when the question hasn't been answered" in {
-          navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
-        }
+      "must go from child date of birth page to does applicant already receive child benefit for child" in {
+        navigator.nextPage(ChildDateOfBirthPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(NormalMode)
       }
 
       "must go from applicant already receives child benefit for this child page" - {
@@ -89,30 +61,13 @@ class NavigatorSpec extends SpecBase with ScalaCheckDrivenPropertyChecks {
           navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
         }
 
-        "to applicant is valid age page when the user answers no" in {
+        "to applicant as UK resident page when the user answers no" in {
           val answers = emptyUserAnswers.set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
-          navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
+          navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, answers) mustBe routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery page when the question hasn't been answered" in {
           navigator.nextPage(ApplicantClaimsChildBenefitForThisChildPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
-        }
-      }
-
-      "must go from applicant is valid age page" - {
-
-        "to the kick out ineligible page when the user answers no" in {
-          val answers = emptyUserAnswers.set(ApplicantIsValidAgePage, false).success.value
-          navigator.nextPage(ApplicantIsValidAgePage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
-        }
-
-        "to was applicant UK resident page when the user answers yes" in {
-          val answers = emptyUserAnswers.set(ApplicantIsValidAgePage, true).success.value
-          navigator.nextPage(ApplicantIsValidAgePage, NormalMode, answers) mustBe routes.ApplicantWasUkResidentController.onPageLoad(NormalMode)
-        }
-
-        "to the journey recovery page when the question hasn't been answered" in {
-          navigator.nextPage(ApplicantIsValidAgePage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
 
@@ -123,13 +78,30 @@ class NavigatorSpec extends SpecBase with ScalaCheckDrivenPropertyChecks {
           navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
         }
 
-        "to does applicant have full NI contributions page when the user answers yes" in {
+        "to applicant is valid age page when the user answers yes" in {
           val answers = emptyUserAnswers.set(ApplicantWasUkResidentPage, true).success.value
-          navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, answers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
+          navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, answers) mustBe routes.ApplicantIsValidAgeController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery page when the question hasn't been answered" in {
           navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
+        }
+      }
+
+      "must go from applicant is valid age page" - {
+
+        "to the kick out ineligible page when the user answers no" in {
+          val answers = emptyUserAnswers.set(ApplicantIsValidAgePage, false).success.value
+          navigator.nextPage(ApplicantIsValidAgePage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
+        }
+
+        "to period details page when the user answers yes" in {
+          val answers = emptyUserAnswers.set(ApplicantIsValidAgePage, true).success.value
+          navigator.nextPage(ApplicantIsValidAgePage, NormalMode, answers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
+        }
+
+        "to the journey recovery page when the question hasn't been answered" in {
+          navigator.nextPage(ApplicantIsValidAgePage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
 
@@ -168,9 +140,9 @@ class NavigatorSpec extends SpecBase with ScalaCheckDrivenPropertyChecks {
           }
         }
 
-        "to the applicant date of birth page when the answer is no" in {
+        "to the applicant relationship to child page when the answer is no" in {
           val answers = emptyUserAnswers.set(AddPeriodPage, false).success.value
-          navigator.nextPage(AddPeriodPage, NormalMode, answers) mustBe routes.ApplicantDateOfBirthController.onPageLoad(NormalMode)
+          navigator.nextPage(AddPeriodPage, NormalMode, answers) mustBe routes.ApplicantRelationshipToChildController.onPageLoad(NormalMode)
         }
 
         "to the journey recovery page when the answer is not present" in {
@@ -206,8 +178,8 @@ class NavigatorSpec extends SpecBase with ScalaCheckDrivenPropertyChecks {
         }
       }
 
-      "must go from applicant date of birth page to applicant address page" in {
-        navigator.nextPage(ApplicantDateOfBirthPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantAddressController.onPageLoad(NormalMode)
+      "must go from applicant relationship to child page to the applicant address page" in {
+        navigator.nextPage(ApplicantRelationshipToChildPage, NormalMode, emptyUserAnswers) mustBe routes.ApplicantAddressController.onPageLoad(NormalMode)
       }
 
       "must go from applicant address page to applicant telephone number page" in {
