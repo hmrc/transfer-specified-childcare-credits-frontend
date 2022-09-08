@@ -16,12 +16,15 @@
 
 package pages
 
-import models.Name
+import models.{Mode, Name}
 import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
 case object ChildNamePage extends QuestionPage[Name] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "childName"
+
+  override def route(mode: Mode): Call = controllers.routes.ChildNameController.onPageLoad(mode)
 }

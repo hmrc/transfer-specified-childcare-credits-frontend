@@ -16,11 +16,15 @@
 
 package pages
 
+import models.Mode
 import play.api.libs.json.JsPath
+import play.api.mvc.Call
 
 case object ApplicantClaimsChildBenefitForThisChildPage extends QuestionPage[Boolean] {
 
   override def path: JsPath = JsPath \ toString
 
   override def toString: String = "applicantClaimsChildBenefitForThisChild"
+
+  override def route(mode: Mode): Call = controllers.routes.ApplicantClaimsChildBenefitForThisChildController.onPageLoad(mode)
 }
