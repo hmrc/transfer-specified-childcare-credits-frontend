@@ -40,7 +40,6 @@ trait UserAnswersGenerator extends TryValues {
     arbitrary[(PeriodPage, JsValue)] ::
     arbitrary[(ChildDateOfBirthPage.type, JsValue)] ::
     arbitrary[(ChildNamePage.type, JsValue)] ::
-    arbitrary[(ApplicantHasFullNIContributionsPage.type, JsValue)] ::
     arbitrary[(ApplicantWasUkResidentPage.type, JsValue)] ::
     arbitrary[(ApplicantIsValidAgePage.type, JsValue)] ::
     arbitrary[(ApplicantClaimsChildBenefitForThisChildPage.type, JsValue)] ::

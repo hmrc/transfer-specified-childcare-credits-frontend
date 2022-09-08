@@ -39,11 +39,6 @@ POST       /applicantWasUkResident                        controllers.ApplicantW
 GET        /changeApplicantWasUkResident                  controllers.ApplicantWasUkResidentController.onPageLoad(mode: Mode = CheckMode)
 POST       /changeApplicantWasUkResident                  controllers.ApplicantWasUkResidentController.onSubmit(mode: Mode = CheckMode)
 
-GET        /applicantHasFullNIContributions                        controllers.ApplicantHasFullNIContributionsController.onPageLoad(mode: Mode = NormalMode)
-POST       /applicantHasFullNIContributions                        controllers.ApplicantHasFullNIContributionsController.onSubmit(mode: Mode = NormalMode)
-GET        /changeApplicantHasFullNIContributions                  controllers.ApplicantHasFullNIContributionsController.onPageLoad(mode: Mode = CheckMode)
-POST       /changeApplicantHasFullNIContributions                  controllers.ApplicantHasFullNIContributionsController.onSubmit(mode: Mode = CheckMode)
-
 GET        /childName                        controllers.ChildNameController.onPageLoad(mode: Mode = NormalMode)
 POST       /childName                        controllers.ChildNameController.onSubmit(mode: Mode = NormalMode)
 GET        /changeChildName                  controllers.ChildNameController.onPageLoad(mode: Mode = CheckMode)

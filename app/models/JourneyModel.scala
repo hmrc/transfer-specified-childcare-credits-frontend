@@ -38,7 +38,6 @@ object JourneyModel {
                               name: Name,
                               dateOfBirth: LocalDate,
                               relationshipToChild: ApplicantRelationshipToChild,
-                              fullNiContributions: ApplicantHasFullNIContributions,
                               address: Address,
                               telephoneNumber: String,
                               nino: Nino
@@ -92,7 +91,6 @@ object JourneyModel {
     answers.getNec(ApplicantNamePage),
     answers.getNec(ApplicantDateOfBirthPage),
     getApplicantRelationshipToChild(answers),
-    answers.getNec(ApplicantHasFullNIContributionsPage),
     answers.getNec(ApplicantAddressPage),
     answers.getNec(ApplicantTelephoneNumberPage),
     answers.getNec(ApplicantNinoPage)

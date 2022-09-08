@@ -125,36 +125,11 @@ class NavigatorSpec extends SpecBase with ScalaCheckDrivenPropertyChecks {
 
         "to does applicant have full NI contributions page when the user answers yes" in {
           val answers = emptyUserAnswers.set(ApplicantWasUkResidentPage, true).success.value
-          navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, answers) mustBe routes.ApplicantHasFullNIContributionsController.onPageLoad(NormalMode)
+          navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, answers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
         }
 
         "to the journey recovery page when the question hasn't been answered" in {
           navigator.nextPage(ApplicantWasUkResidentPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
-        }
-      }
-
-      "must go from does applicant have full NI contributions page" - {
-
-        "to the kick out ineligible page when the user answers yes" in {
-          val answers = emptyUserAnswers.set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.Yes).success.value
-          navigator.nextPage(ApplicantHasFullNIContributionsPage, NormalMode, answers) mustBe routes.KickOutIneligibleController.onPageLoad()
-        }
-
-        "to the first period details page" - {
-
-          "when the user answers no" in {
-            val answers = emptyUserAnswers.set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.No).success.value
-            navigator.nextPage(ApplicantHasFullNIContributionsPage, NormalMode, answers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
-          }
-
-          "when the user answers I don't know" in {
-            val answers = emptyUserAnswers.set(ApplicantHasFullNIContributionsPage, ApplicantHasFullNIContributions.DontKnow).success.value
-            navigator.nextPage(ApplicantHasFullNIContributionsPage, NormalMode, answers) mustBe routes.PeriodController.onPageLoad(NormalMode, Index(0))
-          }
-        }
-
-        "to the journey recovery page when the question hasn't been answered" in {
-          navigator.nextPage(ApplicantHasFullNIContributionsPage, NormalMode, emptyUserAnswers) mustBe routes.JourneyRecoveryController.onPageLoad()
         }
       }
 

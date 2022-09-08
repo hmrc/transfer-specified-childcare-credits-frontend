@@ -17,7 +17,7 @@
 package audit
 
 import audit.DownloadAuditEvent._
-import models.{ApplicantHasFullNIContributions, ApplicantRelationshipToChild, JourneyModel}
+import models.{ApplicantRelationshipToChild, JourneyModel}
 import play.api.libs.json.{Json, Writes}
 import uk.gov.hmrc.domain.Nino
 
@@ -45,7 +45,6 @@ object DownloadAuditEvent {
         lastName = model.applicant.name.lastName,
         dateOfBirth = model.applicant.dateOfBirth,
         relationshipToChild = getRelationshipToChild(model.applicant.relationshipToChild),
-        fullNiContributions = model.applicant.fullNiContributions,
         address = getAddress(model.applicant.address),
         telephoneNumber = model.applicant.telephoneNumber,
         nino = model.applicant.nino
@@ -93,7 +92,6 @@ object DownloadAuditEvent {
                               lastName: String,
                               dateOfBirth: LocalDate,
                               relationshipToChild: String,
-                              fullNiContributions: ApplicantHasFullNIContributions,
                               address: Address,
                               telephoneNumber: String,
                               nino: Nino
