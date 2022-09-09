@@ -17,53 +17,16 @@
 package forms
 
 import forms.mappings.Mappings
-import models.ApplicantRelationshipToChild._
-import models.{ApplicantAndChildNames, ApplicantRelationshipToChild}
+import models.ApplicantAndChildNames
 import play.api.data.Form
-import play.api.data.Forms.mapping
-import uk.gov.voa.play.form.ConditionalMappings.mandatoryIf
 
 import javax.inject.Inject
 
 class ApplicantRelationshipToChildFormProvider @Inject() extends Mappings {
 
-  def apply(names: ApplicantAndChildNames): Form[ApplicantRelationshipToChild] =
+  def apply(names: ApplicantAndChildNames): Form[String] =
     Form(
-      mapping(
-        "value" -> text("applicantRelationshipToChild.error.required", args = Seq(names.applicantName.firstName, names.childName.firstName))
-          .verifying("applicantRelationshipToChild.error.invalid", validTypes.contains(_)),
-        "detail" -> mandatoryIf(isOther, text("applicantRelationshipToChild.other.detail.error.required", args = Seq(names.applicantName.firstName, names.childName.firstName)))
-      )(toModel)(fromModel)
+      "value" -> text("applicantRelationshipToChild.error.required", args = Seq(names.applicantName.firstName, names.childName.firstName))
+        .verifying(maxLength(150, "applicantRelationshipToChild.error.length", names.applicantName.firstName, names.childName.firstName))
     )
-
-  private val validTypes = List(
-    "grandparent", "auntOrUncle", "brotherOrSister",
-    "greatAuntOrGreatUncle", "nonResidentParent",
-    "residentPartner", "other"
-  )
-
-  private def isOther(data: Map[String, String]): Boolean =
-    data.get("value").contains("other")
-
-  private def toModel(value: String, detail: Option[String]): ApplicantRelationshipToChild =
-    value match {
-      case "grandparent"           => Grandparent
-      case "auntOrUncle"           => AuntOrUncle
-      case "brotherOrSister"       => BrotherOrSister
-      case "greatAuntOrGreatUncle" => GreatAuntOrGreatUncle
-      case "nonResidentParent"     => NonResidentParent
-      case "residentPartner"       => ResidentPartner
-      case "other"                 => Other(detail.get)
-    }
-
-  private def fromModel(model: ApplicantRelationshipToChild): Option[(String, Option[String])] =
-    model match {
-      case Grandparent           => Some(("grandparent", None))
-      case AuntOrUncle           => Some(("auntOrUncle", None))
-      case BrotherOrSister       => Some(("brotherOrSister", None))
-      case GreatAuntOrGreatUncle => Some(("greatAuntOrGreatUncle", None))
-      case NonResidentParent     => Some(("nonResidentParent", None))
-      case ResidentPartner       => Some(("residentPartner", None))
-      case Other(value)          => Some(("other", Some(value)))
-    }
 }

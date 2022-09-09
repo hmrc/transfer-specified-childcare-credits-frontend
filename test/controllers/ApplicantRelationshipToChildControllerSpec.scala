@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import forms.ApplicantRelationshipToChildFormProvider
-import models.{ApplicantAndChildNames, ApplicantRelationshipToChild, Name, NormalMode, UserAnswers}
+import models.{ApplicantAndChildNames, Name, NormalMode}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
@@ -67,7 +67,7 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
 
     "must populate the view correctly on a GET when the question has previously been answered" in {
 
-      val userAnswers = minimalUserAnswers.set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.Grandparent).success.value
+      val userAnswers = minimalUserAnswers.set(ApplicantRelationshipToChildPage, "grandparent").success.value
       val application = applicationBuilder(userAnswers = Some(userAnswers)).build()
 
       running(application) {
@@ -76,7 +76,7 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(ApplicantRelationshipToChild.Grandparent), names, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill("grandparent"), names, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -96,7 +96,7 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
       running(application) {
         val request =
           FakeRequest(POST, applicantRelationshipToChildRoute)
-            .withFormUrlEncodedBody(("value", ApplicantRelationshipToChild.Grandparent.toString))
+            .withFormUrlEncodedBody(("value", "grandparent"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -111,8 +111,7 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
       running(application) {
         val request =
           FakeRequest(POST, applicantRelationshipToChildRoute)
-            .withFormUrlEncodedBody(("value", "invalid value"))
-        val boundForm = form.bind(Map("value" -> "invalid value"))
+        val boundForm = form.bind(Map.empty[String, String])
         val view = application.injector.instanceOf[ApplicantRelationshipToChildView]
         val result = route(application, request).value
 
@@ -154,7 +153,7 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
       running(application) {
         val request =
           FakeRequest(POST, applicantRelationshipToChildRoute)
-            .withFormUrlEncodedBody(("value", ApplicantRelationshipToChild.Grandparent.toString))
+            .withFormUrlEncodedBody(("value", "grandparent"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER
@@ -169,7 +168,7 @@ class ApplicantRelationshipToChildControllerSpec extends SpecBase with MockitoSu
       running(application) {
         val request =
           FakeRequest(POST, applicantRelationshipToChildRoute)
-            .withFormUrlEncodedBody(("value", ApplicantRelationshipToChild.Grandparent.toString))
+            .withFormUrlEncodedBody(("value", "grandparent"))
         val result = route(application, request).value
 
         status(result) mustEqual SEE_OTHER

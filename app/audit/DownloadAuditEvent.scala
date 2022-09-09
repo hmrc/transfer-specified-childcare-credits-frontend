@@ -17,7 +17,7 @@
 package audit
 
 import audit.DownloadAuditEvent._
-import models.{ApplicantRelationshipToChild, JourneyModel}
+import models.JourneyModel
 import play.api.libs.json.{Json, Writes}
 import uk.gov.hmrc.domain.Nino
 
@@ -44,7 +44,7 @@ object DownloadAuditEvent {
         firstName = model.applicant.name.firstName,
         lastName = model.applicant.name.lastName,
         dateOfBirth = model.applicant.dateOfBirth,
-        relationshipToChild = getRelationshipToChild(model.applicant.relationshipToChild),
+        relationshipToChild = model.applicant.relationshipToChild,
         address = getAddress(model.applicant.address),
         telephoneNumber = model.applicant.telephoneNumber,
         nino = model.applicant.nino
@@ -62,12 +62,6 @@ object DownloadAuditEvent {
       }
     )
   }
-
-  private def getRelationshipToChild(relationship: ApplicantRelationshipToChild): String =
-    relationship match {
-      case ApplicantRelationshipToChild.Other(value) => value
-      case other                                     => other.toString
-    }
 
   private def getAddress(address: models.Address): Address = Address(
     line1 = address.line1,

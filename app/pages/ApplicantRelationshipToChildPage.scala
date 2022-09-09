@@ -16,11 +16,11 @@
 
 package pages
 
-import models.{ApplicantRelationshipToChild, Mode}
+import models.Mode
 import play.api.libs.json.JsPath
 import play.api.mvc.Call
 
-case object ApplicantRelationshipToChildPage extends QuestionPage[ApplicantRelationshipToChild] {
+case object ApplicantRelationshipToChildPage extends QuestionPage[String] {
 
   override def path: JsPath = JsPath \ toString
 

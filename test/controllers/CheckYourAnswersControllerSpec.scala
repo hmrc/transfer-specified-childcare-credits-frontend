@@ -18,7 +18,7 @@ package controllers
 
 import base.SpecBase
 import generators.Generators
-import models.{Address, ApplicantRelationshipToChild, CheckMode, Index, Name, Period}
+import models.{Address, CheckMode, Index, Name, Period}
 import org.scalacheck.Arbitrary.arbitrary
 import pages._
 import play.api.i18n.Messages
@@ -43,6 +43,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency wi
     val applicantAddress = Address("1 Test Street", None, "Test Town", None, "ZZ1 1ZZ")
     val applicantPhone = "07777777777"
     val applicantNino = arbitrary[Nino].sample.value
+    val applicantRelationshipToChild = "grandparent"
     
     val mainCarerName = Name("Main", "Carer")
     val mainCarerDob = LocalDate.now.minusYears(30)
@@ -56,7 +57,7 @@ class CheckYourAnswersControllerSpec extends SpecBase with SummaryListFluency wi
       .set(ChildNamePage, childName).success.value
       .set(ChildDateOfBirthPage, childDob).success.value
       .set(ApplicantNamePage, applicantName).success.value
-      .set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.Grandparent).success.value
+      .set(ApplicantRelationshipToChildPage, applicantRelationshipToChild).success.value
       .set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
       .set(ApplicantIsValidAgePage, true).success.value
       .set(ApplicantWasUkResidentPage, true).success.value

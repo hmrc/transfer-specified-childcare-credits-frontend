@@ -14,84 +14,40 @@
  * limitations under the License.
  *@
 
-@import models.ApplicantRelationshipToChild._
+@import uk.gov.hmrc.govukfrontend.views.viewmodels.charactercount.CharacterCount
 
 @this(
     layout: templates.Layout,
     formHelper: FormWithCSRF,
     govukErrorSummary: GovukErrorSummary,
-    govukInput: GovukInput,
-    govukRadios: GovukRadios,
+    govukCharacterCount: GovukCharacterCount,
     govukButton: GovukButton
 )
 
 @(form: Form[_], names: ApplicantAndChildNames, mode: Mode)(implicit request: Request[_], messages: Messages)
-
-@detailInput = @{
-  govukInput(InputViewModel(form("detail"), LabelViewModel(messageWithNameFallback("applicantRelationshipToChild.other.detail.label", names))))
-}
-
-@items = @{
-  Seq(
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.grandparent")),
-      value = Some(Grandparent.toString),
-      id = Some(s"value_$Grandparent")
-    ),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.auntOrUncle")),
-      hint = Some(Hint(
-        content = Text(messages("applicantRelationshipToChild.auntOrUncle.hint"))
-      )),
-      value = Some(AuntOrUncle.toString),
-      id = Some(s"value_$AuntOrUncle")
-    ),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.brotherOrSister")),
-      hint = Some(Hint(
-        content = Text(messages("applicantRelationshipToChild.brotherOrSister.hint"))
-      )),
-      value = Some(BrotherOrSister.toString),
-      id = Some(s"value_$BrotherOrSister")
-    ),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.greatAuntOrGreatUncle")),
-      value = Some(GreatAuntOrGreatUncle.toString),
-      id = Some(s"value_$GreatAuntOrGreatUncle")
-    ),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.nonResidentParent")),
-      value = Some(NonResidentParent.toString),
-      id = Some(s"value_$NonResidentParent")
-    ),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.residentPartner")),
-      value = Some(ResidentPartner.toString),
-      id = Some(s"value_$ResidentPartner")
-    ),
-    RadioItem(
-      content = Text(messages("applicantRelationshipToChild.other")),
-      value = Some("other"),
-      id = Some(s"value_$Other"),
-      conditionalHtml = Some(detailInput)
-    )
-  )
-}
 
 @layout(pageTitle = title(form, messages("applicantRelationshipToChild.title"))) {
 
     @formHelper(action = routes.ApplicantRelationshipToChildController.onSubmit(mode), 'autoComplete -> "off") {
 
         @if(form.errors.nonEmpty) {
-            @govukErrorSummary(ErrorSummaryViewModel(form,  errorLinkOverrides = Map("value" -> "value_0")))
+            @govukErrorSummary(ErrorSummaryViewModel(form))
         }
 
-        @govukRadios(
-            RadiosViewModel(
-                field  = form("value"),
-                legend = LegendViewModel(messageWithNameFallback("applicantRelationshipToChild.heading", names)).asPageHeading(),
-                items  = items
-            )
+        @govukCharacterCount(
+          CharacterCount(
+            id = form("value").id,
+            name = form("value").name,
+            maxLength = Some(150),
+            label = HmrcPageHeadingLabel(
+              content = Text(messageWithNameFallback("applicantRelationshipToChild.heading", names))
+            ),
+            value = form("value").value,
+            hint = Some(Hint(
+              content = Text(messages("applicantRelationshipToChild.hint"))
+            )),
+            errorMessage = form("value").error.map(error => ErrorMessage(content = error.format))
+          )
         )
 
         @govukButton(
