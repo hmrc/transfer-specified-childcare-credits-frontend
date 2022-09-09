@@ -20,7 +20,7 @@ import audit.AuditService
 import base.SpecBase
 import com.dmanchester.playfop.sapi.PlayFop
 import generators.Generators
-import models.{Address, ApplicantRelationshipToChild, Index, JourneyModel, Name, Period}
+import models.{Address, Index, JourneyModel, Name, Period}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchersSugar.eqTo
 import org.mockito.Mockito.{never, times, verify, when}
@@ -48,6 +48,7 @@ class PrintControllerSpec extends SpecBase with MockitoSugar with Generators wit
     val applicantAddress = Address("1 Test Street", None, "Test Town", None, "ZZ1 1ZZ")
     val applicantPhone = "07777777777"
     val applicantNino = arbitrary[Nino].sample.value
+    val applicantRelationshipToChild = "grandparent"
 
     val mainCarerName = Name("Main", "Carer")
     val mainCarerDob = LocalDate.now.minusYears(30)
@@ -61,7 +62,7 @@ class PrintControllerSpec extends SpecBase with MockitoSugar with Generators wit
       .set(ChildNamePage, childName).success.value
       .set(ChildDateOfBirthPage, childDob).success.value
       .set(ApplicantNamePage, applicantName).success.value
-      .set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.Grandparent).success.value
+      .set(ApplicantRelationshipToChildPage, applicantRelationshipToChild).success.value
       .set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
       .set(ApplicantIsValidAgePage, true).success.value
       .set(ApplicantWasUkResidentPage, true).success.value

@@ -37,7 +37,7 @@ object JourneyModel {
   final case class Applicant(
                               name: Name,
                               dateOfBirth: LocalDate,
-                              relationshipToChild: ApplicantRelationshipToChild,
+                              relationshipToChild: String,
                               address: Address,
                               telephoneNumber: String,
                               nino: Nino
@@ -90,21 +90,11 @@ object JourneyModel {
   private def getApplicant(answers: UserAnswers): EitherNec[Query, Applicant] = (
     answers.getNec(ApplicantNamePage),
     answers.getNec(ApplicantDateOfBirthPage),
-    getApplicantRelationshipToChild(answers),
+    answers.getNec(ApplicantRelationshipToChildPage),
     answers.getNec(ApplicantAddressPage),
     answers.getNec(ApplicantTelephoneNumberPage),
     answers.getNec(ApplicantNinoPage)
   ).parMapN(Applicant)
-
-  private def getApplicantRelationshipToChild(answers: UserAnswers): EitherNec[Query, ApplicantRelationshipToChild] = {
-    import ApplicantRelationshipToChild._
-    answers.getNec(ApplicantRelationshipToChildPage).flatMap {
-      case GreatAuntOrGreatUncle | ResidentPartner =>
-        Left(NonEmptyChain.one(ApplicantRelationshipToChildPage))
-      case value =>
-        Right(value)
-    }
-  }
 
   private def getMainCarer(answers: UserAnswers): EitherNec[Query, MainCarer] = (
     answers.getNec(MainCarerNamePage),

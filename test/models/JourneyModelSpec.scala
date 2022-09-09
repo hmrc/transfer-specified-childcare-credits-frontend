@@ -40,6 +40,7 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with OptionValues with 
     val applicantAddress = Address("1 Test Street", None, "Test Town", None, "ZZ1 1ZZ")
     val applicantPhone = "07777777777"
     val applicantNino = arbitrary[Nino].sample.value
+    val applicantRelationshipToChild = "grandparent"
 
     val mainCarerName = Name("Main", "Carer")
     val mainCarerDob = LocalDate.now.minusYears(30)
@@ -53,7 +54,7 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with OptionValues with 
       .set(ChildNamePage, childName).success.value
       .set(ChildDateOfBirthPage, childDob).success.value
       .set(ApplicantNamePage, applicantName).success.value
-      .set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.Grandparent).success.value
+      .set(ApplicantRelationshipToChildPage, applicantRelationshipToChild).success.value
       .set(ApplicantClaimsChildBenefitForThisChildPage, false).success.value
       .set(ApplicantIsValidAgePage, true).success.value
       .set(ApplicantWasUkResidentPage, true).success.value
@@ -78,7 +79,7 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with OptionValues with 
         applicant = Applicant(
           name = applicantName,
           dateOfBirth = applicantDob,
-          relationshipToChild = ApplicantRelationshipToChild.Grandparent,
+          relationshipToChild = applicantRelationshipToChild,
           address = applicantAddress,
           telephoneNumber = applicantPhone,
           nino = applicantNino
@@ -99,16 +100,6 @@ class JourneyModelSpec extends AnyFreeSpec with Matchers with OptionValues with 
     "must fail when there are no periods" in {
       val answers = completeAnswers.remove(PeriodPage(Index(0))).success.value
       JourneyModel.from(answers).swap.value mustEqual NonEmptyChain.one(PeriodPage(Index(0)))
-    }
-
-    "must fail when the applicant's relationship to the child is great aunt or great uncle" in {
-      val answers = completeAnswers.set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.GreatAuntOrGreatUncle).success.value
-      JourneyModel.from(answers).swap.value mustEqual NonEmptyChain.one(ApplicantRelationshipToChildPage)
-    }
-
-    "must fail when the applicant's relationship to the child is partner of main carer" in {
-      val answers = completeAnswers.set(ApplicantRelationshipToChildPage, ApplicantRelationshipToChild.ResidentPartner).success.value
-      JourneyModel.from(answers).swap.value mustEqual NonEmptyChain.one(ApplicantRelationshipToChildPage)
     }
 
     "must fail when the applicant already receives child benefit for the child" in {

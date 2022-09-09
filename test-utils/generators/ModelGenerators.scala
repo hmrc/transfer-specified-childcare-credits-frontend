@@ -52,20 +52,6 @@ trait ModelGenerators {
       } yield Name(firstName, lastName)
     }
 
-  implicit lazy val arbitraryApplicantRelationshipToChild: Arbitrary[ApplicantRelationshipToChild] = {
-    import ApplicantRelationshipToChild._
-    val otherGen: Gen[ApplicantRelationshipToChild] = Gen.alphaStr.map(Other)
-    val basicGen: Gen[ApplicantRelationshipToChild] = Gen.oneOf(
-      Grandparent,
-      AuntOrUncle,
-      BrotherOrSister,
-      GreatAuntOrGreatUncle,
-      NonResidentParent,
-      ResidentPartner
-    )
-    Arbitrary(Gen.oneOf(basicGen, otherGen))
-  }
-
   implicit lazy val arbitraryNino: Arbitrary[Nino] = Arbitrary {
     for {
       firstChar <- Gen.oneOf('A', 'C', 'E', 'H', 'J', 'L', 'M', 'O', 'P', 'R', 'S', 'W', 'X', 'Y').map(_.toString)

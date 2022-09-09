@@ -19,7 +19,7 @@ package audit
 import cats.data.NonEmptyList
 import generators.Generators
 import models.JourneyModel.{Applicant, MainCarer}
-import models.{Address, ApplicantRelationshipToChild, Child, JourneyModel, Name, Period}
+import models.{Address, Child, JourneyModel, Name, Period}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.ArgumentMatchersSugar.eqTo
 import org.mockito.Mockito.{times, verify}
@@ -54,6 +54,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with 
     val applicantAddress = Address("1 Test Street", None, "Test Town", None, "ZZ1 1ZZ")
     val applicantPhone = "07777777777"
     val applicantNino = arbitrary[Nino].sample.value
+    val applicantRelationshipToChild = "grandparent"
 
     val mainCarerName = Name("Main", "Carer")
     val mainCarerDob = LocalDate.now.minusYears(30)
@@ -73,7 +74,7 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with 
         applicant = Applicant(
           name = applicantName,
           dateOfBirth = applicantDob,
-          relationshipToChild = ApplicantRelationshipToChild.Grandparent,
+          relationshipToChild = applicantRelationshipToChild,
           address = applicantAddress,
           telephoneNumber = applicantPhone,
           nino = applicantNino
@@ -99,75 +100,6 @@ class AuditServiceSpec extends AnyFreeSpec with Matchers with MockitoSugar with 
           lastName = applicantName.lastName,
           dateOfBirth = applicantDob,
           relationshipToChild = "grandparent",
-          address = DownloadAuditEvent.Address(
-            line1 = applicantAddress.line1,
-            line2 = applicantAddress.line2,
-            townOrCity = applicantAddress.townOrCity,
-            county = applicantAddress.county,
-            postcode = applicantAddress.postcode
-          ),
-          telephoneNumber = applicantPhone,
-          nino = applicantNino
-        ),
-        mainCarer = DownloadAuditEvent.MainCarer(
-          firstName = mainCarerName.firstName,
-          lastName = mainCarerName.lastName,
-          dateOfBirth = mainCarerDob,
-          address = DownloadAuditEvent.Address(
-            line1 = mainCarerAddress.line1,
-            line2 = mainCarerAddress.line2,
-            townOrCity = mainCarerAddress.townOrCity,
-            county = mainCarerAddress.county,
-            postcode = mainCarerAddress.postcode
-          ),
-          telephoneNumber = mainCarerPhone,
-          nino = mainCarerNino
-        ),
-        periods = List(DownloadAuditEvent.Period(period.startDate, period.endDate))
-      )
-
-      val hc = HeaderCarrier()
-      service.auditDownload(model)(hc)
-
-      verify(mockAuditConnector, times(1)).sendExplicitAudit(eqTo("downloadAuditEvent"), eqTo(expected))(eqTo(hc), any(), any())
-    }
-
-    "must call the audit connector with the correct data event when the applicants relationship to the child is other" in {
-
-      val model = JourneyModel(
-        child = Child(
-          name = childName,
-          dateOfBirth = childDob
-        ),
-        applicant = Applicant(
-          name = applicantName,
-          dateOfBirth = applicantDob,
-          relationshipToChild = ApplicantRelationshipToChild.Other("foobar"),
-          address = applicantAddress,
-          telephoneNumber = applicantPhone,
-          nino = applicantNino
-        ),
-        mainCarer = MainCarer(
-          name = mainCarerName,
-          dateOfBirth = mainCarerDob,
-          address = mainCarerAddress,
-          telephoneNumber = mainCarerPhone,
-          nino = mainCarerNino
-        ),
-        periods = NonEmptyList.one(period)
-      )
-
-      val expected = DownloadAuditEvent(
-        child = DownloadAuditEvent.Child(
-          firstName = childName.firstName,
-          lastName = childName.lastName,
-          dateOfBirth = childDob
-        ),
-        applicant = DownloadAuditEvent.Applicant(
-          firstName = applicantName.firstName,
-          lastName = applicantName.lastName,
-          dateOfBirth = applicantDob,
-          relationshipToChild = "foobar",
           address = DownloadAuditEvent.Address(
             line1 = applicantAddress.line1,
             line2 = applicantAddress.line2,

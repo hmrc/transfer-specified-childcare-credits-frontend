@@ -16,17 +16,16 @@
 
 package pages
 
-import models.ApplicantRelationshipToChild
 import pages.behaviours.PageBehaviours
 
-class ApplicantRelationshipToChildSpec extends PageBehaviours {
+class ApplicantRelationshipToChildPageSpec extends PageBehaviours {
 
   "ApplicantRelationshipToChildPage" - {
 
-    beRetrievable[ApplicantRelationshipToChild](ApplicantRelationshipToChildPage)
+    beRetrievable[String](ApplicantRelationshipToChildPage)
 
-    beSettable[ApplicantRelationshipToChild](ApplicantRelationshipToChildPage)
+    beSettable[String](ApplicantRelationshipToChildPage)
 
-    beRemovable[ApplicantRelationshipToChild](ApplicantRelationshipToChildPage)
+    beRemovable[String](ApplicantRelationshipToChildPage)
   }
 }
