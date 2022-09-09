@@ -52,5 +52,6 @@ class PeriodFormProviderSpec extends DateBehaviours {
     behave like dateField(form, "endDate", validData)
     behave like mandatoryDateField(form, "endDate", "period.endDate.error.required.all", Seq(applicantName.firstName, childName.firstName))
     behave like dateFieldWithMax(form, "endDate", LocalDate.now(clock), FormError("endDate", "period.endDate.error.max"))
+    behave like dateFieldWithMin(form, "endDate", cutOffDate, FormError("endDate", "period.endDate.error.min"))
   }
 }
