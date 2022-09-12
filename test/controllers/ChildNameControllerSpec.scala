@@ -18,12 +18,12 @@ package controllers
 
 import base.SpecBase
 import forms.ChildNameFormProvider
-import models.{NormalMode, Name, UserAnswers}
+import models.{Name, NormalMode, UserAnswers}
 import navigation.{FakeNavigator, Navigator}
 import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.when
 import org.scalatestplus.mockito.MockitoSugar
-import pages.ChildNamePage
+import pages.{ApplicantNamePage, ChildNamePage}
 import play.api.inject.bind
 import play.api.libs.json.Json
 import play.api.mvc.Call
@@ -43,21 +43,18 @@ class ChildNameControllerSpec extends SpecBase with MockitoSugar {
 
   lazy val childNameRoute = routes.ChildNameController.onPageLoad(NormalMode).url
 
-  val userAnswers = UserAnswers(
-    userAnswersId,
-    Json.obj(
-      ChildNamePage.toString -> Json.obj(
-        "firstName" -> "value 1",
-        "lastName" -> "value 2"
-      )
-    )
-  )
+  val applicantName = Name("Foo", "Bar")
+  val minimalUserAnswers = emptyUserAnswers
+    .set(ApplicantNamePage, applicantName).success.value
+
+  val userAnswers = minimalUserAnswers
+    .set(ChildNamePage, Name("value 1", "value 2")).success.value
 
   "ChildName Controller" - {
 
     "must return OK and the correct view for a GET" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, childNameRoute)
@@ -65,7 +62,7 @@ class ChildNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form, applicantName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -79,7 +76,7 @@ class ChildNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual OK
-        contentAsString(result) mustEqual view(form.fill(Name("value 1", "value 2")), NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(form.fill(Name("value 1", "value 2")), applicantName, NormalMode)(request, messages(application)).toString
       }
     }
 
@@ -90,7 +87,7 @@ class ChildNameControllerSpec extends SpecBase with MockitoSugar {
       when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
 
       val application =
-        applicationBuilder(userAnswers = Some(emptyUserAnswers))
+        applicationBuilder(userAnswers = Some(minimalUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)
@@ -110,7 +107,7 @@ class ChildNameControllerSpec extends SpecBase with MockitoSugar {
 
     "must return a Bad Request and errors when invalid data is submitted" in {
 
-      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
+      val application = applicationBuilder(userAnswers = Some(minimalUserAnswers)).build()
 
       running(application) {
         val request =
@@ -121,13 +118,26 @@ class ChildNameControllerSpec extends SpecBase with MockitoSugar {
         val result = route(application, request).value
 
         status(result) mustEqual BAD_REQUEST
-        contentAsString(result) mustEqual view(boundForm, NormalMode)(request, messages(application)).toString
+        contentAsString(result) mustEqual view(boundForm, applicantName, NormalMode)(request, messages(application)).toString
       }
     }
 
     "must redirect to Journey Recovery for a GET if no existing data is found" in {
 
       val application = applicationBuilder(userAnswers = None).build()
+
+      running(application) {
+        val request = FakeRequest(GET, childNameRoute)
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().toString
+      }
+    }
+
+    "must redirect to Journey Recovery for a GET if no minimal data is found" in {
+
+      val application = applicationBuilder(userAnswers = Some(emptyUserAnswers)).build()
 
       running(application) {
         val request = FakeRequest(GET, childNameRoute)
@@ -146,6 +156,31 @@ class ChildNameControllerSpec extends SpecBase with MockitoSugar {
 
       val application =
         applicationBuilder(userAnswers = None)
+          .overrides(
+            bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
+            bind[SessionRepository].toInstance(mockSessionRepository)
+          )
+          .build()
+
+      running(application) {
+        val request =
+          FakeRequest(POST, childNameRoute)
+            .withFormUrlEncodedBody(("firstName", "value 1"), ("lastName", "value 2"))
+        val result = route(application, request).value
+
+        status(result) mustEqual SEE_OTHER
+        redirectLocation(result).value mustEqual routes.JourneyRecoveryController.onPageLoad().toString
+      }
+    }
+
+    "must redirect to Journey Recovery for a POST if no minimal data is found" in {
+
+      val mockSessionRepository = mock[SessionRepository]
+
+      when(mockSessionRepository.set(any())) thenReturn Future.successful(true)
+
+      val application =
+        applicationBuilder(userAnswers = Some(emptyUserAnswers))
           .overrides(
             bind[Navigator].toInstance(new FakeNavigator(onwardRoute)),
             bind[SessionRepository].toInstance(mockSessionRepository)

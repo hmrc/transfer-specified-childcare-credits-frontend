@@ -123,8 +123,8 @@ applicantHasFullNIContributions.error.required = Select whether {0} has full Nat
 applicantHasFullNIContributions.change.hidden = whether the applicant has full National Insurance contributions for when they were caring for the child
 
 childName.title = What is the child’s name
-childName.heading = What is the child’s name?
-childName.hint = Enter the name of the child that was being cared for
+childName.heading = What is the name of the child {0} cared for?
+childName.hint = If {0} cared for more than one child under 12 in the same period, fill a separate form for each child.
 childName.firstName = First name
 childName.lastName = Last name
 childName.checkYourAnswersLabel = Name
