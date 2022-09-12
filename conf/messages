@@ -244,17 +244,17 @@ applicantNino.error.required = Enter {0}’s National Insurance number
 applicantNino.error.invalid = Enter {0}’s National Insurance number in the correct format
 applicantNino.change.hidden = the applicant’s National Insurance number
 
-mainCarerName.title = What is the name of the person who claims Child Benefit for the child?
-mainCarerName.heading = Who claims Child Benefit for {0}?
+mainCarerName.title = Who gets Child Benefit for the child?
+mainCarerName.heading = Who gets Child Benefit for {0}?
 mainCarerName.firstName = First name
 mainCarerName.lastName = Last name
 mainCarerName.checkYourAnswersLabel = Name
-mainCarerName.error.firstName.required = Enter the first name of the person who claims Child Benefit for {0}
-mainCarerName.error.lastName.required = Enter the last name of the person who claims Child Benefit for {0}
+mainCarerName.error.firstName.required = Enter the first name of the person who gets Child Benefit for {0}
+mainCarerName.error.lastName.required = Enter the last name of the person who gets Child Benefit for {0}
 mainCarerName.error.firstName.length = First name must be 100 characters or less
 mainCarerName.error.lastName.length = Last name must be 100 characters or less
-mainCarerName.firstName.change.hidden = the first name of the person who claims Child Benefit for the child
-mainCarerName.lastName.change.hidden = the last name of the person who claims Child Benefit for the child
+mainCarerName.firstName.change.hidden = the first name of the person who gets Child Benefit for the child
+mainCarerName.lastName.change.hidden = the last name of the person who gets Child Benefit for the child
 
 mainCarerDateOfBirth.title = What is the date of birth of the person who claims Child Benefit for the child?
 mainCarerDateOfBirth.heading = What is {0}’s date of birth?
