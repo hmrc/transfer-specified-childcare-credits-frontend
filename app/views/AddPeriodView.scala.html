@@ -30,9 +30,9 @@
 
 @heading = @{
   if(items.length < 2) {
-    messages("addPeriod.heading")
+    messageWithNameFallback("addPeriod.heading", names)
   } else {
-    messages("addPeriod.heading.plural", items.length)
+    messageWithNameFallback("addPeriod.heading.plural", names, items.length.toString)
   }
 }
 
@@ -53,7 +53,7 @@
                 field = form("value"),
                 legend = LegendViewModel(messageWithNameFallback("addPeriod.question", names)).withSize(LegendSize.Medium)
             )
-        )
+         )
 
         @govukButton(
             ButtonViewModel(messages("site.continue"))

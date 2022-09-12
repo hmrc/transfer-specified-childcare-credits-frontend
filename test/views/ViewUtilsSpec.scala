@@ -28,8 +28,8 @@ class ViewUtilsSpec extends AnyFreeSpec with Matchers {
 
     val testMessages = Map(
       "default" -> Map(
-        "foo"          -> "Test {0}, {1}",
-        "foo.fallback" -> "Test"
+        "foo"          -> "Test {0}, {1}, {2}",
+        "foo.fallback" -> "Test {0}"
       )
     )
     val messagesApi = new DefaultMessagesApi(testMessages)
@@ -39,14 +39,14 @@ class ViewUtilsSpec extends AnyFreeSpec with Matchers {
       val applicantName = Name("Foo", "Quux")
       val childName = Name("Bar", "Quux")
       val names = ApplicantAndChildNames(applicantName, childName)
-      ViewUtils.messageWithNameFallback("foo", names) mustEqual "Test Foo, Bar"
+      ViewUtils.messageWithNameFallback("foo", names, "Baz") mustEqual "Test Foo, Bar, Baz"
     }
 
     "must return the fallback message when the names match" in {
       val childName = Name("Foo", "Quux")
       val applicantName = Name("Foo", "Quux")
       val names = ApplicantAndChildNames(applicantName, childName)
-      ViewUtils.messageWithNameFallback("foo", names) mustEqual "Test"
+      ViewUtils.messageWithNameFallback("foo", names, "Baz") mustEqual "Test Baz"
     }
   }
 }

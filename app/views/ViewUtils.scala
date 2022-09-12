@@ -44,10 +44,10 @@ object ViewUtils {
   def date(d: LocalDate): String =
     d.format(DateTimeFormatter.ofPattern("d MMMM yyyy"))
 
-  def messageWithNameFallback(key: String, names: ApplicantAndChildNames)(implicit messages: Messages): String =
+  def messageWithNameFallback(key: String, names: ApplicantAndChildNames, args: String*)(implicit messages: Messages): String =
     if (names.childName.firstName == names.applicantName.firstName) {
-      Messages(s"$key.fallback")
+      Messages(s"$key.fallback", args: _*)
     } else {
-      Messages(key, names.applicantName.firstName, names.childName.firstName)
+      Messages(key, (Seq(names.applicantName.firstName, names.childName.firstName) ++ args): _*)
     }
 }
