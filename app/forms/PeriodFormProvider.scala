@@ -50,6 +50,7 @@ class PeriodFormProvider @Inject()(clock: Clock) extends Mappings {
         requiredKey = "period.endDate.error.required",
         args = Seq(people.applicantName.firstName, people.child.name.firstName)
       ).verifying(maxDate(max, "period.endDate.error.max"))
+       .verifying(minDate(min, "period.endDate.error.min"))
     )(Period.apply)(Period.unapply)
   )
 }
