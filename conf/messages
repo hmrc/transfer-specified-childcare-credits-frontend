@@ -132,6 +132,7 @@ childName.error.firstName.required = Enter the child’s first name
 childName.error.lastName.required = Enter the child’s last name
 childName.error.firstName.length = The child’s first name must be {0} characters or less
 childName.error.lastName.length = The child’s last name must be {0} characters or less
+childName.change.hidden = child’s name
 
 childDateOfBirth.title = What is the child’s date of birth?
 childDateOfBirth.heading = What is {0}’s date of birth?
@@ -193,8 +194,7 @@ applicantName.error.firstName.required = Enter the applicant’s first name
 applicantName.error.lastName.required = Enter the applicant’s last name
 applicantName.error.firstName.length = The applicant’s first name must be 100 characters or less
 applicantName.error.lastName.length = The applicant’s last name must be 100 characters or less
-applicantName.firstName.change.hidden = the applicant’s first name
-applicantName.lastName.change.hidden = the applicant’s last name
+applicantName.change.hidden = the applicant’s name
 
 applicantDateOfBirth.title = What is the applicant’s date of birth?
 applicantDateOfBirth.heading = What is {0}’s date of birth?
@@ -223,11 +223,7 @@ applicantAddress.error.line2.length = Address line 2 must be 100 characters or l
 applicantAddress.error.town.length = Town or city must be 100 characters or less
 applicantAddress.error.county.length = County must be 100 characters or less
 applicantAddress.error.postcode.length = Postcode must be 100 characters or less
-applicantAddress.line1.change.hidden = address line 1
-applicantAddress.line2.change.hidden = address line 2
-applicantAddress.town.change.hidden = the town or city
-applicantAddress.county.change.hidden = the county
-applicantAddress.postcode.change.hidden = the postcode
+applicantAddress.change.hidden = applicant address details
 
 applicantTelephoneNumber.title = What is the applicant’s telephone number?
 applicantTelephoneNumber.heading = What is {0}’s telephone number?
@@ -238,7 +234,7 @@ applicantTelephoneNumber.change.hidden = the applicant’s phone number
 
 applicantNino.title = What is the applicant’s National Insurance number?
 applicantNino.heading = What is {0}’s National Insurance number?
-applicantNino.hint = It’s on their National Insurance card, benefit letter, payslip or P60. For example, QQ123456C
+applicantNino.hint = It’s on their National Insurance card, benefit letter, payslip or P60. For example, QQ 12 34 56 C
 applicantNino.checkYourAnswersLabel = National Insurance number
 applicantNino.error.required = Enter {0}’s National Insurance number
 applicantNino.error.invalid = Enter {0}’s National Insurance number in the correct format
@@ -255,6 +251,7 @@ mainCarerName.error.firstName.length = First name must be 100 characters or less
 mainCarerName.error.lastName.length = Last name must be 100 characters or less
 mainCarerName.firstName.change.hidden = the first name of the person who claims Child Benefit for the child
 mainCarerName.lastName.change.hidden = the last name of the person who claims Child Benefit for the child
+mainCarerName.change.hidden = main carer name
 
 mainCarerDateOfBirth.title = What is the date of birth of the person who claims Child Benefit for the child?
 mainCarerDateOfBirth.heading = What is {0}’s date of birth?
@@ -288,6 +285,7 @@ mainCarerAddress.line2.change.hidden = address line 2
 mainCarerAddress.town.change.hidden = the town or city
 mainCarerAddress.county.change.hidden = the county
 mainCarerAddress.postcode.change.hidden = the postcode
+mainCarerAddress.change.hidden = main carer address
 
 mainCarerTelephoneNumber.title = What is the telephone number of the person who claims Child Benefit for the child?
 mainCarerTelephoneNumber.heading = What is {0}’s telephone number?
@@ -298,7 +296,7 @@ mainCarerTelephoneNumber.change.hidden = the telephone number of the person who 
 
 mainCarerNino.title = What is the National Insurance number of the person who claims Child Benefit for the child?
 mainCarerNino.heading = What is {0}’s National Insurance number?
-mainCarerNino.hint = It’s on their National Insurance card, benefit letter, payslip or P60. For example, QQ123456C
+mainCarerNino.hint = It’s on their National Insurance card, benefit letter, payslip or P60. For example, QQ 12 34 56 C
 mainCarerNino.checkYourAnswersLabel = National Insurance number
 mainCarerNino.error.required = Enter {0}’s National Insurance number
 mainCarerNino.error.invalid = Enter {0}’s National Insurance number in the correct format
